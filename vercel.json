@@ -1,8 +1,6 @@
 {
-  "rewrites": [
-    { "source": "/api/generate-scenario", "destination": "/api/generate-scenario" }
-  ],
-  "outputDirectory": "public",
+  "buildCommand": false,
+  "installCommand": "npm install",
   "functions": {
     "api/generate-scenario.js": {
       "maxDuration": 30
