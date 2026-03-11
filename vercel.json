@@ -1,0 +1,11 @@
+{
+  "rewrites": [
+    { "source": "/api/generate-scenario", "destination": "/api/generate-scenario" }
+  ],
+  "outputDirectory": "public",
+  "functions": {
+    "api/generate-scenario.js": {
+      "maxDuration": 30
+    }
+  }
+}

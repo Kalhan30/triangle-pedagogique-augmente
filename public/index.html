@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="fr" class="bg-stone-50 text-slate-900 font-sans">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Triangle Pédagogique Augmenté — MaProfBranchee</title>
+  <meta name="description" content="Enseigner sans se trahir — comprendre où l'IA amplifie et où l'humain est irremplaçable. Outil interactif basé sur le Triangle de Houssaye augmenté par V. Le Scolan." />
+  <meta property="og:title" content="Triangle Pédagogique Augmenté" />
+  <meta property="og:description" content="Visualisez comment l'IA module les relations pédagogiques du Triangle de Houssaye." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="./logo.jpg" />
+  <link rel="icon" type="image/jpeg" href="./logo.jpg" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Instrument+Serif:ital@0;1&display=swap"
+    rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"DM Sans"', 'sans-serif'],
+            serif: ['"Instrument Serif"', 'serif'],
+          },
+          colors: {
+            teal: { 50: '#F0FDFA', 100: '#CCFBF1', 600: '#0D9488', 900: '#134E4A' },
+            violet: { 50: '#F5F3FF', 100: '#EDE9FE', 600: '#7C3AED' },
+            corail: { 50: '#FFF7ED', 100: '#FFEDD5', 600: '#EA580C' },
+            bleu: { 50: '#EFF6FF', 600: '#2563EB' },
+            dark: '#1E1B4B',
+            fond: '#FAFAF9',
+          },
+          animation: {
+            'pulse-fast': 'pulse 1.3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- React 18 & ReactDOM -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+
+  <!-- Babel Standalone (pour JSX) -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <!-- Datas Externes (sans require, définies sur window) -->
+  <script src="./data.js"></script>
+
+  <style>
+    /* CSS custom minime pour animations SVG */
+    .svg-transition {
+      transition: all 300ms ease;
+    }
+
+    .panel-transition {
+      transition: transform 250ms ease-out, opacity 250ms ease-out;
+    }
+
+    /* Cache scrollbar pour les panneaux si besoin */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+
+<body class="bg-stone-50 min-h-screen flex flex-col overflow-x-hidden relative selection:bg-teal-200 selection:text-teal-900">
+  <div class="fixed inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-teal-50/60 via-stone-50/30 to-violet-50/40 -z-10 pointer-events-none"></div>
+  <div class="fixed inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+PHBhdGggZD0iTTAgMGgyMHYyMEgwWiIgZmlsbD0ibm9uZSIvPjxjaXJjbGUgY3g9IjEwIiBjeT0iMTAiIHI9IjAuNSIgZmlsbD0icmdiYSgwLDAsMCwwLjE1KSIvPjwvc3ZnPg==')] -z-10 opacity-30 pointer-events-none"></div>
+
+  <div id="root" class="flex flex-col flex-1 z-0"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect, useMemo } = React;
+
+    // Récupération des données depuis window
+    const LEVELS = window.LEVELS;
+    const DATA_BY_LEVEL = window.DATA_BY_LEVEL;
+    const REFERENCES = window.REFERENCES;
+    const OVERCOMPENSATION_LOOP = window.OVERCOMPENSATION_LOOP;
+
+    // --- Composants UI Globaux ---
+
+    const LevelSelector = ({ levels, activeLevel, onLevelChange }) => (
+      <div class="flex flex-wrap justify-center gap-2 py-3 px-4">
+        {levels.map(level => (
+          <button
+            key={level.id}
+            onClick={() => onLevelChange(level.id)}
+            class={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 flex items-center gap-1.5 border ${
+              activeLevel === level.id
+                ? 'text-white shadow-lg scale-105 border-transparent'
+                : 'bg-white/60 backdrop-blur-md text-stone-600 hover:bg-white/90 border-white/60 hover:shadow-md'
+            }`}
+            style={activeLevel === level.id ? { backgroundColor: level.color, borderColor: level.color } : {}}
+          >
+            <span class="text-base">{level.icon}</span>
+            <span class="hidden sm:inline">{level.shortLabel}</span>
+          </button>
+        ))}
+      </div>
+    );
+
+    const RegulationBanner = ({ level }) => {
+      const levelData = LEVELS.find(l => l.id === level);
+      if (!levelData) return null;
+      return (
+        <div class="max-w-4xl mx-auto px-4 mb-2">
+          <div class="flex items-start gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm border transition-colors duration-300"
+            style={{ backgroundColor: `${levelData.color}10`, borderColor: `${levelData.color}30`, color: `${levelData.color}` }}>
+            <svg class="w-4 h-4 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            <span><strong>{levelData.regulationSource}</strong> — {levelData.regulation}</span>
+          </div>
+        </div>
+      );
+    };
+
+    const Header = ({ activeTab, setActiveTab, activeLevel, setActiveLevel }) => (
+      <header class="bg-white/70 backdrop-blur-lg border-b border-white/50 shadow-sm sticky top-0 z-40 relative">
+        <div class="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-stone-200 to-transparent"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+          <div>
+            <h1 class="font-serif italic text-2xl lg:text-3xl text-dark tracking-wide">
+              Triangle Pédagogique Augmenté
+            </h1>
+            <p class="text-xs sm:text-sm text-stone-400 font-medium tracking-wide mt-0.5 hidden sm:block">Enseigner sans se trahir — comprendre où l'IA amplifie et où l'humain est irremplaçable</p>
+          </div>
+          <a href="https://maprofbranchee.fr" target="_blank" rel="noopener noreferrer"
+            class="hidden sm:inline-flex items-center px-3 py-1.5 rounded-full bg-teal-50 text-teal-600 text-sm font-medium hover:bg-teal-100 transition-colors border border-teal-100">
+            <img src="./logo.jpg" alt="Logo MaProfBranchee" class="h-8 w-8 mr-2 object-cover rounded-full shadow-sm border border-white" />
+            MaProfBranchee
+          </a>
+        </div>
+        <LevelSelector levels={LEVELS} activeLevel={activeLevel} onLevelChange={setActiveLevel} />
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex space-x-6 sm:space-x-12 relative -bottom-px">
+          {[
+            { id: 'explorer', label: 'Explorer' },
+            { id: 'situations', label: 'Situations' },
+            { id: 'ethique', label: 'Éthique' }
+          ].map(tab => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              class={`pb-3 px-1 text-sm font-medium border-b-2 transition-colors duration-200 ${activeTab === tab.id
+                ? 'border-teal-600 text-teal-600'
+                : 'border-transparent text-stone-500 hover:text-stone-700 hover:border-stone-300'
+                }`}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+      </header>
+    );
+
+    const Footer = ({ onOpenSources }) => (
+      <footer class="bg-white/70 backdrop-blur-md border-t border-white/50 py-6 mt-auto shrink-0 z-10 w-full relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center text-sm text-stone-500 gap-4">
+          <p>Cadre : Triangle de Houssaye (1988) augmenté par V. Le Scolan (2025)</p>
+          <div class="flex items-center gap-4">
+            <button onClick={onOpenSources} class="hover:text-teal-600 underline underline-offset-2 transition-colors">
+              Sources scientifiques
+            </button>
+            <span>&copy; <a href="https://maprofbranchee.fr" class="hover:text-teal-600" target="_blank">MaProfBranchee</a></span>
+          </div>
+        </div>
+      </footer>
+    );
+
+    const SourcesModal = ({ isOpen, onClose }) => {
+      if (!isOpen) return null;
+      return (
+        <div class="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div class="absolute inset-0 bg-dark/30 backdrop-blur-md transition-opacity" onClick={onClose}></div>
+          <div class="bg-white/90 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/60 w-full max-w-2xl max-h-[90vh] overflow-y-auto relative p-6 sm:p-8 animate-[slideIn_0.2s_ease-out]">
+            <div class="flex justify-between items-center mb-6">
+              <h2 class="text-2xl font-serif text-dark">Sources Scientifiques</h2>
+              <button onClick={onClose} class="text-stone-400 hover:text-stone-600 p-2 rounded-full hover:bg-stone-100 transition-colors" aria-label="Fermer">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+              </button>
+            </div>
+            <ul class="space-y-4">
+              {REFERENCES.map((ref, idx) => (
+                <li key={idx} class="p-4 bg-stone-50 rounded-lg border border-stone-100">
+                  <div class="font-bold text-dark">{ref.author} ({ref.year})</div>
+                  <div class="italic text-stone-700 mb-1">{ref.title}</div>
+                  <div class="text-sm text-stone-600">{ref.detail}</div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      );
+    }
+
+    // --- Composants Panneaux (Mode Explorer) ---
+
+    // Icônes helper
+    const CheckIcon = () => <svg class="w-5 h-5 text-teal-600 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>;
+    const SparkleIcon = () => <svg class="w-5 h-5 text-violet-600 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>;
+
+    const PanelContainer = ({ isOpen, onClose, children }) => {
+      return (
+        <div class={`fixed inset-y-0 right-0 z-40 flex panel-transition ${isOpen ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0 pointer-events-none'}`}>
+          {/* Backdrop mobile */}
+          <div class={`fixed inset-0 bg-dark/20 backdrop-blur-sm md:hidden transition-opacity ${isOpen ? 'opacity-100' : 'opacity-0'}`} onClick={onClose} />
+
+          <div class="relative w-full md:w-[450px] lg:w-[500px] h-full bg-white/95 backdrop-blur-3xl shadow-2xl border-l border-white/60 overflow-y-auto no-scrollbar md:mt-[73px] flex flex-col mt-auto max-h-[85vh] md:max-h-full rounded-t-3xl md:rounded-none panel-transition"
+            style={{ transform: !isOpen ? (window.innerWidth < 768 ? 'translateY(100%)' : 'translateX(100%)') : 'translate(0,0)' }}>
+
+            <button onClick={onClose} class="absolute top-4 right-4 p-2 bg-stone-100 rounded-full hover:bg-stone-200 text-stone-500 transition-colors z-10">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+            <div class="p-6 sm:p-8 flex-1 flex flex-col">
+              {children}
+            </div>
+          </div>
+        </div>
+      );
+    };
+
+    const VertexDetail = ({ data, onClose }) => {
+      if (!data) return null;
+      return (
+        <React.Fragment>
+          <div class="flex items-center gap-4 mb-6">
+            <div class="w-12 h-12 flex-shrink-0 filter drop-shadow-md" style={{ color: data.color }} dangerouslySetInnerHTML={{ __html: data.icon }}></div>
+            <h2 class="text-3xl font-serif text-dark tracking-wide">{data.label}</h2>
+          </div>
+          <p class="text-lg text-stone-600 leading-relaxed mb-8">{data.description}</p>
+          <div class="bg-teal-50 border-l-4 border-teal-600 p-5 rounded-r-xl mb-auto">
+            <p class="italic text-teal-900 font-medium">« {data.citation} »</p>
+          </div>
+          <button onClick={onClose} class="mt-8 w-full py-3 bg-stone-100 hover:bg-stone-200 text-stone-700 font-medium rounded-xl transition-colors">
+            Fermer
+          </button>
+        </React.Fragment>
+      );
+    };
+
+    const AxisDetail = ({ data, onClose, vertices }) => {
+      if (!data) return null;
+
+      const vFrom = vertices.find(v => v.id === data.from);
+      const vTo = vertices.find(v => v.id === data.to);
+
+      return (
+        <React.Fragment>
+          <div class="mb-6">
+            <div class="flex items-center gap-2 text-sm font-medium text-stone-500 mb-2 uppercase tracking-wide">
+              <span>{vFrom.label}</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+              <span>{vTo.label}</span>
+            </div>
+            <h2 class="text-3xl font-serif text-dark">{data.label}</h2>
+          </div>
+
+          <div class="flex flex-col sm:flex-row gap-4 mb-6">
+            <div class="flex-1 bg-violet-50 rounded-xl p-5 border border-violet-100">
+              <h3 class="font-bold text-violet-900 mb-4 flex items-center gap-2">
+                <span class="text-lg">🤖</span> Ce que l'IA peut faire
+              </h3>
+              <ul class="space-y-3">
+                {data.ia_can_do.map((item, idx) => (
+                  <li key={idx} class="text-sm text-violet-800 flex items-start gap-2 leading-tight">
+                    <SparkleIcon /> <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div class="flex-1 bg-teal-50 rounded-xl p-5 border border-teal-100">
+              <h3 class="font-bold text-teal-900 mb-4 flex items-center gap-2">
+                <span class="text-lg">👤</span> Irremplaçable humain
+              </h3>
+              <ul class="space-y-3">
+                {data.human_only.map((item, idx) => (
+                  <li key={idx} class="text-sm text-teal-800 flex items-start gap-2 leading-tight">
+                    <CheckIcon /> <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          <div class="bg-stone-50 border-l-4 border-corail-600 p-5 rounded-r-xl mb-6 flex-1">
+            <div class="text-xs font-bold text-stone-400 uppercase tracking-widest mb-2 flex items-center gap-2">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /></svg>
+              Exemple terrain
+            </div>
+            <p class="text-sm text-stone-700 italic leading-relaxed">« {data.terrain_example} »</p>
+          </div>
+
+          <div class="mt-auto flex flex-col gap-3">
+            <a href={data.cta.url} target="_blank" class="w-full py-3 bg-teal-600 hover:bg-teal-700 text-white font-medium rounded-xl transition-colors flex justify-center items-center gap-2 group">
+              {data.cta.label}
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" class="group-hover:translate-x-1 transition-transform"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+            </a>
+            <button onClick={onClose} class="w-full py-3 bg-stone-100 hover:bg-stone-200 text-stone-700 font-medium rounded-xl transition-colors">
+              Fermer
+            </button>
+          </div>
+        </React.Fragment>
+      );
+    };
+
+
+    // --- Composants Spécifiques aux Modes ---
+
+    const ScenarioSelector = ({ scenarios, activeScenario, onScenarioChange, onAddScenario }) => (
+      <div class="w-full max-w-lg mx-auto mb-8 animate-[slideIn_0.3s_ease-out]">
+        <div class="flex flex-col sm:flex-row justify-between items-center mb-2 gap-2">
+          <label htmlFor="scenario-select" class="block text-sm font-bold text-stone-500 uppercase tracking-widest text-center sm:text-left">
+            Choisissez une situation terrain
+          </label>
+          <button
+            onClick={onAddScenario}
+            class="text-xs font-bold text-teal-600 bg-teal-50 hover:bg-teal-100 px-3 py-1.5 rounded-full transition-colors flex items-center gap-1"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            Nouvelle situation
+          </button>
+        </div>
+        <div class="relative">
+          <select
+            id="scenario-select"
+            value={activeScenario.id}
+            onChange={(e) => onScenarioChange(e.target.value)}
+            class="block w-full bg-white/70 backdrop-blur-md border border-white/60 text-stone-800 rounded-2xl py-3 px-4 appearance-none focus:outline-none focus:ring-2 focus:ring-teal-600 focus:border-transparent font-medium shadow-sm cursor-pointer transition-all duration-300 hover:shadow-md hover:bg-white/90"
+          >
+            {scenarios.map(s => <option key={s.id} value={s.id}>{s.title}</option>)}
+          </select>
+          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-stone-400">
+            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
+        </div>
+      </div>
+    );
+
+    const ScenarioDetail = ({ scenario }) => (
+      <div class="w-full max-w-3xl mx-auto mt-8 bg-white/60 backdrop-blur-xl rounded-3xl shadow-lg border border-white/80 p-6 md:p-8 animate-[slideIn_0.3s_ease-out]">
+        <h3 class="font-serif tracking-wide text-2xl text-dark mb-6 text-center">{scenario.title}</h3>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="bg-violet-50/50 rounded-xl p-5 border border-violet-100/50 relative overflow-hidden group">
+            <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+              <span class="text-6xl">🤖</span>
+            </div>
+            <h4 class="font-bold text-violet-900 mb-2 relative z-10 flex items-center gap-2">Rôle de l'IA</h4>
+            <p class="text-violet-800 text-sm leading-relaxed relative z-10">{scenario.ia_role}</p>
+          </div>
+          <div class="bg-teal-50/50 rounded-xl p-5 border border-teal-100/50 relative overflow-hidden group">
+            <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+              <span class="text-6xl">👤</span>
+            </div>
+            <h4 class="font-bold text-teal-900 mb-2 relative z-10 flex items-center gap-2">Rôle Humain</h4>
+            <p class="text-teal-800 text-sm leading-relaxed relative z-10">{scenario.human_role}</p>
+          </div>
+        </div>
+      </div>
+    );
+
+    const EthicsSlider = ({ value, onChange, activeZone }) => (
+      <div class="w-full max-w-2xl mx-auto mt-4 mb-10 px-4 animate-[slideIn_0.3s_ease-out]">
+        <div class="flex justify-between text-xs font-bold text-stone-400 mb-2 px-1 uppercase tracking-widest">
+          <span>0%</span>
+          <span>50%</span>
+          <span>100%</span>
+        </div>
+
+        <div class="relative w-full h-8 mb-6 flex items-center group">
+          {/* Background tracks per zone */}
+          <div class="absolute inset-x-0 h-3 rounded-full overflow-hidden flex shadow-inner border border-black/5">
+            <div class="h-full bg-green-200/60" style={{ width: '25%' }}></div>
+            <div class="h-full bg-teal-200/60" style={{ width: '35%' }}></div>
+            <div class="h-full bg-orange-200/60" style={{ width: '25%' }}></div>
+            <div class="h-full bg-red-200/60" style={{ width: '15%' }}></div>
+          </div>
+
+          <input
+            type="range" min="0" max="100" value={value}
+            onChange={(e) => onChange(Number(e.target.value))}
+            class="absolute w-full appearance-none bg-transparent outline-none z-10 cursor-ew-resize opacity-0 group-hover:opacity-100 transition-opacity h-full"
+            style={{ WebkitAppearance: 'none' }}
+          />
+
+          {/* Custom thumb that follows value */}
+          <div class="absolute h-6 w-6 bg-white border-2 border-stone-400 rounded-full shadow-md z-0 transform -translate-x-1/2 pointer-events-none transition-transform duration-75"
+            style={{ left: `${value}%`, borderColor: activeZone.bgColor !== '#FAFAF9' ? activeZone.bgColor : '#94a3b8' }}>
+            <div class="absolute inset-1.5 rounded-full" style={{ backgroundColor: activeZone.bgColor !== '#FAFAF9' ? activeZone.bgColor : '#cbd5e1' }} ></div>
+          </div>
+        </div>
+
+        <div class="p-5 rounded-xl border transition-colors duration-300" style={{ backgroundColor: activeZone.bgColor, borderColor: `color-mix(in srgb, ${activeZone.bgColor} 80%, black)` }}>
+          <h3 class="font-bold mb-1 flex items-center gap-2 text-dark">
+            {activeZone.label}
+            {activeZone.label.includes('RECOMMANDÉ') && <span class="bg-teal-600 text-white text-xs px-2 py-0.5 rounded-full">✓ Vise ça</span>}
+          </h3>
+          <p class="text-sm text-stone-700 leading-relaxed font-medium">{activeZone.message}</p>
+        </div>
+      </div>
+    );
+
+    const OvercompensationAlert = ({ isVisible }) => {
+      if (!isVisible) return <div class="h-32 transition-all duration-300 pointer-events-none"></div>;
+      return (
+        <div class="w-full max-w-3xl mx-auto mb-8 animate-[slideIn_0.3s_ease-out]">
+          <div class="bg-corail-50/80 backdrop-blur-md border-2 border-corail-200/50 rounded-3xl p-6 shadow-xl relative overflow-hidden">
+            <div class="absolute -right-4 -top-4 text-corail-100 opacity-30 text-8xl pointer-events-none">⚠️</div>
+            <h3 class="text-xl font-bold text-corail-800 mb-4">{OVERCOMPENSATION_LOOP.title}</h3>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 relative z-10">
+              {OVERCOMPENSATION_LOOP.steps.map((step, idx) => (
+                <div key={idx} class="flex gap-3 text-sm text-corail-900 items-start">
+                  <span class="bg-corail-200 text-corail-800 font-bold rounded-full w-5 h-5 flex items-center justify-center shrink-0 text-xs mt-0.5">{idx + 1}</span>
+                  <span class="leading-tight">{step}</span>
+                </div>
+              ))}
+            </div>
+            <div class="mt-5 p-3 bg-white/60 rounded-lg text-sm font-bold text-corail-900 border border-corail-200 relative z-10">
+              {OVERCOMPENSATION_LOOP.conclusion}
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // --- Triangle SVG Principal ---
+
+    const TriangleSVG = ({ activeTab, onVertexClick, onAxisClick, activeScenario, ethicsValue, isRedZone, vertices, axes, ethicsZones }) => {
+      const isExplorer = activeTab === 'explorer';
+      const isSituations = activeTab === 'situations';
+      const isEthique = activeTab === 'ethique';
+
+      const iaCenter = { x: 50, y: 55 };
+
+      // Helper pour récupérer l'activation d'un axe en mode Situation
+      const getAxisStyle = (axisId, defaultColor) => {
+        if (!isSituations || !activeScenario) return { opacity: 1, strokeWidth: 2, color: defaultColor };
+        const act = activeScenario.axes_activation[axisId];
+        if (act >= 0.7) return { opacity: 1.0, strokeWidth: 4, color: defaultColor };
+        if (act >= 0.3) return { opacity: 0.6, strokeWidth: 3, color: defaultColor };
+        return { opacity: 0.25, strokeWidth: 1.5, color: '#A8A29E' };
+      };
+
+      // Helper pour le style IA en mode Ethique
+      const getIaLineStyle = () => {
+        if (!isEthique) return { strokeWidth: 1.5, dash: "4 4", opacity: 0.6, clr: '#7C3AED' };
+
+        let zone = ethicsZones.find(z => ethicsValue >= z.min && ethicsValue <= z.max);
+        if (ethicsValue === 100) zone = ethicsZones[3]; // handle edge case
+
+        return {
+          strokeWidth: zone.iaStrokeWidth,
+          dash: zone.iaDashArray,
+          opacity: isRedZone ? 0.9 : 0.7,
+          clr: isRedZone ? '#EF4444' : '#7C3AED'
+        };
+      };
+
+      const iaStyle = getIaLineStyle();
+
+      return (
+        <div class={`relative w-full max-w-3xl mx-auto aspect-square my-6 select-none flex items-center justify-center ${isEthique ? 'max-h-[350px]' : 'max-h-[500px]'}`}>
+          <svg viewBox="0 0 100 100" class="w-full h-full overflow-visible p-4">
+            <defs>
+              <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="2" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+              </filter>
+            </defs>
+
+            {/* Triangles/Axes background (relations AI-Sommets) */}
+            {vertices.map(v => (
+              <line
+                key={`ia-${v.id}`}
+                x1={iaCenter.x} y1={iaCenter.y}
+                x2={v.position.x} y2={v.position.y}
+                stroke={iaStyle.clr}
+                strokeWidth={iaStyle.strokeWidth}
+                strokeDasharray={iaStyle.dash}
+                class="svg-transition"
+                style={{ opacity: iaStyle.opacity }}
+              />
+            ))}
+
+            {/* Axes Principaux Humains */}
+            {axes.map(axis => {
+              const vFrom = vertices.find(v => v.id === axis.from);
+              const vTo = vertices.find(v => v.id === axis.to);
+              const dynamicStyle = getAxisStyle(axis.id, axis.color);
+
+              const isHoverable = isExplorer;
+              const midX = (vFrom.position.x + vTo.position.x) / 2;
+              const midY = (vFrom.position.y + vTo.position.y) / 2;
+
+              return (
+                <g key={axis.id}
+                  onClick={() => isExplorer && onAxisClick(axis)}
+                  onKeyDown={(e) => { if (e.key === 'Enter' && isExplorer) onAxisClick(axis); }}
+                  class={isExplorer ? "cursor-pointer group" : ""}
+                  tabIndex={isExplorer ? 0 : -1}
+                  role={isExplorer ? "button" : undefined}
+                  aria-label={`Axe ${axis.label}`}>
+                  {/* HITBOX invisible plus large */}
+                  <line
+                    x1={vFrom.position.x} y1={vFrom.position.y}
+                    x2={vTo.position.x} y2={vTo.position.y}
+                    stroke="transparent" strokeWidth="6"
+                  />
+                  {/* Axe visible */}
+                  <line
+                    x1={vFrom.position.x} y1={vFrom.position.y}
+                    x2={vTo.position.x} y2={vTo.position.y}
+                    stroke={dynamicStyle.color}
+                    strokeWidth={dynamicStyle.strokeWidth}
+                    class="svg-transition group-hover:stroke-[4px]"
+                    style={{ opacity: dynamicStyle.opacity }}
+                  />
+                  {/* Label Axe */}
+                  <rect
+                    x={midX - 14} y={midY - 3}
+                    width="28" height="6"
+                    rx="3"
+                    fill="white"
+                    class={`svg-transition shadow-sm border border-stone-200 ${isExplorer ? 'group-hover:border-teal-400' : ''}`}
+                    style={{ opacity: isEthique && isRedZone ? 0.3 : dynamicStyle.opacity }}
+                  />
+                  <text
+                    x={midX} y={midY + 1}
+                    textAnchor="middle"
+                    fontSize="2.5"
+                    fontFamily="sans-serif"
+                    fontWeight="700"
+                    fill={isExplorer ? '#444' : dynamicStyle.color}
+                    class={`svg-transition ${isExplorer ? 'group-hover:fill-teal-700' : ''}`}
+                    pointerEvents="none"
+                    style={{ opacity: isEthique && isRedZone ? 0.3 : dynamicStyle.opacity }}
+                  >
+                    {axis.label}
+                  </text>
+                </g>
+              );
+            })}
+
+            {/* Noeud Central IA */}
+            <g class={`svg-transition ${isRedZone ? 'animate-pulse-fast' : ''}`}
+              style={{ transform: `scale(${isRedZone ? 1.8 : 1.0})`, transformOrigin: '50% 55%' }}>
+              <circle
+                cx={iaCenter.x} cy={iaCenter.y}
+                r="6"
+                fill={isRedZone ? '#EF4444' : '#7C3AED'}
+                class="svg-transition shadow-lg"
+              />
+              <text
+                x={iaCenter.x} y={iaCenter.y + 1.5}
+                textAnchor="middle"
+                fill="white"
+                fontSize="4"
+                fontWeight="bold"
+                pointerEvents="none"
+              >
+                IA
+              </text>
+            </g>
+
+            {/* Sommets (Humains & Savoir) */}
+            {vertices.map(v => (
+              <g key={v.id}
+                onClick={() => isExplorer && onVertexClick(v)}
+                onKeyDown={(e) => { if (e.key === 'Enter' && isExplorer) onVertexClick(v); }}
+                class={`svg-transition ${isExplorer ? 'cursor-pointer group' : ''}`}
+                style={{ opacity: isRedZone ? 0.3 : 1 }}
+                tabIndex={isExplorer ? 0 : -1}
+                role={isExplorer ? "button" : undefined}
+                aria-label={v.label}>
+                <circle
+                  cx={v.position.x} cy={v.position.y}
+                  r="7"
+                  fill="white"
+                  stroke={v.color}
+                  strokeWidth="0.5"
+                  class={`svg-transition drop-shadow-lg ${isExplorer ? 'group-hover:scale-[1.12]' : ''}`}
+                />
+                <foreignObject
+                  x={v.position.x - 4} y={v.position.y - 4}
+                  width="8" height="8"
+                  class={`svg-transition pointer-events-none drop-shadow-md ${isExplorer ? 'group-hover:scale-[1.12]' : ''}`}
+                >
+                  <div xmlns="http://www.w3.org/1999/xhtml" class="w-full h-full text-current pointer-events-none" style={{ color: v.color }} dangerouslySetInnerHTML={{ __html: v.icon }} />
+                </foreignObject>
+                <rect
+                  x={v.position.x - 10} y={v.position.y + 8.5}
+                  width="20" height="5"
+                  rx="2"
+                  fill="rgba(255,255,255,0.9)"
+                />
+                <text
+                  x={v.position.x} y={v.position.y + 12}
+                  textAnchor="middle"
+                  fontSize="3"
+                  fontWeight="bold"
+                  fill="#1E1B4B"
+                  pointerEvents="none"
+                >
+                  {v.label}
+                </text>
+              </g>
+            ))}
+          </svg>
+
+          {/* Overlay textuel rouge en zone rouge */}
+          {isRedZone && activeTab === 'ethique' && (
+            <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
+              <span class="bg-red-600/90 text-white px-6 py-2 rounded-full font-serif text-2xl tracking-wide rotate-[-5deg] shadow-xl animate-pulse backdrop-blur-sm border border-red-400">
+                Enseigner en se trahissant
+              </span>
+            </div>
+          )}
+        </div>
+      );
+    };
+
+    // --- App Principale ---
+
+    const ScenarioForm = ({ onSave, onCancel, level }) => {
+      const [title, setTitle] = useState('');
+      const [iaRole, setIaRole] = useState('');
+      const [humanRole, setHumanRole] = useState('');
+      const [axes, setAxes] = useState({ "ens-sav": 0.5, "ens-elev": 0.5, "elev-sav": 0.5 });
+      const [isGenerating, setIsGenerating] = useState(false);
+      const [apiError, setApiError] = useState('');
+
+      const handleGenerate = async () => {
+        setApiError('');
+        if (!title) {
+          alert("Veuillez entrer un titre de situation d'abord.");
+          return;
+        }
+        setIsGenerating(true);
+        try {
+          const response = await fetch('/api/generate-scenario', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ title: title, level: level })
+          });
+          const data = await response.json();
+          if (response.ok) {
+            setIaRole(data.ia_role || '');
+            setHumanRole(data.human_role || '');
+            if (data.axes) {
+              setAxes(data.axes);
+            }
+          } else {
+            setApiError(data.error || data.message || "Erreur lors de la génération avec l'IA.");
+          }
+        } catch (error) {
+          console.error("Erreur lors de la génération avec l'IA:", error);
+          setApiError("Erreur de connexion au serveur. Assurez-vous d'avoir démarré le backend (node server.js).");
+        } finally {
+          setIsGenerating(false);
+        }
+      };
+
+      const handleSubmit = (e) => {
+        e.preventDefault();
+        onSave({
+          id: `custom-scenario-${Date.now()}`,
+          title: title || 'Nouvelle Situation',
+          axes_activation: axes,
+          ia_role: iaRole || 'Rôle de l\'IA à définir',
+          human_role: humanRole || 'Rôle de l\'humain à définir'
+        });
+      };
+
+      return (
+        <div class="w-full max-w-2xl mx-auto mt-8 bg-white/80 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/80 p-6 md:p-8 animate-[slideIn_0.3s_ease-out]">
+          <h3 class="font-serif tracking-wide text-2xl text-dark mb-6 text-center">Créer une Situation Terrain</h3>
+          {apiError && (
+            <div class="mb-4 p-3 bg-red-50 border border-red-200 rounded-xl text-sm text-red-700 flex items-start gap-2">
+              <svg class="w-5 h-5 shrink-0 mt-0.5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+              <span>{apiError}</span>
+            </div>
+          )}
+          <form onSubmit={handleSubmit} class="space-y-6">
+            <div>
+              <label class="block text-sm font-bold text-stone-600 mb-2">Titre de la situation</label>
+              <div class="flex flex-col sm:flex-row gap-3">
+                <input type="text" required value={title} onChange={e => setTitle(e.target.value)} class="flex-1 w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-600" placeholder="Ex: Gérer un conflit dans la cour..." />
+                <button type="button" onClick={handleGenerate} disabled={isGenerating || !title} class={`px-4 py-2 rounded-xl font-medium flex items-center justify-center gap-2 transition-colors ${isGenerating || !title ? 'bg-stone-100 text-stone-400 cursor-not-allowed' : 'bg-violet-100 text-violet-700 hover:bg-violet-200 border border-violet-200'}`}>
+                  {isGenerating ? (
+                    <svg class="animate-spin h-5 w-5 text-violet-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                  ) : (
+                    <span>✨</span>
+                  )}
+                  {isGenerating ? 'Génération...' : 'Générer avec l\'IA'}
+                </button>
+              </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+              <div>
+                <label class="block text-sm font-bold text-violet-800 mb-2 flex items-center gap-2"><span class="text-xl">🤖</span> Rôle de l'IA</label>
+                <textarea required value={iaRole} onChange={e => setIaRole(e.target.value)} rows="3" class="w-full bg-violet-50/50 border border-violet-200 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-violet-600 text-sm" placeholder="Ce que fait l'algorithme..."></textarea>
+              </div>
+              <div>
+                <label class="block text-sm font-bold text-teal-800 mb-2 flex items-center gap-2"><span class="text-xl">👤</span> Rôle Humain</label>
+                <textarea required value={humanRole} onChange={e => setHumanRole(e.target.value)} rows="3" class="w-full bg-teal-50/50 border border-teal-200 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-600 text-sm" placeholder="Votre expertise et intuition..."></textarea>
+              </div>
+            </div>
+
+            <div class="bg-stone-50 p-5 rounded-xl border border-stone-200">
+              <h4 class="text-sm font-bold text-stone-600 mb-4 text-center">Activation des Axes Pédagogiques</h4>
+              <div class="space-y-4">
+                {[
+                  { id: 'ens-sav', label: 'Enseignant ↔ Savoir (Préparation)', color: 'accent-violet-600' },
+                  { id: 'ens-elev', label: 'Enseignant ↔ Élève (Relation)', color: 'accent-teal-600' },
+                  { id: 'elev-sav', label: 'Élève ↔ Savoir (Apprentissage)', color: 'accent-blue-600' }
+                ].map(axe => (
+                  <div key={axe.id} class="flex items-center gap-4">
+                    <label class="text-xs font-semibold text-stone-500 w-1/2 text-right">{axe.label}</label>
+                    <input
+                      type="range" min="0" max="1" step="0.1"
+                      value={axes[axe.id]}
+                      onChange={e => setAxes({ ...axes, [axe.id]: parseFloat(e.target.value) })}
+                      class={`w-1/2 h-2 rounded-lg appearance-none bg-stone-200 cursor-pointer ${axe.color}`}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div class="flex justify-end gap-3 pt-4 border-t border-stone-100">
+              <button type="button" onClick={onCancel} class="px-5 py-2 text-stone-600 font-medium hover:bg-stone-100 rounded-xl transition-colors">Annuler</button>
+              <button type="submit" class="px-5 py-2 bg-teal-600 text-white font-medium hover:bg-teal-700 rounded-xl shadow-sm transition-colors">Enregistrer & Découvrir</button>
+            </div>
+          </form>
+        </div>
+      );
+    };
+
+    const App = () => {
+      const [activeLevel, setActiveLevel] = useState('primaire');
+      const [activeTab, setActiveTab] = useState('explorer');
+      const [openPanel, setOpenPanel] = useState(null); // { type: 'vertex'|'axis', data }
+      const [isAddingScenario, setIsAddingScenario] = useState(false);
+      const [ethicsValue, setEthicsValue] = useState(45); // défaut dans recommende
+      const [showSources, setShowSources] = useState(false);
+
+      // Données du niveau actif
+      const levelData = DATA_BY_LEVEL[activeLevel];
+      const activeVertices = levelData.vertices;
+      const activeAxes = levelData.axes;
+      const activeEthicsZones = levelData.ethicsZones;
+
+      const [scenarios, setScenarios] = useState(levelData.scenarios);
+      const [activeScenario, setActiveScenario] = useState(levelData.scenarios[0]);
+
+      // Reset état lors du changement de niveau
+      useEffect(() => {
+        const ld = DATA_BY_LEVEL[activeLevel];
+        setScenarios(ld.scenarios);
+        setActiveScenario(ld.scenarios[0]);
+        setOpenPanel(null);
+        setIsAddingScenario(false);
+        setEthicsValue(45);
+      }, [activeLevel]);
+
+      // Reset état lors du changement de tab
+      useEffect(() => {
+        setOpenPanel(null);
+      }, [activeTab]);
+
+      const activeEthicsZone = useMemo(() => {
+        let zone = activeEthicsZones.find(z => ethicsValue >= z.min && ethicsValue <= z.max);
+        return zone || activeEthicsZones[3];
+      }, [ethicsValue, activeEthicsZones]);
+
+      const isOvercompensation = ethicsValue > 60;
+      const isRedZone = ethicsValue > 85;
+
+      return (
+        <div class="flex flex-col min-h-screen">
+          <Header activeTab={activeTab} setActiveTab={setActiveTab} activeLevel={activeLevel} setActiveLevel={setActiveLevel} />
+          <RegulationBanner level={activeLevel} />
+
+          <main class="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 flex flex-col items-center relative overflow-hidden">
+
+            {/* Haut : Sélecteur si mode Situations */}
+            {activeTab === 'situations' && !isAddingScenario && (
+              <ScenarioSelector
+                scenarios={scenarios}
+                activeScenario={activeScenario}
+                onScenarioChange={(id) => setActiveScenario(scenarios.find(s => s.id === id))}
+                onAddScenario={() => setIsAddingScenario(true)}
+              />
+            )}
+
+            {/* Formulaire de création si actif */}
+            {activeTab === 'situations' && isAddingScenario && (
+              <ScenarioForm
+                level={activeLevel}
+                onCancel={() => setIsAddingScenario(false)}
+                onSave={(newScenario) => {
+                  setScenarios([...scenarios, newScenario]);
+                  setActiveScenario(newScenario);
+                  setIsAddingScenario(false);
+                }}
+              />
+            )}
+
+            {/* Texte d'aide en mode Explorer */}
+            {activeTab === 'explorer' && !openPanel && (
+              <p class="text-center text-sm text-stone-400 mt-2 animate-[slideIn_0.5s_ease-out]">Cliquez sur un sommet ou un axe du triangle pour explorer les rôles de l'IA et de l'humain.</p>
+            )}
+
+            {/* Milieu : Triangle (masqué quand formulaire ouvert) */}
+            {!(activeTab === 'situations' && isAddingScenario) && (
+              <TriangleSVG
+                activeTab={activeTab}
+                activeScenario={activeScenario}
+                ethicsValue={ethicsValue}
+                isRedZone={isRedZone}
+                vertices={activeVertices}
+                axes={activeAxes}
+                ethicsZones={activeEthicsZones}
+                onVertexClick={(v) => setOpenPanel({ type: 'vertex', data: v })}
+                onAxisClick={(a) => setOpenPanel({ type: 'axis', data: a })}
+              />
+            )}
+
+            {/* Bas : Description Situation */}
+            {activeTab === 'situations' && !isAddingScenario && (
+              <ScenarioDetail scenario={activeScenario} />
+            )}
+
+            {/* Bas : Slider Ethique */}
+            {activeTab === 'ethique' && (
+              <div class="flex flex-col w-full">
+                <EthicsSlider value={ethicsValue} onChange={setEthicsValue} activeZone={activeEthicsZone} />
+                <div class="relative h-48 w-full transition-all duration-300">
+                  <OvercompensationAlert isVisible={isOvercompensation} />
+                </div>
+              </div>
+            )}
+
+            {/* Mode Explorer - Pannel de détail */}
+            <PanelContainer isOpen={!!openPanel} onClose={() => setOpenPanel(null)}>
+              {openPanel?.type === 'vertex' && <VertexDetail data={openPanel.data} onClose={() => setOpenPanel(null)} />}
+              {openPanel?.type === 'axis' && <AxisDetail data={openPanel.data} onClose={() => setOpenPanel(null)} vertices={activeVertices} />}
+            </PanelContainer>
+
+          </main>
+
+          <Footer onOpenSources={() => setShowSources(true)} />
+          <SourcesModal isOpen={showSources} onClose={() => setShowSources(false)} />
+        </div>
+      );
+    };
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+
+</html>
