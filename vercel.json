@@ -1,9 +1,6 @@
 {
-  "buildCommand": false,
-  "installCommand": "npm install",
-  "functions": {
-    "api/generate-scenario.js": {
-      "maxDuration": 30
-    }
-  }
+  "version": 2,
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api/$1" }
+  ]
 }
