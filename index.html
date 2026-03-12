@@ -196,6 +196,56 @@
       </footer>
     );
 
+    const SourcesModal = ({ isOpen, onClose }) => {
+      if (!isOpen) return null;
+      return (
+        <div class="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div class="absolute inset-0 bg-dark/30 backdrop-blur-md transition-opacity" onClick={onClose}></div>
+          <div class="bg-white/90 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/60 w-full max-w-2xl max-h-[90vh] overflow-y-auto relative p-6 sm:p-8 animate-[slideIn_0.2s_ease-out]">
+            <div class="flex justify-between items-center mb-6">
+              <h2 class="text-2xl font-serif text-dark">Sources Scientifiques</h2>
+              <button onClick={onClose} class="text-stone-400 hover:text-stone-600 p-2 rounded-full hover:bg-stone-100 transition-colors" aria-label="Fermer">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+              </button>
+            </div>
+            <div class="space-y-6">
+              <div>
+                <h3 class="text-xs font-bold text-teal-600 uppercase tracking-widest mb-3 flex items-center gap-2">
+                  <div class="w-2 h-4 bg-teal-600 rounded-full"></div>
+                  Cadres théoriques et recherche
+                </h3>
+                <ul class="space-y-4">
+                  {REFERENCES.validated.map((ref, idx) => (
+                    <li key={idx} class="p-4 bg-white rounded-xl border-l-4 border-teal-600 shadow-sm">
+                      <div class="font-bold text-dark">{ref.author} ({ref.year})</div>
+                      <div class="italic text-stone-700 mb-1">{ref.title}</div>
+                      <div class="text-sm text-stone-600 leading-tight">{ref.detail}</div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div>
+                <h3 class="text-xs font-bold text-corail-600 uppercase tracking-widest mb-3 flex items-center gap-2">
+                  <div class="w-2 h-4 bg-corail-600 rounded-full"></div>
+                  Observations de terrain (non validées)
+                </h3>
+                <ul class="space-y-4">
+                  {REFERENCES.original.map((ref, idx) => (
+                    <li key={idx} class="p-4 bg-orange-50/50 border-l-4 border-corail-600 rounded-xl">
+                      <div class="font-bold text-dark">{ref.author} ({ref.year})</div>
+                      <div class="italic text-stone-700 mb-1">{ref.title}</div>
+                      <div class="text-sm text-stone-600 leading-tight">{ref.detail}</div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    };
+
     const MistralConfigModal = ({ isOpen, onClose }) => {
       const [apiKey, setApiKey] = useState('');
       const [saved, setSaved] = useState(false);
