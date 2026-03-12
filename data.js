@@ -120,9 +120,7 @@ window.DATA_BY_LEVEL = {
           "L'intuition pédagogique face à un enfant en détresse",
           "La gestion des émotions et des conflits dans la classe",
           "La construction du lien de confiance élève-adulte",
-          "Le repérage de ce qu'aucun algorithme ne voit : le non-dit",
-          "⏱️ La capacité à transformer du temps gagné en temps pédagogique utile — observer, écouter, ajuster"
-        ],
+          "Le repérage de ce qu'aucun algorithme ne voit : le non-dit"],
         terrain_example: "Quand un enfant de CP pleure parce qu'il ne comprend pas, aucune IA ne peut s'asseoir à côté de lui et lui dire : 'Regarde, on va reprendre ensemble'. L'empathie n'est pas automatisable — surtout à 6 ans.",
         cta: { label: "Mes prompts pour enseignants", url: "https://maprofbranchee.fr/mes-prompts-enseignants/" }
       },
@@ -139,9 +137,7 @@ window.DATA_BY_LEVEL = {
           "La construction du sens par le jeu et l'interaction entre pairs",
           "L'erreur comme levier d'apprentissage — pas de correction automatique",
           "La mémorisation par la répétition active et le vécu corporel",
-          "L'éveil de la curiosité et du plaisir d'apprendre",
-          "⏱️ La capacité à transformer du temps gagné en temps pédagogique utile — observer, écouter, ajuster"
-        ],
+          "L'éveil de la curiosité et du plaisir d'apprendre"],
         terrain_example: "En CP, on apprend à lire en touchant des lettres, en chantant des syllabes, en jouant avec les mots. Aucune IA ne remplace le moment où un enfant déchiffre son premier mot et que toute la classe applaudit.",
         cta: { label: "Lire l'article sur IA et mémorisation", url: "https://maprofbranchee.fr/ia-memorisation/" }
       }
@@ -222,9 +218,7 @@ window.DATA_BY_LEVEL = {
           "Construire la progressivité entre la 6e et la 5e",
           "Choisir les œuvres et supports qui parlent à SES élèves",
           "Articuler les programmes entre disciplines (interdisciplinarité)",
-          "Évaluer la cohérence pédagogique dans le cadre du cycle",
-          "⏱️ La capacité à transformer du temps gagné en temps pédagogique utile — observer, écouter, ajuster"
-        ],
+          "Évaluer la cohérence pédagogique dans le cadre du cycle"],
         terrain_example: "En 6e, mes élèves arrivent avec des niveaux très différents du primaire. L'IA m'aide à créer rapidement 3 parcours de révision en maths. Mais c'est moi qui observe qui a besoin de quoi, et qui adapte le rythme de chacun.",
         cta: { label: "Outils IA pour le collège", url: "https://maprofbranchee.fr/outils-ia/" }
       },
@@ -241,9 +235,7 @@ window.DATA_BY_LEVEL = {
           "Gérer les dynamiques de groupe propres à la préadolescence",
           "Repérer le décrochage scolaire derrière les comportements",
           "Construire une posture d'autorité éducative et de confiance",
-          "Le dialogue avec les familles sur les sujets sensibles",
-          "⏱️ La capacité à transformer du temps gagné en temps pédagogique utile — observer, écouter, ajuster"
-        ],
+          "Le dialogue avec les familles sur les sujets sensibles"],
         terrain_example: "En 6e, un élève qui ne rend plus ses devoirs, ce n'est pas un problème d'organisation — c'est souvent un signal. L'IA peut m'alerter sur la baisse de résultats, mais c'est moi qui prends le temps de comprendre ce qui se passe.",
         cta: { label: "Mes prompts pour enseignants", url: "https://maprofbranchee.fr/mes-prompts-enseignants/" }
       },
@@ -260,9 +252,7 @@ window.DATA_BY_LEVEL = {
           "La compréhension profonde au-delà de la mémorisation",
           "Le développement du raisonnement logique et de l'abstraction",
           "La collaboration entre pairs (travail de groupe, tutorat)",
-          "La métacognition : apprendre à apprendre",
-          "⏱️ La capacité à transformer du temps gagné en temps pédagogique utile — observer, écouter, ajuster"
-        ],
+          "La métacognition : apprendre à apprendre"],
         terrain_example: "En 5e, mes élèves utilisent des flashcards que j'ai générées avec l'IA et imprimées. Ils ne touchent pas d'IA, mais ils bénéficient d'exercices parfaitement calibrés. L'IA est derrière le rideau, l'apprentissage est devant.",
         cta: { label: "Lire l'article sur IA et mémorisation", url: "https://maprofbranchee.fr/ia-memorisation/" }
       }
@@ -343,9 +333,7 @@ window.DATA_BY_LEVEL = {
           "Former les élèves à l'esprit critique face aux réponses générées",
           "Distinguer quand l'IA aide l'apprentissage vs quand elle le court-circuite",
           "Accompagner l'appropriation personnelle des contenus générés",
-          "Garantir que le travail évalué reflète les compétences de l'élève",
-          "⏱️ La capacité à transformer du temps gagné en temps pédagogique utile — observer, écouter, ajuster"
-        ],
+          "Garantir que le travail évalué reflète les compétences de l'élève"],
         terrain_example: "En 4e, j'autorise mes élèves à utiliser un chatbot pour reformuler un texte difficile. Mais je leur demande ensuite d'expliquer avec leurs propres mots ce qu'ils ont compris. L'IA reformule, l'élève s'approprie — ou pas.",
         cta: { label: "Guide IA pour les 4e-3e", url: "https://maprofbranchee.fr/outils-ia/" }
       },
@@ -362,9 +350,7 @@ window.DATA_BY_LEVEL = {
           "Poser le cadre éthique : plagiat, propriété intellectuelle, fiabilité",
           "Gérer les inégalités d'accès au numérique entre élèves",
           "Accompagner l'orientation avec une connaissance fine de l'élève",
-          "Maintenir l'exigence intellectuelle face à la facilité de l'IA",
-          "⏱️ La capacité à transformer du temps gagné en temps pédagogique utile — observer, écouter, ajuster"
-        ],
+          "Maintenir l'exigence intellectuelle face à la facilité de l'IA"],
         terrain_example: "Un élève de 3e me rend une dissertation parfaite — trop parfaite. Plutôt que d'accuser, je lui demande de m'expliquer sa démarche à l'oral. L'IA peut générer un texte, mais pas le regard de l'élève quand il défend ses idées.",
         cta: { label: "Mes prompts pour enseignants", url: "https://maprofbranchee.fr/mes-prompts-enseignants/" }
       },
@@ -381,9 +367,7 @@ window.DATA_BY_LEVEL = {
           "L'esprit critique face aux réponses de l'IA (vérification, croisement)",
           "La production personnelle : argumentation, expression, créativité",
           "La métacognition active : savoir ce qu'on sait vs ce qu'on croit savoir",
-          "L'appropriation des savoirs au-delà du copier-coller",
-          "⏱️ La capacité à transformer du temps gagné en temps pédagogique utile — observer, écouter, ajuster"
-        ],
+          "L'appropriation des savoirs au-delà du copier-coller"],
         terrain_example: "Un élève de 4e utilise un chatbot pour réviser les maths. L'IA lui donne la méthode, pas la réponse. Quand il se trompe, l'IA lui pose des questions au lieu de corriger. C'est l'erreur accompagnée — exactement ce que Dehaene recommande.",
         cta: { label: "Lire l'article sur IA et mémorisation", url: "https://maprofbranchee.fr/ia-memorisation/" }
       }
@@ -464,9 +448,7 @@ window.DATA_BY_LEVEL = {
           "Guider la construction d'une pensée personnelle au-delà de la synthèse IA",
           "Former à l'éthique de la citation et de l'appropriation intellectuelle",
           "Évaluer la qualité du raisonnement, pas seulement le résultat",
-          "Préparer les élèves à un monde professionnel transformé par l'IA",
-          "⏱️ La capacité à transformer du temps gagné en temps pédagogique utile — observer, écouter, ajuster"
-        ],
+          "Préparer les élèves à un monde professionnel transformé par l'IA"],
         terrain_example: "En Terminale, mes élèves utilisent l'IA pour structurer leur Grand Oral. Mais je leur interdis de lire un texte généré. L'IA aide à organiser les idées, l'élève doit les porter avec ses mots, son regard, sa conviction.",
         cta: { label: "IA au lycée : bonnes pratiques", url: "https://maprofbranchee.fr/outils-ia/" }
       },
@@ -483,9 +465,7 @@ window.DATA_BY_LEVEL = {
           "L'évaluation de la maturité du raisonnement, pas du style",
           "L'accompagnement à l'orientation post-bac (projet de vie)",
           "La transmission de la passion pour une discipline",
-          "Le dialogue sur l'éthique professionnelle face à l'IA",
-          "⏱️ La capacité à transformer du temps gagné en temps pédagogique utile — observer, écouter, ajuster"
-        ],
+          "Le dialogue sur l'éthique professionnelle face à l'IA"],
         terrain_example: "En prépa, un étudiant utilise l'IA pour synthétiser 20 articles de recherche. Je ne m'y oppose pas. Mais je lui demande : 'Et toi, qu'est-ce que tu en penses ? Quelle est ta thèse ?' L'IA compile, l'humain pense.",
         cta: { label: "Mes prompts pour enseignants", url: "https://maprofbranchee.fr/mes-prompts-enseignants/" }
       },
@@ -502,9 +482,7 @@ window.DATA_BY_LEVEL = {
           "La créativité et l'innovation au-delà de la prédiction statistique",
           "Le jugement éthique et la responsabilité intellectuelle",
           "Le transfert de connaissances à des situations inédites",
-          "La construction d'un projet intellectuel et professionnel personnel",
-          "⏱️ La capacité à transformer du temps gagné en temps pédagogique utile — observer, écouter, ajuster"
-        ],
+          "La construction d'un projet intellectuel et professionnel personnel"],
         terrain_example: "Une étudiante utilise l'IA pour synthétiser 30 pages de cours en fiches. C'est utile. Mais quand je lui demande de résoudre un problème inédit avec ces connaissances, c'est là que l'apprentissage réel se révèle — ou pas.",
         cta: { label: "Lire l'article sur IA et mémorisation", url: "https://maprofbranchee.fr/ia-memorisation/" }
       }
@@ -639,3 +617,8 @@ window.VERTICES = window.DATA_BY_LEVEL["primaire"].vertices;
 window.AXES = window.DATA_BY_LEVEL["primaire"].axes;
 window.SCENARIOS = window.DATA_BY_LEVEL["primaire"].scenarios;
 window.ETHICS_ZONES = window.DATA_BY_LEVEL["primaire"].ethicsZones;
+
+window.TRANSVERSAL_HUMAN = {
+  emoji: "⏱️",
+  text: "La capacité à transformer du temps gagné en temps pédagogique utile — observer, écouter, ajuster"
+};

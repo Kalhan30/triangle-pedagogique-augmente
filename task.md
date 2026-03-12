@@ -1,18 +1,24 @@
-# Task Checklist - App Updates (on D:)
+# Task Checklist - App Updates (Mistral Integration)
 
-- [x] **Preparation**
-    - [x] Review current `index.html` and `data.js` structure
-- [x] **Data Model Updates**
-    - [x] Update `data.js` with `DEAD_POLE`
-    - [x] Update `data.js` with `SCENARIO_DEAD_POLES`
-    - [x] Update `data.js` with `NEURO_BOXES`
-    - [x] Update `window.REFERENCES` to `REFERENCES_UPDATED` structure
-- [ ] **UI & Data Synchronization**
-    - [/] Sync `SCENARIO_DEAD_POLES` IDs with actual scenarios in `DATA_BY_LEVEL`
-    - [/] Refine `TriangleSVG` "mort" pôle detection logic
-    - [ ] Update Sources Modal styles (border-l, colors)
-    - [ ] Final check of Ethics Mode messages and OvercompensationAlert
-    - [ ] Add 6th item to `human_only` lists if missing in any level
+- [ ] **Preparation**
+    - [x] Review `CORRECTIFS-Triangle-Mistral.md`
+- [ ] **Data Model Cleanup (`data.js`)**
+    - [ ] Remove duplicated `⏱️` items from all levels/axes
+    - [ ] Add `window.TRANSVERSAL_HUMAN` constant
+- [ ] **UI Fixes (`index.html`)**
+    - [ ] Replace `bleu` Tailwind classes with hex values
+    - [ ] Update Open Graph meta tags to absolute URLs
+- [ ] **Mistral AI Integration (`index.html`)**
+    - [ ] Add `MistralConfigModal` component
+    - [ ] Add settings icon (⚙️) to `Header`
+    - [ ] Update `App` state to manage Mistral config modal
+    - [ ] Update `ScenarioForm` to handle custom `dead_pole` state
+    - [ ] Rewrite `handleGenerate` in `ScenarioForm` for direct Mistral API call
+    - [ ] Update `AxisDetail` to show the transversal human principle
+- [ ] **Deployment**
+    - [ ] Copy updated files to `public/`
+    - [ ] Push changes to GitHub
 - [ ] **Verification**
-    - [ ] Use browser to verify all changes
-    - [ ] Test scenario creation and automatic "dead pole" detection (if applicable)
+    - [ ] Verify Mistral configuration storage
+    - [ ] Test scenario generation with a valid API key (if possible)
+    - [ ] Verify UI consistency and "dead pole" visual feedback for custom scenarios
