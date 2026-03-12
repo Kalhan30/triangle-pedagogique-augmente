@@ -194,15 +194,39 @@
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
               </button>
             </div>
-            <ul class="space-y-4">
-              {REFERENCES.map((ref, idx) => (
-                <li key={idx} class="p-4 bg-stone-50 rounded-lg border border-stone-100">
-                  <div class="font-bold text-dark">{ref.author} ({ref.year})</div>
-                  <div class="italic text-stone-700 mb-1">{ref.title}</div>
-                  <div class="text-sm text-stone-600">{ref.detail}</div>
-                </li>
-              ))}
-            </ul>
+            <div class="space-y-6">
+              <div>
+                <h3 class="text-xs font-bold text-teal-600 uppercase tracking-widest mb-3 flex items-center gap-2">
+                  <div class="w-2 h-4 bg-teal-600 rounded-full"></div>
+                  Cadres théoriques et recherche
+                </h3>
+                <ul class="space-y-4">
+                  {REFERENCES.validated.map((ref, idx) => (
+                    <li key={idx} class="p-4 bg-white rounded-xl border-l-4 border-teal-600 shadow-sm">
+                      <div class="font-bold text-dark">{ref.author} ({ref.year})</div>
+                      <div class="italic text-stone-700 mb-1">{ref.title}</div>
+                      <div class="text-sm text-stone-600 leading-tight">{ref.detail}</div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div>
+                <h3 class="text-xs font-bold text-corail-600 uppercase tracking-widest mb-3 flex items-center gap-2">
+                  <div class="w-2 h-4 bg-corail-600 rounded-full"></div>
+                  Observations de terrain (non validées)
+                </h3>
+                <ul class="space-y-4">
+                  {REFERENCES.original.map((ref, idx) => (
+                    <li key={idx} class="p-4 bg-orange-50/50 border-l-4 border-corail-600 rounded-xl">
+                      <div class="font-bold text-dark">{ref.author} ({ref.year})</div>
+                      <div class="italic text-stone-700 mb-1">{ref.title}</div>
+                      <div class="text-sm text-stone-600 leading-tight">{ref.detail}</div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       );
@@ -297,7 +321,31 @@
             </div>
           </div>
 
-          <div class="bg-stone-50 border-l-4 border-corail-600 p-5 rounded-r-xl mb-6 flex-1">
+          {/* Pôle en retrait section */}
+          {window.DEAD_POLE[data.id] && (
+            <div class="bg-stone-100 border-l-4 border-corail-600 p-5 rounded-r-xl mb-6">
+              <h3 class="font-bold text-corail-900 mb-2 flex items-center gap-2">
+                <span class="text-lg">⚠️</span> {window.DEAD_POLE[data.id].title}
+              </h3>
+              <p class="text-sm text-stone-700 leading-relaxed italic">
+                {window.DEAD_POLE[data.id].text}
+              </p>
+            </div>
+          )}
+
+          {/* Neuro point section */}
+          {window.NEURO_BOXES[data.id] && (
+            <div class="bg-bleu-50 border-l-4 border-bleu-600 p-5 rounded-r-xl mb-6 shadow-sm">
+              <h3 class="font-bold text-bleu-900 mb-2 flex items-center gap-2">
+                {window.NEURO_BOXES[data.id].title}
+              </h3>
+              <p class="text-sm text-stone-700 leading-relaxed">
+                {window.NEURO_BOXES[data.id].text}
+              </p>
+            </div>
+          )}
+
+          <div class="bg-stone-50 border-l-4 border-stone-300 p-5 rounded-r-xl mb-6 flex-1">
             <div class="text-xs font-bold text-stone-400 uppercase tracking-widest mb-2 flex items-center gap-2">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /></svg>
               Exemple terrain
@@ -372,6 +420,17 @@
             <p class="text-teal-800 text-sm leading-relaxed relative z-10">{scenario.human_role}</p>
           </div>
         </div>
+
+        {/* Pôle en retrait dans le scénario */}
+        {window.SCENARIO_DEAD_POLES[scenario.id] && (
+          <div class="mt-6 p-5 bg-stone-100 border border-stone-200 rounded-2xl flex items-start gap-4">
+            <div class="text-2xl mt-1">⚠️</div>
+            <div>
+              <h4 class="font-bold text-stone-700 text-sm uppercase tracking-wider mb-1">Pôle en retrait</h4>
+              <p class="text-stone-600 text-sm leading-relaxed italic">{window.SCENARIO_DEAD_POLES[scenario.id]}</p>
+            </div>
+          </div>
+        )}
       </div>
     );
 
@@ -434,6 +493,9 @@
             </div>
             <div class="mt-5 p-3 bg-white/60 rounded-lg text-sm font-bold text-corail-900 border border-corail-200 relative z-10">
               {OVERCOMPENSATION_LOOP.conclusion}
+            </div>
+            <div class="mt-3 text-[10px] text-stone-500 italic text-center opacity-70">
+              Concept original (V. Le Scolan, 2025) — observation de terrain issue de 200+ enseignants formés, non encore validée par une étude contrôlée.
             </div>
           </div>
         </div>
@@ -580,48 +642,59 @@
             </g>
 
             {/* Sommets (Humains & Savoir) */}
-            {vertices.map(v => (
-              <g key={v.id}
-                onClick={() => isExplorer && onVertexClick(v)}
-                onKeyDown={(e) => { if (e.key === 'Enter' && isExplorer) onVertexClick(v); }}
-                class={`svg-transition ${isExplorer ? 'cursor-pointer group' : ''}`}
-                style={{ opacity: isRedZone ? 0.3 : 1 }}
-                tabIndex={isExplorer ? 0 : -1}
-                role={isExplorer ? "button" : undefined}
-                aria-label={v.label}>
-                <circle
-                  cx={v.position.x} cy={v.position.y}
-                  r="7"
-                  fill="white"
-                  stroke={v.color}
-                  strokeWidth="0.5"
-                  class={`svg-transition drop-shadow-lg ${isExplorer ? 'group-hover:scale-[1.12]' : ''}`}
-                />
-                <foreignObject
-                  x={v.position.x - 4} y={v.position.y - 4}
-                  width="8" height="8"
-                  class={`svg-transition pointer-events-none drop-shadow-md ${isExplorer ? 'group-hover:scale-[1.12]' : ''}`}
-                >
-                  <div xmlns="http://www.w3.org/1999/xhtml" class="w-full h-full text-current pointer-events-none" style={{ color: v.color }} dangerouslySetInnerHTML={{ __html: v.icon }} />
-                </foreignObject>
-                <rect
-                  x={v.position.x - 10} y={v.position.y + 8.5}
-                  width="20" height="5"
-                  rx="2"
-                  fill="rgba(255,255,255,0.9)"
-                />
-                <text
-                  x={v.position.x} y={v.position.y + 12}
-                  textAnchor="middle"
-                  fontSize="3"
-                  fontWeight="bold"
-                  fill="#1E1B4B"
-                  pointerEvents="none"
-                >
-                  {v.label}
-                </text>
-              </g>
-            ))}
+            {vertices.map(v => {
+               const scenarioDeadText = window.SCENARIO_DEAD_POLES[activeScenario.id] || "";
+               const isDeadInSituation = isSituations && activeScenario && (
+                 (scenarioDeadText.includes('Élève fait le mort') && v.id === 'eleve') ||
+                 (scenarioDeadText.includes('Savoir fait le mort') && v.id === 'savoir') ||
+                 (scenarioDeadText.includes('Enseignant fait le mort') && v.id === 'enseignant') ||
+                 (scenarioDeadText.includes('Enseignant fait partiellement le mort') && v.id === 'enseignant')
+               );
+
+              return (
+                <g key={v.id}
+                  onClick={() => isExplorer && onVertexClick(v)}
+                  onKeyDown={(e) => { if (e.key === 'Enter' && isExplorer) onVertexClick(v); }}
+                  class={`svg-transition ${isExplorer ? 'cursor-pointer group' : ''}`}
+                  style={{ opacity: isRedZone ? 0.3 : (isDeadInSituation ? 0.4 : 1) }}
+                  tabIndex={isExplorer ? 0 : -1}
+                  role={isExplorer ? "button" : undefined}
+                  aria-label={v.label}>
+                  <circle
+                    cx={v.position.x} cy={v.position.y}
+                    r="7"
+                    fill="white"
+                    stroke={v.color}
+                    strokeWidth="0.5"
+                    strokeDasharray={isDeadInSituation ? "2 2" : "none"}
+                    class={`svg-transition drop-shadow-lg ${isExplorer ? 'group-hover:scale-[1.12]' : ''}`}
+                  />
+                  <foreignObject
+                    x={v.position.x - 4} y={v.position.y - 4}
+                    width="8" height="8"
+                    class={`svg-transition pointer-events-none drop-shadow-md ${isExplorer ? 'group-hover:scale-[1.12]' : ''}`}
+                  >
+                    <div xmlns="http://www.w3.org/1999/xhtml" class="w-full h-full text-current pointer-events-none" style={{ color: v.color }} dangerouslySetInnerHTML={{ __html: v.icon }} />
+                  </foreignObject>
+                  <rect
+                    x={v.position.x - 10} y={v.position.y + 8.5}
+                    width="20" height="5"
+                    rx="2"
+                    fill="rgba(255,255,255,0.9)"
+                  />
+                  <text
+                    x={v.position.x} y={v.position.y + 12}
+                    textAnchor="middle"
+                    fontSize="3"
+                    fontWeight="bold"
+                    fill="#1E1B4B"
+                    pointerEvents="none"
+                  >
+                    {v.label}
+                  </text>
+                </g>
+              );
+            })}
           </svg>
 
           {/* Overlay textuel rouge en zone rouge */}
