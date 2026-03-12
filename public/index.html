@@ -104,7 +104,7 @@
             class={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 flex items-center gap-1.5 border ${
               activeLevel === level.id
                 ? 'text-white shadow-lg scale-105 border-transparent'
-                : 'bg-white/60 backdrop-blur-md text-stone-600 hover:bg-white/90 border-white/60 hover:shadow-md'
+                : 'bg-white/60 backdrop-blur-md text-slate-700 hover:bg-white/90 border-white/60 hover:shadow-md font-semibold'
             }`}
             style={activeLevel === level.id ? { backgroundColor: level.color, borderColor: level.color } : {}}
           >
@@ -140,7 +140,7 @@
               <h1 class="font-serif italic text-2xl lg:text-3xl text-dark tracking-wide leading-tight">
                 Triangle Pédagogique Augmenté
               </h1>
-              <p class="text-xs sm:text-sm text-stone-500 font-medium tracking-wide hidden sm:block">Enseigner sans se trahir — comprendre où l'IA amplifie et où l'humain est irremplaçable</p>
+              <p class="text-xs sm:text-sm text-slate-600 font-medium tracking-wide hidden sm:block">Enseigner sans se trahir — comprendre où l'IA amplifie et où l'humain est irremplaçable</p>
             </div>
             <button
               onClick={onOpenMistralConfig}
@@ -171,9 +171,9 @@
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                class={`pb-3 px-1 text-sm font-semibold border-b-2 transition-all duration-300 ${activeTab === tab.id
+                class={`pb-3 px-1 text-sm font-bold border-b-2 transition-all duration-300 ${activeTab === tab.id
                   ? 'border-teal-600 text-teal-600'
-                  : 'border-transparent text-stone-400 hover:text-stone-600 hover:border-stone-200'
+                  : 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300'
                   }`}
               >
                 {tab.label}
@@ -182,7 +182,7 @@
           </div>
         ) : (
           <div class="max-w-7xl mx-auto px-4 py-2 text-center">
-             <span class="text-xs font-bold text-teal-600 uppercase tracking-widest animate-pulse"> Commencez par choisir un niveau scolaire ci-dessus 👆</span>
+             <span class="text-xs font-bold text-teal-700 uppercase tracking-[0.15em] animate-pulse"> Commencez par choisir un niveau scolaire ci-dessus 👆</span>
           </div>
         )}
       </header>
@@ -193,10 +193,10 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center text-sm text-stone-500 gap-4">
           <p>Cadre : Triangle de Houssaye (1988) augmenté par V. Le Scolan (2025)</p>
           <div class="flex items-center gap-4">
-            <button onClick={onOpenSources} class="hover:text-teal-600 underline underline-offset-2 transition-colors">
+            <button onClick={onOpenSources} class="hover:text-teal-700 font-medium underline underline-offset-2 transition-colors">
               Sources scientifiques
             </button>
-            <span>&copy; <a href="https://maprofbranchee.fr" class="hover:text-teal-600" target="_blank">MaProfBranchee</a></span>
+            <span>&copy; <a href="https://maprofbranchee.fr" class="hover:text-teal-700 font-medium" target="_blank">MaProfBranchee</a></span>
           </div>
         </div>
       </footer>
@@ -209,8 +209,8 @@
           <div class="absolute inset-0 bg-dark/30 backdrop-blur-md transition-opacity" onClick={onClose}></div>
           <div class="bg-white/90 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/60 w-full max-w-2xl max-h-[90vh] overflow-y-auto relative p-6 sm:p-8 animate-[slideIn_0.2s_ease-out]">
             <div class="flex justify-between items-center mb-6">
-              <h2 class="text-2xl font-serif text-dark">Sources Scientifiques</h2>
-              <button onClick={onClose} class="text-stone-400 hover:text-stone-600 p-2 rounded-full hover:bg-stone-100 transition-colors" aria-label="Fermer">
+              <h2 class="text-2xl font-serif text-slate-900">Sources Scientifiques</h2>
+              <button onClick={onClose} class="text-slate-400 hover:text-slate-600 p-2 rounded-full hover:bg-stone-100 transition-colors" aria-label="Fermer">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
               </button>
             </div>
@@ -351,9 +351,9 @@
         <React.Fragment>
           <div class="flex items-center gap-4 mb-6">
             <div class="w-12 h-12 flex-shrink-0 filter drop-shadow-md" style={{ color: data.color }} dangerouslySetInnerHTML={{ __html: data.icon }}></div>
-            <h2 class="text-3xl font-serif text-dark tracking-wide">{data.label}</h2>
+            <h2 class="text-3xl font-serif text-slate-900 tracking-wide">{data.label}</h2>
           </div>
-          <p class="text-lg text-stone-600 leading-relaxed mb-8">{data.description}</p>
+          <p class="text-lg text-slate-700 leading-relaxed mb-8">{data.description}</p>
           <div class="bg-teal-50 border-l-4 border-teal-600 p-5 rounded-r-xl mb-auto">
             <p class="italic text-teal-900 font-medium">« {data.citation} »</p>
           </div>
@@ -373,12 +373,12 @@
       return (
         <React.Fragment>
           <div class="mb-6">
-            <div class="flex items-center gap-2 text-sm font-medium text-stone-500 mb-2 uppercase tracking-wide">
+            <div class="flex items-center gap-2 text-sm font-bold text-slate-500 mb-2 uppercase tracking-widest">
               <span>{vFrom.label}</span>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
               <span>{vTo.label}</span>
             </div>
-            <h2 class="text-3xl font-serif text-dark">{data.label}</h2>
+            <h2 class="text-3xl font-serif text-slate-900">{data.label}</h2>
           </div>
 
           <div class="flex flex-col sm:flex-row gap-4 mb-6">
@@ -441,11 +441,11 @@
           )}
 
           <div class="bg-stone-50 border-l-4 border-stone-300 p-5 rounded-r-xl mb-6 flex-1">
-            <div class="text-xs font-bold text-stone-400 uppercase tracking-widest mb-2 flex items-center gap-2">
+            <div class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 flex items-center gap-2">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /></svg>
               Exemple terrain
             </div>
-            <p class="text-sm text-stone-700 italic leading-relaxed">« {data.terrain_example} »</p>
+            <p class="text-sm text-slate-700 italic leading-relaxed">« {data.terrain_example} »</p>
           </div>
 
           <div class="mt-auto flex flex-col gap-3">
@@ -467,7 +467,7 @@
     const ScenarioSelector = ({ scenarios, activeScenario, onScenarioChange, onAddScenario }) => (
       <div class="w-full max-w-lg mx-auto mb-8 animate-[slideIn_0.3s_ease-out]">
         <div class="flex flex-col sm:flex-row justify-between items-center mb-2 gap-2">
-          <label htmlFor="scenario-select" class="block text-sm font-bold text-stone-500 uppercase tracking-widest text-center sm:text-left">
+          <label htmlFor="scenario-select" class="block text-sm font-bold text-slate-500 uppercase tracking-widest text-center sm:text-left">
             Choisissez une situation terrain
           </label>
           <button
@@ -531,10 +531,10 @@
 
     const EthicsSlider = ({ value, onChange, activeZone }) => (
       <div class="w-full max-w-2xl mx-auto mt-4 mb-10 px-4 animate-[slideIn_0.3s_ease-out]">
-        <label class="block text-center text-xs font-bold text-teal-600 uppercase tracking-[0.2em] mb-4 animate-pulse">
+        <label class="block text-center text-xs font-bold text-teal-700 uppercase tracking-[0.2em] mb-4 animate-pulse">
            Ajustez la place de l'IA avec le curseur ↓
         </label>
-        <div class="flex justify-between text-xs font-bold text-stone-400 mb-2 px-1 uppercase tracking-widest">
+        <div class="flex justify-between text-xs font-bold text-slate-500 mb-2 px-1 uppercase tracking-widest">
           <span>0%</span>
           <span>50%</span>
           <span>100%</span>
@@ -564,11 +564,11 @@
         </div>
 
         <div class="p-5 rounded-xl border transition-colors duration-300" style={{ backgroundColor: activeZone.bgColor, borderColor: `color-mix(in srgb, ${activeZone.bgColor} 80%, black)` }}>
-          <h3 class="font-bold mb-1 flex items-center gap-2 text-dark">
+          <h3 class="font-bold mb-1 flex items-center gap-2 text-slate-900">
             {activeZone.label}
-            {activeZone.label.includes('RECOMMANDÉ') && <span class="bg-teal-600 text-white text-xs px-2 py-0.5 rounded-full">✓ Vise ça</span>}
+            {activeZone.label.includes('RECOMMANDÉ') && <span class="bg-teal-700 text-white text-xs px-2 py-0.5 rounded-full">✓ Vise ça</span>}
           </h3>
-          <p class="text-sm text-stone-700 leading-relaxed font-medium">{activeZone.message}</p>
+          <p class="text-sm text-slate-800 leading-relaxed font-semibold">{activeZone.message}</p>
         </div>
       </div>
     );
