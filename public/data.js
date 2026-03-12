@@ -101,7 +101,8 @@ window.DATA_BY_LEVEL = {
           "Adapter au contexte local et au vécu des jeunes élèves",
           "Choisir la progression en fonction du rythme et de la maturité du groupe",
           "Prioriser selon les besoins observés au quotidien",
-          "Valider la conformité aux programmes officiels du cycle"
+          "Valider la conformité aux programmes officiels du cycle",
+          "⏱️ La capacité à transformer du temps gagné en temps pédagogique utile — observer, écouter, ajuster"
         ],
         terrain_example: "En CE2, j'utilise l'IA pour générer 3 niveaux de différenciation sur une leçon de grammaire. L'IA me propose les variantes en 2 minutes. Mais c'est moi qui décide laquelle colle à ma classe, à mes élèves, à ce qu'on a fait la semaine dernière.",
         cta: { label: "Découvrir la méthode CRAFT", url: "https://maprofbranchee.fr/outils-ia/" }
@@ -119,7 +120,8 @@ window.DATA_BY_LEVEL = {
           "L'intuition pédagogique face à un enfant en détresse",
           "La gestion des émotions et des conflits dans la classe",
           "La construction du lien de confiance élève-adulte",
-          "Le repérage de ce qu'aucun algorithme ne voit : le non-dit"
+          "Le repérage de ce qu'aucun algorithme ne voit : le non-dit",
+          "⏱️ La capacité à transformer du temps gagné en temps pédagogique utile — observer, écouter, ajuster"
         ],
         terrain_example: "Quand un enfant de CP pleure parce qu'il ne comprend pas, aucune IA ne peut s'asseoir à côté de lui et lui dire : 'Regarde, on va reprendre ensemble'. L'empathie n'est pas automatisable — surtout à 6 ans.",
         cta: { label: "Mes prompts pour enseignants", url: "https://maprofbranchee.fr/mes-prompts-enseignants/" }
@@ -137,7 +139,8 @@ window.DATA_BY_LEVEL = {
           "La construction du sens par le jeu et l'interaction entre pairs",
           "L'erreur comme levier d'apprentissage — pas de correction automatique",
           "La mémorisation par la répétition active et le vécu corporel",
-          "L'éveil de la curiosité et du plaisir d'apprendre"
+          "L'éveil de la curiosité et du plaisir d'apprendre",
+          "⏱️ La capacité à transformer du temps gagné en temps pédagogique utile — observer, écouter, ajuster"
         ],
         terrain_example: "En CP, on apprend à lire en touchant des lettres, en chantant des syllabes, en jouant avec les mots. Aucune IA ne remplace le moment où un enfant déchiffre son premier mot et que toute la classe applaudit.",
         cta: { label: "Lire l'article sur IA et mémorisation", url: "https://maprofbranchee.fr/ia-memorisation/" }
@@ -145,46 +148,46 @@ window.DATA_BY_LEVEL = {
     }),
     scenarios: [
       {
-        id: "dictee-ce1", title: "Préparer une dictée différenciée en CE1",
+        id: "eval-maths-ce2", title: "Préparer une évaluation CE2 en maths",
         axes_activation: { "ens-sav": 0.9, "ens-elev": 0.3, "elev-sav": 0.5 },
-        ia_role: "L'IA génère 3 versions de la dictée (soutien, consolidation, approfondissement), adaptées aux compétences phonologiques ciblées et à la progression de la période.",
-        human_role: "L'enseignant sélectionne les mots selon les sons étudiés, adapte la longueur au profil de chaque groupe et prépare les aides visuelles pour les élèves fragiles."
+        ia_role: "L'IA génère des exercices adaptés aux attendus de fin de cycle et propose une grille de correction automatique.",
+        human_role: "L'enseignant valide la pertinence pédagogique, ajuste la longueur et prévoit les aides pour les élèves fragiles."
       },
       {
-        id: "sciences-cm1", title: "Créer des supports visuels en sciences CM1",
-        axes_activation: { "ens-sav": 0.8, "ens-elev": 0.2, "elev-sav": 0.6 },
-        ia_role: "L'IA propose des schémas légendés, des expériences pas à pas et des fiches de synthèse illustrées sur les états de la matière.",
-        human_role: "L'enseignant valide la rigueur scientifique, choisit les supports adaptés à ses élèves et orchestre la séance d'observation et de manipulation."
+        id: "differenciation-allophone", title: "Différencier pour un élève allophone",
+        axes_activation: { "ens-sav": 0.7, "ens-elev": 0.9, "elev-sav": 0.6 },
+        ia_role: "L'IA traduit les consignes et propose des aides visuelles spécifiques pour faciliter l'accès au sens.",
+        human_role: "L'enseignant accompagne l'intégration dans la classe, gère l'aspect émotionnel et vérifie la compréhension réelle."
       },
       {
-        id: "besoins-particuliers", title: "Adapter une évaluation pour un élève à besoins particuliers",
-        axes_activation: { "ens-sav": 0.7, "ens-elev": 0.8, "elev-sav": 0.5 },
-        ia_role: "L'IA reformule les consignes en langage simplifié, ajoute des aides visuelles et propose des exercices réduits adaptés au tiers-temps.",
-        human_role: "L'enseignant connaît le PPS/PAP de l'élève, ajuste les attentes en fonction du handicap et observe les réactions pendant l'évaluation."
+        id: "revision-espacee", title: "Animer une séance de révision espacée",
+        axes_activation: { "ens-sav": 0.5, "ens-elev": 0.4, "elev-sav": 0.9 },
+        ia_role: "L'IA planifie les rappels et propose des flashcards basées sur les erreurs précédentes des élèves.",
+        human_role: "L'enseignant orchestre la séance, encourage les progrès et s'assure que l'automatisme ne remplace pas le sens."
       },
       {
-        id: "geometrie-cm2", title: "Structurer une séquence de géométrie CM2",
-        axes_activation: { "ens-sav": 0.9, "ens-elev": 0.4, "elev-sav": 0.7 },
-        ia_role: "L'IA génère une séquence complète : situation de découverte, exercices d'entraînement, évaluation sommative, avec progression du concret vers l'abstrait.",
-        human_role: "L'enseignant adapte les situations-problèmes au vécu de la classe, choisit le matériel de manipulation et décide de la durée de chaque phase."
+        id: "reunion-parents", title: "Préparer une réunion parents",
+        axes_activation: { "ens-sav": 0.4, "ens-elev": 0.9, "elev-sav": 0.3 },
+        ia_role: "L'IA aide à structurer le discours et à préparer des fiches de suivi claires pour chaque famille.",
+        human_role: "L'enseignant porte le lien de confiance, nuance les propos et ancre l'échange dans le vécu de l'enfant."
       },
       {
-        id: "rallye-lecture", title: "Préparer un rallye lecture personnalisé CE2",
-        axes_activation: { "ens-sav": 0.6, "ens-elev": 0.5, "elev-sav": 0.8 },
-        ia_role: "L'IA propose des questionnaires de compréhension différenciés pour 10 albums, avec des niveaux de difficulté progressifs.",
-        human_role: "L'enseignant sélectionne les livres selon les goûts et niveaux de ses élèves, organise les rotations et valorise les progrès individuels."
+        id: "sequence-interdisciplinaire", title: "Construire une séquence interdisciplinaire",
+        axes_activation: { "ens-sav": 0.9, "ens-elev": 0.6, "elev-sav": 0.7 },
+        ia_role: "L'IA propose des ponts entre les disciplines et structure les activités transversales.",
+        human_role: "L'enseignant garantit la cohérence des apprentissages et l'équilibre entre les différents objectifs."
       },
       {
-        id: "problemes-cp", title: "Concevoir une séance de résolution de problèmes CP",
-        axes_activation: { "ens-sav": 0.7, "ens-elev": 0.6, "elev-sav": 0.9 },
-        ia_role: "L'IA crée des problèmes contextualisés (monnaie, partages, mesures) avec des illustrations et des supports de manipulation.",
-        human_role: "L'enseignant observe les stratégies de résolution, relance par le questionnement et accompagne le passage du concret à la représentation."
+        id: "difficulte-lecture", title: "Accompagner un élève en difficulté de lecture",
+        axes_activation: { "ens-sav": 0.6, "ens-elev": 0.8, "elev-sav": 0.9 },
+        ia_role: "L'IA propose des textes à niveau de lecture adapté et offre une aide à la fluence en temps réel.",
+        human_role: "L'enseignant observe les blocages, rassure l'élève et maintient le plaisir de lire malgré l'effort."
       }
     ],
     ethicsZones: [
       { min: 0, max: 25, bgColor: "#DCFCE7", label: "IA minimale", message: "L'enseignant utilise occasionnellement l'IA pour des tâches isolées (mise en forme, correction). Les élèves n'ont aucun contact direct avec l'IA générative.", iaStrokeWidth: 1, iaDashArray: "4 4" },
-      { min: 25, max: 60, bgColor: "#CCFBF1", label: "IA partenaire — RECOMMANDÉ", message: "L'assistant invisible — l'IA aide l'enseignant à préparer et différencier. Les élèves bénéficient indirectement de supports mieux adaptés. L'enseignant reste le pilote.", iaStrokeWidth: 2, iaDashArray: "none" },
-      { min: 60, max: 85, bgColor: "#FFF7ED", label: "IA dominante — Attention", message: "L'enseignant délègue trop : séquences entières générées sans adaptation, évaluations copiées-collées. Risque de perte de contact avec les besoins réels des jeunes élèves.", iaStrokeWidth: 4, iaDashArray: "none" },
+      { min: 25, max: 60, bgColor: "#CCFBF1", label: "IA partenaire — RECOMMANDÉ", message: "L'assistant invisible — l'IA assiste sur la préparation et la différenciation. L'enseignant reste le pilote. C'est la zone d'équilibre : l'IA amplifie sans remplacer. Le temps gagné n'est un vrai gain que s'il est réinvesti dans l'observation des élèves, la relation pédagogique ou la réflexion sur sa pratique — pas dans davantage de production.", iaStrokeWidth: 2, iaDashArray: "none" },
+      { min: 60, max: 85, bgColor: "#FFF7ED", label: "IA dominante — Attention", message: "L'enseignant délègue trop : séquences entières générées sans adaptation, évaluations copiées-collées. Risque de perte de contact avec les besoins réels des jeunes élèves. Du point de vue du Triangle : quand l'IA domine, ce n'est plus l'enseignant qui choisit quel pôle fait le mort — c'est l'algorithme qui décide à sa place. La tension pédagogique n'est plus un choix professionnel conscient, elle devient une conséquence subie.", iaStrokeWidth: 4, iaDashArray: "none" },
       { min: 85, max: 100, bgColor: "#FEE2E2", label: "IA totale — ZONE ROUGE", message: "L'enseignant ne conçoit plus rien. Les séquences, évaluations et remédiations sont entièrement générées. Le triangle s'effondre : la relation humaine, essentielle en primaire, disparaît.", iaStrokeWidth: 8, iaDashArray: "none" }
     ]
   },
@@ -219,7 +222,8 @@ window.DATA_BY_LEVEL = {
           "Construire la progressivité entre la 6e et la 5e",
           "Choisir les œuvres et supports qui parlent à SES élèves",
           "Articuler les programmes entre disciplines (interdisciplinarité)",
-          "Évaluer la cohérence pédagogique dans le cadre du cycle"
+          "Évaluer la cohérence pédagogique dans le cadre du cycle",
+          "⏱️ La capacité à transformer du temps gagné en temps pédagogique utile — observer, écouter, ajuster"
         ],
         terrain_example: "En 6e, mes élèves arrivent avec des niveaux très différents du primaire. L'IA m'aide à créer rapidement 3 parcours de révision en maths. Mais c'est moi qui observe qui a besoin de quoi, et qui adapte le rythme de chacun.",
         cta: { label: "Outils IA pour le collège", url: "https://maprofbranchee.fr/outils-ia/" }
@@ -237,7 +241,8 @@ window.DATA_BY_LEVEL = {
           "Gérer les dynamiques de groupe propres à la préadolescence",
           "Repérer le décrochage scolaire derrière les comportements",
           "Construire une posture d'autorité éducative et de confiance",
-          "Le dialogue avec les familles sur les sujets sensibles"
+          "Le dialogue avec les familles sur les sujets sensibles",
+          "⏱️ La capacité à transformer du temps gagné en temps pédagogique utile — observer, écouter, ajuster"
         ],
         terrain_example: "En 6e, un élève qui ne rend plus ses devoirs, ce n'est pas un problème d'organisation — c'est souvent un signal. L'IA peut m'alerter sur la baisse de résultats, mais c'est moi qui prends le temps de comprendre ce qui se passe.",
         cta: { label: "Mes prompts pour enseignants", url: "https://maprofbranchee.fr/mes-prompts-enseignants/" }
@@ -255,7 +260,8 @@ window.DATA_BY_LEVEL = {
           "La compréhension profonde au-delà de la mémorisation",
           "Le développement du raisonnement logique et de l'abstraction",
           "La collaboration entre pairs (travail de groupe, tutorat)",
-          "La métacognition : apprendre à apprendre"
+          "La métacognition : apprendre à apprendre",
+          "⏱️ La capacité à transformer du temps gagné en temps pédagogique utile — observer, écouter, ajuster"
         ],
         terrain_example: "En 5e, mes élèves utilisent des flashcards que j'ai générées avec l'IA et imprimées. Ils ne touchent pas d'IA, mais ils bénéficient d'exercices parfaitement calibrés. L'IA est derrière le rideau, l'apprentissage est devant.",
         cta: { label: "Lire l'article sur IA et mémorisation", url: "https://maprofbranchee.fr/ia-memorisation/" }
@@ -301,8 +307,8 @@ window.DATA_BY_LEVEL = {
     ],
     ethicsZones: [
       { min: 0, max: 25, bgColor: "#DCFCE7", label: "IA minimale", message: "L'enseignant utilise ponctuellement l'IA pour des tâches isolées. Les élèves de 6e-5e ne sont pas exposés à l'IA générative, conformément au cadre MEN.", iaStrokeWidth: 1, iaDashArray: "4 4" },
-      { min: 25, max: 60, bgColor: "#CCFBF1", label: "IA partenaire — RECOMMANDÉ", message: "L'enseignant utilise l'IA régulièrement pour préparer, différencier et suivre ses élèves. L'IA reste invisible pour les élèves de ce niveau. Zone d'équilibre.", iaStrokeWidth: 2, iaDashArray: "none" },
-      { min: 60, max: 85, bgColor: "#FFF7ED", label: "IA dominante — Attention", message: "L'enseignant génère trop de contenus sans adaptation. Risque de standardisation des cours et de perte de l'adaptation fine aux besoins de la transition primaire-collège.", iaStrokeWidth: 4, iaDashArray: "none" },
+      { min: 25, max: 60, bgColor: "#CCFBF1", label: "IA partenaire — RECOMMANDÉ", message: "L'assistant invisible — l'IA assiste sur la préparation et la différenciation. L'enseignant reste le pilote. C'est la zone d'équilibre : l'IA amplifie sans remplacer. Le temps gagné n'est un vrai gain que s'il est réinvesti dans l'observation des élèves, la relation pédagogique ou la réflexion sur sa pratique — pas dans davantage de production.", iaStrokeWidth: 2, iaDashArray: "none" },
+      { min: 60, max: 85, bgColor: "#FFF7ED", label: "IA dominante — Attention", message: "L'enseignant génère trop de contenus sans adaptation. Risque de standardisation des cours et de perte de l'adaptation fine aux besoins de la transition primaire-collège. Du point de vue du Triangle : quand l'IA domine, ce n'est plus l'enseignant qui choisit quel pôle fait le mort — c'est l'algorithme qui décide à sa place. La tension pédagogique n'est plus un choix professionnel conscient, elle devient une conséquence subie.", iaStrokeWidth: 4, iaDashArray: "none" },
       { min: 85, max: 100, bgColor: "#FEE2E2", label: "IA totale — ZONE ROUGE", message: "L'enseignant n'a plus de prise sur ses cours. Tout est généré, rien n'est contextualisé. L'accompagnement humain de la transition disparaît. Le triangle s'effondre.", iaStrokeWidth: 8, iaDashArray: "none" }
     ]
   },
@@ -337,7 +343,8 @@ window.DATA_BY_LEVEL = {
           "Former les élèves à l'esprit critique face aux réponses générées",
           "Distinguer quand l'IA aide l'apprentissage vs quand elle le court-circuite",
           "Accompagner l'appropriation personnelle des contenus générés",
-          "Garantir que le travail évalué reflète les compétences de l'élève"
+          "Garantir que le travail évalué reflète les compétences de l'élève",
+          "⏱️ La capacité à transformer du temps gagné en temps pédagogique utile — observer, écouter, ajuster"
         ],
         terrain_example: "En 4e, j'autorise mes élèves à utiliser un chatbot pour reformuler un texte difficile. Mais je leur demande ensuite d'expliquer avec leurs propres mots ce qu'ils ont compris. L'IA reformule, l'élève s'approprie — ou pas.",
         cta: { label: "Guide IA pour les 4e-3e", url: "https://maprofbranchee.fr/outils-ia/" }
@@ -355,7 +362,8 @@ window.DATA_BY_LEVEL = {
           "Poser le cadre éthique : plagiat, propriété intellectuelle, fiabilité",
           "Gérer les inégalités d'accès au numérique entre élèves",
           "Accompagner l'orientation avec une connaissance fine de l'élève",
-          "Maintenir l'exigence intellectuelle face à la facilité de l'IA"
+          "Maintenir l'exigence intellectuelle face à la facilité de l'IA",
+          "⏱️ La capacité à transformer du temps gagné en temps pédagogique utile — observer, écouter, ajuster"
         ],
         terrain_example: "Un élève de 3e me rend une dissertation parfaite — trop parfaite. Plutôt que d'accuser, je lui demande de m'expliquer sa démarche à l'oral. L'IA peut générer un texte, mais pas le regard de l'élève quand il défend ses idées.",
         cta: { label: "Mes prompts pour enseignants", url: "https://maprofbranchee.fr/mes-prompts-enseignants/" }
@@ -373,7 +381,8 @@ window.DATA_BY_LEVEL = {
           "L'esprit critique face aux réponses de l'IA (vérification, croisement)",
           "La production personnelle : argumentation, expression, créativité",
           "La métacognition active : savoir ce qu'on sait vs ce qu'on croit savoir",
-          "L'appropriation des savoirs au-delà du copier-coller"
+          "L'appropriation des savoirs au-delà du copier-coller",
+          "⏱️ La capacité à transformer du temps gagné en temps pédagogique utile — observer, écouter, ajuster"
         ],
         terrain_example: "Un élève de 4e utilise un chatbot pour réviser les maths. L'IA lui donne la méthode, pas la réponse. Quand il se trompe, l'IA lui pose des questions au lieu de corriger. C'est l'erreur accompagnée — exactement ce que Dehaene recommande.",
         cta: { label: "Lire l'article sur IA et mémorisation", url: "https://maprofbranchee.fr/ia-memorisation/" }
@@ -419,8 +428,8 @@ window.DATA_BY_LEVEL = {
     ],
     ethicsZones: [
       { min: 0, max: 25, bgColor: "#DCFCE7", label: "IA minimale", message: "L'IA n'est presque pas utilisée. Les élèves de 4e-3e pourraient bénéficier d'une introduction encadrée, conformément au cadre MEN qui l'autorise à partir de la 4e.", iaStrokeWidth: 1, iaDashArray: "4 4" },
-      { min: 25, max: 60, bgColor: "#CCFBF1", label: "IA partenaire — RECOMMANDÉ", message: "L'IA est utilisée de manière encadrée : l'enseignant prépare avec l'IA et guide les élèves dans des activités supervisées. Formation à l'esprit critique active.", iaStrokeWidth: 2, iaDashArray: "none" },
-      { min: 60, max: 85, bgColor: "#FFF7ED", label: "IA dominante — Attention", message: "Les élèves utilisent l'IA sans cadrage suffisant. Risque : les productions sont 'assistées' sans réelle appropriation. L'évaluation ne mesure plus les compétences réelles.", iaStrokeWidth: 4, iaDashArray: "none" },
+      { min: 25, max: 60, bgColor: "#CCFBF1", label: "IA partenaire — RECOMMANDÉ", message: "L'assistant invisible — l'IA assiste sur la préparation et la différenciation. L'enseignant reste le pilote. C'est la zone d'équilibre : l'IA amplifie sans remplacer. Le temps gagné n'est un vrai gain que s'il est réinvesti dans l'observation des élèves, la relation pédagogique ou la réflexion sur sa pratique — pas dans davantage de production.", iaStrokeWidth: 2, iaDashArray: "none" },
+      { min: 60, max: 85, bgColor: "#FFF7ED", label: "IA dominante — Attention", message: "Les élèves utilisent l'IA sans cadrage suffisant. Risque : les productions sont 'assistées' sans réelle appropriation. L'évaluation ne mesure plus les compétences réelles. Du point de vue du Triangle : quand l'IA domine, ce n'est plus l'enseignant qui choisit quel pôle fait le mort — c'est l'algorithme qui décide à sa place. La tension pédagogique n'est plus un choix professionnel conscient, elle devient une conséquence subie.", iaStrokeWidth: 4, iaDashArray: "none" },
       { min: 85, max: 100, bgColor: "#FEE2E2", label: "IA totale — ZONE ROUGE", message: "Les élèves délèguent tout à l'IA. Plus d'effort cognitif, plus de construction personnelle. Le DNB se prépare par copier-coller. L'apprentissage est une illusion.", iaStrokeWidth: 8, iaDashArray: "none" }
     ]
   },
@@ -455,7 +464,8 @@ window.DATA_BY_LEVEL = {
           "Guider la construction d'une pensée personnelle au-delà de la synthèse IA",
           "Former à l'éthique de la citation et de l'appropriation intellectuelle",
           "Évaluer la qualité du raisonnement, pas seulement le résultat",
-          "Préparer les élèves à un monde professionnel transformé par l'IA"
+          "Préparer les élèves à un monde professionnel transformé par l'IA",
+          "⏱️ La capacité à transformer du temps gagné en temps pédagogique utile — observer, écouter, ajuster"
         ],
         terrain_example: "En Terminale, mes élèves utilisent l'IA pour structurer leur Grand Oral. Mais je leur interdis de lire un texte généré. L'IA aide à organiser les idées, l'élève doit les porter avec ses mots, son regard, sa conviction.",
         cta: { label: "IA au lycée : bonnes pratiques", url: "https://maprofbranchee.fr/outils-ia/" }
@@ -473,7 +483,8 @@ window.DATA_BY_LEVEL = {
           "L'évaluation de la maturité du raisonnement, pas du style",
           "L'accompagnement à l'orientation post-bac (projet de vie)",
           "La transmission de la passion pour une discipline",
-          "Le dialogue sur l'éthique professionnelle face à l'IA"
+          "Le dialogue sur l'éthique professionnelle face à l'IA",
+          "⏱️ La capacité à transformer du temps gagné en temps pédagogique utile — observer, écouter, ajuster"
         ],
         terrain_example: "En prépa, un étudiant utilise l'IA pour synthétiser 20 articles de recherche. Je ne m'y oppose pas. Mais je lui demande : 'Et toi, qu'est-ce que tu en penses ? Quelle est ta thèse ?' L'IA compile, l'humain pense.",
         cta: { label: "Mes prompts pour enseignants", url: "https://maprofbranchee.fr/mes-prompts-enseignants/" }
@@ -491,7 +502,8 @@ window.DATA_BY_LEVEL = {
           "La créativité et l'innovation au-delà de la prédiction statistique",
           "Le jugement éthique et la responsabilité intellectuelle",
           "Le transfert de connaissances à des situations inédites",
-          "La construction d'un projet intellectuel et professionnel personnel"
+          "La construction d'un projet intellectuel et professionnel personnel",
+          "⏱️ La capacité à transformer du temps gagné en temps pédagogique utile — observer, écouter, ajuster"
         ],
         terrain_example: "Une étudiante utilise l'IA pour synthétiser 30 pages de cours en fiches. C'est utile. Mais quand je lui demande de résoudre un problème inédit avec ces connaissances, c'est là que l'apprentissage réel se révèle — ou pas.",
         cta: { label: "Lire l'article sur IA et mémorisation", url: "https://maprofbranchee.fr/ia-memorisation/" }
@@ -537,8 +549,8 @@ window.DATA_BY_LEVEL = {
     ],
     ethicsZones: [
       { min: 0, max: 25, bgColor: "#DCFCE7", label: "IA minimale", message: "L'IA est ignorée alors que les élèves l'utilisent hors classe. Risque de déconnexion entre l'école et la réalité. Les élèves n'apprennent pas à l'utiliser de manière éthique et critique.", iaStrokeWidth: 1, iaDashArray: "4 4" },
-      { min: 25, max: 60, bgColor: "#CCFBF1", label: "IA partenaire — RECOMMANDÉ", message: "L'IA est intégrée comme outil dans un cadre clair. Les élèves apprennent à vérifier, critiquer et s'approprier les productions IA. La pensée critique est au cœur de la démarche.", iaStrokeWidth: 2, iaDashArray: "none" },
-      { min: 60, max: 85, bgColor: "#FFF7ED", label: "IA dominante — Attention", message: "L'IA produit la majorité du travail. Dissertations, synthèses et projets sont générés sans réelle réflexion personnelle. L'évaluation ne mesure plus les compétences réelles de l'élève.", iaStrokeWidth: 4, iaDashArray: "none" },
+      { min: 25, max: 60, bgColor: "#CCFBF1", label: "IA partenaire — RECOMMANDÉ", message: "L'assistant invisible — l'IA assiste sur la préparation et la différenciation. L'enseignant reste le pilote. C'est la zone d'équilibre : l'IA amplifie sans remplacer. Le temps gagné n'est un vrai gain que s'il est réinvesti dans l'observation des élèves, la relation pédagogique ou la réflexion sur sa pratique — pas dans davantage de production.", iaStrokeWidth: 2, iaDashArray: "none" },
+      { min: 60, max: 85, bgColor: "#FFF7ED", label: "IA dominante — Attention", message: "L'IA produit la majority du travail. Dissertations, synthèses et projets sont générés sans réelle réflexion personnelle. L'évaluation ne mesure plus les compétences réelles de l'élève. Du point de vue du Triangle : quand l'IA domine, ce n'est plus l'enseignant qui choisit quel pôle fait le mort — c'est l'algorithme qui décide à sa place. La tension pédagogique n'est plus un choix professionnel conscient, elle devient une conséquence subie.", iaStrokeWidth: 4, iaDashArray: "none" },
       { min: 85, max: 100, bgColor: "#FEE2E2", label: "IA totale — ZONE ROUGE", message: "L'IA remplace l'effort intellectuel. Grand Oral récité, mémoire généré, pensée critique absente. Le diplôme ne certifie plus rien. La formation perd tout son sens.", iaStrokeWidth: 8, iaDashArray: "none" }
     ]
   }
@@ -546,14 +558,23 @@ window.DATA_BY_LEVEL = {
 
 // --- Données partagées (identiques pour tous les niveaux) ---
 
-window.REFERENCES = [
-  { author: "Houssaye, J.", year: 1988, title: "Le Triangle pédagogique", detail: "Modèle fondateur des relations Enseignant-Élève-Savoir" },
-  { author: "Dehaene, S.", year: 2018, title: "Apprendre ! Les talents du cerveau, le défi des machines", detail: "4 piliers de l'apprentissage : attention, engagement actif, retour sur erreur, consolidation" },
-  { author: "MEN", year: 2025, title: "Cadre d'usage de l'IA en éducation", detail: "IAG réservée enseignants en primaire, interdite élèves avant la 4e, usage encadré à partir de la 4e, autonome au lycée" },
-  { author: "UNESCO", year: 2024, title: "Compétences IA pour les enseignants", detail: "15 compétences en 5 dimensions : éthique, pédagogie, données, culture numérique, développement pro" },
-  { author: "Hattie, J.", year: 2009, title: "Visible Learning", detail: "Méta-analyse : le feedback a l'une des plus grandes tailles d'effet sur l'apprentissage" },
-  { author: "Anderson, L.W. & Krathwohl, D.R.", year: 2001, title: "Taxonomie de Bloom révisée", detail: "6 niveaux cognitifs : mémoriser, comprendre, appliquer, analyser, évaluer, créer" }
-];
+// --- Références mises à jour ---
+window.REFERENCES = {
+  validated: [
+    { author: "Houssaye, J.", year: 1988, title: "Le Triangle pédagogique", detail: "Modèle fondateur des relations Enseignant-Élève-Savoir et processus du « mort »" },
+    { author: "Dehaene, S.", year: 2018, title: "Apprendre ! Les talents du cerveau, le défi des machines", detail: "4 piliers : attention, engagement actif, retour sur erreur, consolidation" },
+    { author: "Sweller, J.", year: 1988, title: "Cognitive Load Theory", detail: "Charge intrinsèque, extrinsèque et germane — cadre pour optimiser les supports d'apprentissage" },
+    { author: "Slamecka, N.J. & Graf, P.", year: 1978, title: "The Generation Effect", detail: "L'effort de production améliore la mémorisation — implication directe sur l'usage de l'IA par l'enseignant" },
+    { author: "Anderson, L.W. & Krathwohl, D.R.", year: 2001, title: "Taxonomie de Bloom révisée", detail: "6 niveaux cognitifs : mémoriser, comprendre, appliquer, analyser, évaluer, créer" },
+    { author: "Hattie, J.", year: 2009, title: "Visible Learning", detail: "Méta-analyse : le feedback a l'une des plus grandes tailles d'effet sur l'apprentissage" },
+    { author: "MEN", year: 2025, title: "Cadre d'usage de l'IA en éducation", detail: "IA générative réservée enseignants, élèves à partir du CM1 uniquement" },
+    { author: "UNESCO", year: 2024, title: "Compétences IA pour les enseignants", detail: "15 compétences en 5 dimensions" }
+  ],
+  original: [
+    { author: "Le Scolan, V.", year: 2025, title: "La boucle de surcompensation", detail: "Observation de terrain (200+ enseignants formés) — non validée par étude contrôlée. Mécanisme : IA fait trop → illégitimité → surcompensation → épuisement → dépendance accrue.", isOriginal: true },
+    { author: "Le Scolan, V.", year: 2025, title: "Le Triangle Pédagogique Augmenté", detail: "Extension du modèle de Houssaye intégrant l'IA comme modulateur central. Cadre théorique original en cours de formalisation.", isOriginal: true }
+  ]
+};
 
 window.OVERCOMPENSATION_LOOP = {
   title: "⚠️ La boucle de surcompensation",
@@ -566,6 +587,51 @@ window.OVERCOMPENSATION_LOOP = {
     "Retour à l'étape 1 — la boucle se referme"
   ],
   conclusion: "La solution : rester dans la zone 'IA partenaire' (25-60%). L'IA amplifie, elle ne remplace pas."
+};
+
+// --- Le processus du "mort" par axe ---
+window.DEAD_POLE = {
+  "ens-sav": {
+    deadVertex: "eleve",
+    title: "Quand cet axe domine, l'Élève fait le mort",
+    text: "L'enseignant se concentre sur le savoir (préparation, programmation, didactique). L'élève est temporairement absent de la réflexion. C'est normal et nécessaire — mais si l'IA accélère tellement la préparation que l'enseignant ne pense plus à ses élèves concrets en préparant, le « mort » devient un oublié."
+  },
+  "ens-elev": {
+    deadVertex: "savoir",
+    title: "Quand cet axe domine, le Savoir fait le mort",
+    text: "L'enseignant se concentre sur la relation (écoute, accompagnement, gestion émotionnelle). Le contenu disciplinaire passe au second plan. L'IA peut maintenir un fil de rigueur disciplinaire pendant que l'enseignant gère l'humain — mais attention à ne pas vider la relation de tout contenu d'apprentissage."
+  },
+  "elev-sav": {
+    deadVertex: "enseignant",
+    title: "Quand cet axe domine, l'Enseignant fait le mort",
+    text: "L'élève est en prise directe avec le savoir (autonomie, exercices, révisions). L'enseignant s'efface. L'IA peut tenir ce rôle de tuteur individualisé — mais un algorithme ne repère pas que l'élève fait semblant de comprendre. Le « mort » ici, c'est le regard humain."
+  }
+};
+
+// --- Pôle en retrait par scénario ---
+window.SCENARIO_DEAD_POLES = {
+  "eval-maths-ce2": "L'Élève fait le mort — l'enseignant pense au programme, pas encore aux élèves concrets. L'IA aide à produire vite, mais c'est au moment de valider que l'enseignant doit « réveiller » l'élève dans sa tête.",
+  "differenciation-allophone": "Le Savoir disciplinaire fait le mort — l'attention est sur l'élève et ses besoins spécifiques. Vigilance : la différenciation ne doit pas vider l'exercice de son contenu d'apprentissage.",
+  "revision-espacee": "L'Enseignant fait le mort — l'élève travaille en autonomie avec l'outil. Le risque : confondre activité (l'élève clique) et apprentissage (l'élève comprend).",
+  "reunion-parents": "Le Savoir fait le mort — la communication porte sur la relation, pas sur les contenus. L'IA structure le discours, mais l'enseignant doit ancrer l'échange dans des faits d'apprentissage concrets.",
+  "sequence-interdisciplinaire": "Aucun pôle ne fait clairement le mort — c'est pourquoi ce type de séquence est le plus complexe. L'IA peut structurer les croisements, mais l'enseignant doit accepter que chaque séance privilégie un axe.",
+  "difficulte-lecture": "L'Enseignant fait partiellement le mort — l'élève est en prise directe avec le texte, accompagné par l'outil. Mais un outil de fluence ne détecte pas l'anxiété de lecture. L'enseignant doit rester en observation active."
+};
+
+// --- Encadrés neuro ---
+window.NEURO_BOXES = {
+  "elev-sav": {
+    title: "🧠 Point neuro : la charge cognitive",
+    text: "L'IA peut générer des exercices, des quiz, des reformulations. Mais respectent-ils la charge cognitive de l'élève ? Un exercice qui mélange texte, image et consigne orale surcharge la mémoire de travail (effet de redondance — Sweller). Un exercice trop guidé pour un élève avancé freine son apprentissage (effet d'expertise inversée). L'enseignant reste le seul à pouvoir évaluer si le contenu généré est cognitivement adapté à SES élèves.",
+    bgColor: "#EFF6FF",
+    borderColor: "#2563EB"
+  },
+  "ens-sav": {
+    title: "🧠 Point neuro : l'effet de génération",
+    text: "La recherche montre que l'effort cognitif investi dans la production d'un contenu améliore sa mémorisation et sa compréhension (effet de génération — Slamecka & Graf, 1978). Quand un enseignant construit lui-même sa séquence, il apprend quelque chose sur sa matière et sur ses élèves. Quand l'IA la génère à sa place, cet apprentissage professionnel disparaît. Le gain de temps est réel — mais le coût caché est une érosion progressive de l'expertise didactique.",
+    bgColor: "#EFF6FF",
+    borderColor: "#2563EB"
+  }
 };
 
 // --- Backward compatibility (défaut = primaire) ---
