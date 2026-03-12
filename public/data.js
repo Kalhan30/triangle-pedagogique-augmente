@@ -9,18 +9,18 @@ const ICON_SAVOIR = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="
 // --- Helpers de construction ---
 function buildVertices(overrides) {
   const base = [
-    { id: "enseignant", label: "Enseignant", icon: ICON_ENSEIGNANT, color: "#ec4899", position: { x: 50, y: 8 } },
-    { id: "eleve", label: "Élève", icon: ICON_ELEVE, color: "#06b6d4", position: { x: 15, y: 82 } },
-    { id: "savoir", label: "Savoir", icon: ICON_SAVOIR, color: "#f97316", position: { x: 85, y: 82 } }
+    { id: "enseignant", label: "Enseignant", icon: ICON_ENSEIGNANT, color: "#be185d", position: { x: 50, y: 8 } }, // Rose foncé plus riche
+    { id: "eleve", label: "Élève", icon: ICON_ELEVE, color: "#0891b2", position: { x: 15, y: 82 } }, // Teal/Cyan plus profond
+    { id: "savoir", label: "Savoir", icon: ICON_SAVOIR, color: "#c2410c", position: { x: 85, y: 82 } } // Orange brûlé plus sombre
   ];
   return base.map(v => ({ ...v, ...overrides[v.id] }));
 }
 
 function buildAxes(overrides) {
   const base = [
-    { id: "ens-sav", from: "enseignant", to: "savoir", label: "La préparation", color: "#d946ef" },
-    { id: "ens-elev", from: "enseignant", to: "eleve", label: "La relation", color: "#8b5cf6" },
-    { id: "elev-sav", from: "eleve", to: "savoir", label: "L'apprentissage", color: "#3b82f6" }
+    { id: "ens-sav", from: "enseignant", to: "savoir", label: "La préparation", color: "#a21caf" }, // Magenta assombri
+    { id: "ens-elev", from: "enseignant", to: "eleve", label: "La relation", color: "#6d28d9" }, // Violet profond
+    { id: "elev-sav", from: "eleve", to: "savoir", label: "L'apprentissage", color: "#1d4ed8" } // Bleu royal
   ];
   return base.map(a => ({ ...a, ...overrides[a.id] }));
 }
