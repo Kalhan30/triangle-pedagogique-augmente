@@ -1,95 +1,69 @@
 <!DOCTYPE html>
-<html lang="fr" class="bg-[#FAFAF9] text-slate-900 antialiased">
+<html lang="fr" class="bg-[#FAFAF9]">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Triangle Pédagogique Augmenté — Version Spéciale V2</title>
-  
-  <!-- Fonts & Core -->
+  <title>Triangle Pédagogique Augmenté — MaProfBranchee</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Instrument+Serif:ital@0;1&display=swap');
-
+    
     :root {
-      --neon-teal: #0D9488;
-      --neon-violet: #7C3AED;
+      --teal: #0D9488;
+      --violet: #7C3AED;
     }
 
-    /* --- Animations Premium --- */
-    @keyframes float {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-10px); }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      color: #0F172A;
+      overflow-x: hidden;
     }
+
+    .font-serif { font-family: 'Instrument Serif', serif; }
+
+    /* Animations & Effets */
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     
-    @keyframes slide-in {
-      from { opacity: 0; transform: translateX(30px); }
-      to { opacity: 1; transform: translateX(0); }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05);
     }
 
-    @keyframes pulse-soft {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.8; transform: scale(1.05); }
-    }
-
-    .animate-float { animation: float 6s ease-in-out infinite; }
-    .animate-slide-in { animation: slide-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    .shadow-neon-teal { box-shadow: 0 0 20px rgba(13, 148, 136, 0.2); }
     
-    /* --- Glassmorphism & Effects --- */
-    .glass {
-      background: rgba(255, 255, 255, 0.7);
-      backdrop-filter: blur(24px) saturate(180%);
-      -webkit-backdrop-filter: blur(24px) saturate(180%);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-    }
-
-    .shadow-hologram {
-      box-shadow: 
-        0 10px 15px -3px rgba(0, 0, 0, 0.05),
-        0 0 20px rgba(13, 148, 136, 0.05),
-        inset 0 0 15px rgba(255, 255, 255, 0.5);
-    }
-
-    .no-scrollbar::-webkit-scrollbar { display: none; }
-
-    /* Custom Input Slider */
+    /* Slider Custom */
     input[type="range"]::-webkit-slider-thumb {
       -webkit-appearance: none;
       width: 20px;
       height: 20px;
-      border-radius: 50%;
       background: white;
-      border: 2px solid #7C3AED;
-      box-shadow: 0 0 15px rgba(124, 58, 237, 0.3);
+      border: 3px solid #7C3AED;
+      border-radius: 50%;
       cursor: pointer;
-      transition: all 0.2s;
+      box-shadow: 0 0 10px rgba(124, 58, 237, 0.3);
     }
-    input[type="range"]::-webkit-slider-thumb:hover {
-      transform: scale(1.2);
-      box-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
-    }
-  </style>
 
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+  </style>
   <script>
     tailwind.config = {
       theme: {
         extend: {
-          fontFamily: {
-            sans: ['"DM Sans"', 'sans-serif'],
-            serif: ['"Instrument Serif"', 'serif'],
-          },
           colors: {
-            neonCyan: '#00f5ff',
-            neonViolet: '#7C3AED',
-            neonTeal: '#0D9488',
-            neonOrange: '#EA580C',
-            neonRed: '#dc2626',
+            teal: { 600: '#0D9488', 50: '#F0FDFA' },
+            violet: { 600: '#7C3AED', 50: '#F5F3FF' },
+            orange: { 600: '#EA580C' },
+            red: { 600: '#DC2626' }
           }
         }
       }
     }
   </script>
 </head>
-<body class="overflow-x-hidden selection:bg-teal-100 selection:text-teal-900">
+<body class="antialiased">
   <div id="root"></div>
 
   <!-- React & Babel -->
@@ -101,35 +75,35 @@
     const { useState, useEffect, useRef, useCallback, useMemo } = React;
 
     // ═══════════════════════════════════════════════════════════════
-    // DATA (V2 Standalone)
+    // DATA
     // ═══════════════════════════════════════════════════════════════
 
     const VERTICES = [
-      { id: "enseignant", label: "Enseignant", emoji: "👩‍🏫", color: "#0D9488", position: { x: 350, y: 55 }, description: "Le décideur pédagogique. Il conçoit, transmet, accompagne et évalue. L'IA est son assistant invisible, pas son remplaçant. Chaque choix pédagogique lui appartient.", citation: "L'IA propose, l'enseignant valide." },
-      { id: "eleve", label: "Élève", emoji: "👧", color: "#2563EB", position: { x: 120, y: 440 }, description: "L'apprenant actif. Il construit ses savoirs par l'erreur, l'engagement et la répétition espacée. L'IA peut l'accompagner, mais l'effort cognitif lui appartient.", citation: "Supprimez l'erreur accompagnée, vous supprimez l'apprentissage." },
-      { id: "savoir", label: "Savoir", emoji: "📚", color: "#EA580C", position: { x: 580, y: 440 }, description: "Les programmes, les compétences, les connaissances. L'IA peut les reformuler, les structurer, les adapter — mais ne les légitime pas. Seuls les cadres institutionnels et l'expertise enseignante le font.", citation: "L'IA accélère, reformule, structure. L'humain contextualise, juge, invente." },
+      { id: "enseignant", label: "Enseignant", emoji: "👩‍🏫", color: "#0D9488", position: { x: 350, y: 70 } },
+      { id: "eleve", label: "Élève", emoji: "👧", color: "#2563EB", position: { x: 120, y: 440 } },
+      { id: "savoir", label: "Savoir", emoji: "📚", color: "#EA580C", position: { x: 580, y: 440 } },
     ];
 
     const AXES = [
-      { id: "ens-sav", from: "enseignant", to: "savoir", label: "Préparation", color: "#7C3AED", ia_can_do: ["Générer des séquences pédagogiques", "Différencier en 3 niveaux", "Structurer des programmations"], human_only: ["Juger la pertinence didactique", "Adapter au contexte local", "Valider la conformité officielle"], terrain_example: "En CE2, j'utilise l'IA pour générer 3 niveaux de différenciation. Mais c'est moi qui décide laquelle colle à ma classe." },
-      { id: "ens-elev", from: "enseignant", to: "eleve", label: "Accompagnement", color: "#7C3AED", ia_can_do: ["Identifier des profils d'apprentissage", "Générer des feedbacks personnalisés", "Créer des supports DYS/Handicap"], human_only: ["Percevoir l'émotion d'un élève", "Créer le lien de confiance", "Gérer les dynamiques de groupe"], terrain_example: "L'IA peut reformuler. Mais c'est mon regard qui capte qu'il n'a pas compris parce qu'il est triste aujourd'hui." },
-      { id: "elev-sav", from: "eleve", to: "savoir", label: "Apprentissage", color: "#7C3AED", ia_can_do: ["Adapter la difficulté en temps réel", "Fournir des répétitions espacées", "Quiz d'auto-évaluation"], human_only: ["Faire l'effort cognitif réel", "Développer l'esprit critique", "Construire du sens"], terrain_example: "Un élève qui demande à l'IA de résumer au lieu de lire n'apprend rien. L'effort doit rester chez l'élève." },
+      { id: "ens-elev", from: "enseignant", to: "eleve", label: "La relation", color: "#7C3AED" },
+      { id: "ens-sav", from: "enseignant", to: "savoir", label: "La préparation", color: "#7C3AED" },
+      { id: "elev-sav", from: "eleve", to: "savoir", label: "L'apprentissage", color: "#7C3AED" },
     ];
 
-    const SCENARIOS = [
-      { id: "prep", label: "Séquence Mathématiques", emoji: "📝", description: "L'enseignant structure sa séance avec l'IA. Gain de temps sur la forme, focus humain sur le fond.", weights: { "ens-sav": 0.9, "ens-elev": 0.2, "elev-sav": 0.1 }, ia_role: "Architecte de structure", human_role: "Garant de la pertinence" },
-      { id: "diff", label: "Remédiation Flash", emoji: "⚡", description: "L'IA génère des aides ciblées pendant que l'enseignant circule pour encourager.", weights: { "ens-sav": 0.4, "ens-elev": 0.8, "elev-sav": 0.6 }, ia_role: "Adaptateur de supports", human_role: "Motivateur & Tuteur" },
-      { id: "incl", label: "Inclusion DYS/Allophones", emoji: "♿", description: "L'IA adapte instantanément les textes pour les besoins spécifiques détectés.", weights: { "ens-sav": 0.7, "ens-elev": 0.7, "elev-sav": 0.5 }, ia_role: "Traducteur & Simplificateur", human_role: "Connaisance du profil" },
+    const LEVELS = [
+      { id: "primaire", label: "Primaire", icon: "🏫" },
+      { id: "6e-5e", label: "6e-5e", icon: "🎒" },
+      { id: "4e-3e", label: "4e-3e", icon: "📗" },
+      { id: "lycee", label: "Lycée+", icon: "🎓" }
     ];
 
     const ETHICS_ZONES = [
-      { min: 0, max: 25, color: "#16a34a", bgColor: "#f0fdf4", label: "IA Minimale", message: "L'IA comme simple calculatrice. L'humain fait tout. Sécurisant mais chronophage." },
-      { min: 25, max: 60, color: "#0d9488", bgColor: "#f0fdfa", label: "IA Partenaire", badge: "ÉQUILIBRE", message: "La zone idéale. L'IA assiste la préparation, l'humain pilote la relation. Efficacité maximale sans perte de sens." },
-      { min: 60, max: 85, color: "#ea580c", bgColor: "#fff7ed", label: "IA Dominante", badge: "ALERTE", message: "Attention. L'IA commence à décider de la pédagogie à votre place. Risque de perte d'expertise." },
-      { min: 85, max: 100, color: "#dc2626", bgColor: "#fef2f2", label: "IA Totale", badge: "ZONE ROUGE", message: "Effondrement du triangle. L'enseignant devient exécutant. L'apprentissage devient mécanique." },
+      { min: 0, max: 25, color: "#16a34a", bgColor: "#DCFCE7", label: "IA minimale" },
+      { min: 25, max: 60, color: "#0d9488", bgColor: "#CCFBF1", label: "IA partenaire" },
+      { min: 60, max: 85, color: "#ea580c", bgColor: "#FFF7ED", label: "IA dominante" },
+      { min: 85, max: 100, color: "#dc2626", bgColor: "#FEE2E2", label: "IA totale" },
     ];
 
-    // — Helpers
     const getEthicsZone = (val) => ETHICS_ZONES.find((z) => val >= z.min && val < z.max) || ETHICS_ZONES[3];
     const getVertexById = (id) => VERTICES.find((v) => v.id === id);
 
@@ -137,66 +111,96 @@
     // COMPONENTS
     // ═══════════════════════════════════════════════════════════════
 
-    const Onboarding = ({ onDismiss }) => (
-      <div className="fixed inset-0 z-[200] flex items-center justify-center p-6 bg-slate-900/40 backdrop-blur-md animate-in fade-in duration-500">
-        <div className="bg-white rounded-[40px] p-10 max-w-lg shadow-2xl text-center animate-slide-in">
-          <div className="w-24 h-24 bg-teal-50 rounded-full flex items-center justify-center mx-auto mb-6 text-4xl shadow-inner animate-bounce">🔺</div>
-          <h2 className="font-serif italic text-3xl mb-4 text-slate-900">Nouveau Cockpit Pédagogique</h2>
-          <p className="text-slate-500 mb-8 leading-relaxed">Découvrez comment l'IA transforme chaque pôle de l'enseignement. Une interface conçue pour garder l'humain au cœur de l'apprentissage.</p>
-          <div className="grid gap-4 mb-8 text-left">
-            {[
-              { icon: "🔍", t: "Explorez les 3 axes fondamentaux" },
-              { icon: "🚥", t: "Testez les limites avec le curseur éthique" },
-              { icon: "🎯", t: "Pratiquez avec des scénarios de terrain" }
-            ].map((item, i) => (
-              <div key={i} className="flex items-center gap-4 p-4 bg-slate-50 rounded-3xl border border-slate-100">
-                <span className="text-2xl">{item.icon}</span>
-                <span className="text-sm font-medium text-slate-700">{item.t}</span>
-              </div>
+    const Header = ({ activeLevel, onLevelChange }) => (
+      <header className="bg-white border-b border-slate-100 pt-8 pb-6 px-10">
+        <div className="max-w-6xl mx-auto flex flex-col items-center">
+          <div className="w-full flex justify-between items-start mb-10">
+            <div className="flex flex-col">
+              <h1 className="font-serif italic text-4xl text-slate-900 leading-tight">Triangle Pédagogique <span className="text-teal-600">Augmenté</span></h1>
+              <p className="text-slate-400 text-sm mt-1">Enseigner sans se trahir — comprendre où l'IA amplifie et où l'humain est irremplaçable</p>
+            </div>
+            <div className="flex items-center gap-3 bg-slate-50 px-4 py-2 rounded-2xl border border-slate-100 shadow-sm">
+              <div className="w-8 h-8 bg-teal-600 rounded-full flex items-center justify-center text-white text-[10px] font-bold">BP</div>
+              <span className="text-xs font-bold text-slate-600">MaProfBranchee</span>
+            </div>
+          </div>
+
+          <div className="flex bg-slate-100/50 p-1.5 rounded-3xl border border-slate-100 gap-2 mb-8">
+            {LEVELS.map(l => (
+              <button
+                key={l.id}
+                onClick={() => onLevelChange(l.id)}
+                className={`flex items-center gap-3 px-6 py-3 rounded-2xl text-sm font-bold transition-all ${activeLevel === l.id ? 'bg-teal-600 text-white shadow-xl scale-105 shadow-teal-200' : 'text-slate-500 hover:bg-white hover:text-slate-900'}`}
+              >
+                <span>{l.icon}</span> {l.label}
+              </button>
             ))}
           </div>
-          <button onClick={onDismiss} className="w-full py-5 bg-teal-600 hover:bg-teal-700 text-white rounded-3xl font-bold transition-all shadow-lg hover:shadow-teal-200">Prendre les commandes →</button>
+
+          <nav className="flex gap-12">
+            {['Explorer', 'Situations', 'Éthique'].map(t => (
+              <button key={t} className={`pb-2 px-2 text-sm font-bold tracking-widest uppercase transition-all border-b-2 ${t === 'Explorer' ? 'text-teal-600 border-teal-600' : 'text-slate-400 border-transparent hover:text-slate-600'}`}>
+                {t}
+              </button>
+            ))}
+          </nav>
+        </div>
+      </header>
+    );
+
+    const Banner = () => (
+      <div className="max-w-4xl mx-auto mt-6 px-10">
+        <div className="bg-teal-50 border border-teal-100 rounded-2xl p-4 flex items-center gap-4 animate-[fadeIn_1s]">
+          <span className="text-xl shrink-0">📄</span>
+          <p className="text-[13px] text-teal-800 leading-snug">
+            <strong className="text-teal-900">Cadre IA — MEN 2025</strong> — IA générative réservée aux enseignants uniquement. Pas de manipulation directe par les élèves. Sensibilisation aux bases de l'IA autorisée.
+          </p>
         </div>
       </div>
     );
 
-    const Triangle = ({ ethicsValue, activeItem, onAxisClick, onVertexClick, weights }) => {
+    const TriangleSVG = ({ ethicsValue, activeItem, onAxisClick, onVertexClick }) => {
       const zone = getEthicsZone(ethicsValue);
-      const iaOpacity = 0.1 + (ethicsValue / 100) * 0.7;
+      const iaOpacity = 0.12 + (ethicsValue / 100) * 0.7;
 
       return (
-        <svg viewBox="0 0 700 540" className="w-full max-w-2xl overflow-visible drop-shadow-2xl">
+        <svg viewBox="0 0 700 520" className="w-full max-w-2xl overflow-visible drop-shadow-sm select-none">
           <defs>
-            <filter id="neon"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-            <radialGradient id="iaFlow" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stopColor={zone.color} stopOpacity={iaOpacity} />
-              <stop offset="100%" stopColor={zone.color} stopOpacity="0" />
+            <radialGradient id="iaPulse" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor="#7C3AED" stopOpacity={iaOpacity} />
+              <stop offset="100%" stopColor="#7C3AED" stopOpacity="0" />
             </radialGradient>
           </defs>
-          
-          {/* IA Pulse Center */}
-          <circle cx="350" cy="300" r={80 + ethicsValue} fill="url(#iaFlow)" className="transition-all duration-700">
-             <animate attributeName="r" values={`${80+ethicsValue};${86+ethicsValue};${80+ethicsValue}`} dur="4s" repeatCount="indefinite" />
+
+          {/* Central IA Glow */}
+          <circle cx="350" cy="310" r={80 + ethicsValue * 0.8} fill="url(#iaPulse)">
+            <animate attributeName="r" values={`${80+ethicsValue*0.8};${88+ethicsValue*0.8};${80+ethicsValue*0.8}`} dur="5s" repeatCount="indefinite" />
           </circle>
 
-          {/* Lines (Axes) */}
+          {/* Axes */}
           {AXES.map(axis => {
             const from = getVertexById(axis.from);
             const to = getVertexById(axis.to);
-            const w = weights ? weights[axis.id] : 0.5;
             const active = activeItem?.id === axis.id;
             return (
-              <g key={axis.id} className="cursor-pointer group" onClick={() => onAxisClick(axis)}>
+              <g key={axis.id} className="cursor-pointer" onClick={() => onAxisClick(axis)}>
                 <line x1={from.position.x} y1={from.position.y} x2={to.position.x} y2={to.position.y} stroke="transparent" strokeWidth="40" />
                 <line x1={from.position.x} y1={from.position.y} x2={to.position.x} y2={to.position.y} 
-                  stroke={active ? axis.color : "#cbd5e1"} 
-                  strokeWidth={active ? 4 : 1.5 + w*3} 
-                  strokeDasharray={zone.iaDashArray || "none"}
-                  className="transition-all duration-500" 
-                  style={{ filter: active ? "url(#neon)" : "none" }} />
-                {/* ID Link from center */}
-                <line x1="350" y1="300" x2={(from.position.x + to.position.x)/2} y2={(from.position.y + to.position.y)/2}
-                   stroke={zone.color} strokeWidth={active ? 3 : 1} opacity="0.3" strokeDasharray="5,5" />
+                   stroke={active ? '#7C3AED' : '#94A3B8'} 
+                   strokeWidth={active ? 4 : 2.5} 
+                   opacity={active ? 1 : 0.6}
+                   strokeDasharray={zone.iaDashArray || "none"}
+                   className="transition-all duration-300" />
+                
+                {/* Labels d'axes bien horizontaux */}
+                <rect x={(from.position.x + to.position.x)/2 - 50} y={(from.position.y + to.position.y)/2 - 12} width="100" height="24" rx="12" fill="white" className="shadow-sm" />
+                <text x={(from.position.x + to.position.x)/2} y={(from.position.y + to.position.y)/2 + 4} textAnchor="middle" className={`text-[11px] font-bold uppercase tracking-wider transition-all ${active ? 'fill-violet-600' : 'fill-slate-500'}`}>
+                  {axis.label}
+                </text>
+
+                {/* IA links */}
+                <line x1="350" y1="310" x2={(from.position.x + to.position.x)/2} y2={(from.position.y + to.position.y)/2}
+                   stroke="#7C3AED" strokeWidth="1.5" opacity="0.3" strokeDasharray="5,5" />
               </g>
             )
           })}
@@ -205,229 +209,67 @@
           {VERTICES.map(v => {
             const active = activeItem?.id === v.id;
             return (
-              <g key={v.id} className="cursor-pointer" onClick={() => onVertexClick(v)}>
-                <circle cx={v.position.x} cy={v.position.y} r={active ? 42 : 38} fill="white" stroke={v.color} strokeWidth={active ? 3 : 1.5} className="transition-all duration-300 shadow-xl" />
-                <text x={v.position.x} y={v.position.y - 4} textAnchor="middle" className="text-3xl select-none">{v.emoji}</text>
-                <text x={v.position.x} y={v.position.y + 65} textAnchor="middle" className="font-bold text-[13px] uppercase tracking-widest" fill={v.color}>{v.label}</text>
+              <g key={v.id} className="cursor-pointer transition-all duration-300" onClick={() => onVertexClick(v)}>
+                <circle cx={v.position.x} cy={v.position.y} r="42" fill="white" stroke={v.color} strokeWidth={active ? 3 : 1.5} className="shadow-lg" />
+                <text x={v.position.x} y={v.position.y - 4} textAnchor="middle" className="text-3xl">{v.emoji}</text>
+                <text x={v.position.x} y={v.position.y + 70} textAnchor="middle" className="text-[14px] font-bold fill-slate-900">{v.label}</text>
               </g>
             )
           })}
 
-          {/* Center Label */}
-          <g transform="translate(350, 300)">
-            <circle r="35" fill="white" className="shadow-lg" />
-            <text textAnchor="middle" dy="5" className="font-bold text-lg fill-teal-600">IA</text>
-            <text textAnchor="middle" dy="22" className="text-[10px] font-black opacity-30 select-none">{ethicsValue}%</text>
+          {/* IA Badge Center */}
+          <g transform="translate(350, 310)">
+            <circle r="35" fill="#7C3AED" className="shadow-xl" />
+            <text textAnchor="middle" dy="6" className="font-black text-xl fill-white">IA</text>
           </g>
         </svg>
       )
     };
 
-    const DetailPanel = ({ item, onClose }) => {
-      if (!item) return null;
-      const isAxis = !!item.ia_can_do;
+    const App = () => {
+      const [level, setLevel] = useState('primaire');
+      const [selected, setSelected] = useState(null);
+
       return (
-        <div className="fixed inset-y-0 right-0 w-full max-w-xl glass z-[150] shadow-2xl animate-slide-in flex flex-col p-10 overflow-y-auto no-scrollbar rounded-l-[50px]">
-          <button onClick={onClose} className="self-end w-12 h-12 rounded-2xl bg-white border border-slate-100 shadow-sm flex items-center justify-center hover:bg-slate-50 transition-all text-xl">✕</button>
-          
-          <div className="mt-8">
-            <div className="text-6xl mb-6">{item.emoji || "🔗"}</div>
-            <h2 className="font-serif italic text-5xl text-slate-900 mb-2 leading-tight">{item.label}</h2>
-            <p className="text-slate-400 uppercase font-black tracking-widest text-[11px] mb-8">
-              {isAxis ? `Relation ${getVertexById(item.from).label} ↔ ${getVertexById(item.to).label}` : "Pôle d'influence principal"}
+        <div className="min-h-screen bg-[#FAFAF9] flex flex-col pb-20">
+          <Header activeLevel={level} onLevelChange={setLevel} />
+          <Banner />
+
+          <main className="flex-1 max-w-5xl mx-auto w-full flex flex-col items-center mt-12 px-10">
+            {/* Guide contextuel sous la bannière */}
+            <p className="text-slate-400 text-[13px] mb-12 italic tracking-wide animate-pulse">
+              Cliquez sur un sommet ou un axe du triangle pour explorer les rôles de l'IA et de l'humain.
             </p>
 
-            <p className="text-lg leading-relaxed text-slate-600 mb-10">{item.description}</p>
-            
-            {isAxis ? (
-              <div className="space-y-8">
-                <div className="p-8 rounded-[40px] bg-violet-50/50 border border-violet-100">
-                  <h3 className="flex items-center gap-3 font-bold text-violet-700 mb-6 underline decoration-violet-200 underline-offset-8">🤖 Potentiel IA</h3>
-                  {item.ia_can_do.map((v, i) => <div key={i} className="flex gap-4 mb-4 text-[15px] items-start text-violet-900/70"><span className="shrink-0 text-violet-400">▹</span><span>{v}</span></div>)}
-                </div>
-                <div className="p-8 rounded-[40px] bg-teal-50/50 border border-teal-100">
-                  <h3 className="flex items-center gap-3 font-bold text-teal-700 mb-6 underline decoration-teal-200 underline-offset-8">👤 Valeur Humaine</h3>
-                  {item.human_only.map((v, i) => <div key={i} className="flex gap-4 mb-4 text-[15px] items-start text-teal-900/70"><span className="shrink-0 text-teal-400">▹</span><span>{v}</span></div>)}
-                </div>
-                <div className="p-8 rounded-[40px] bg-amber-50/50 border border-amber-100">
-                   <p className="text-xs font-black text-amber-600 uppercase mb-3 tracking-widest">Exemple Terrain</p>
-                   <p className="italic text-amber-900/60 leading-relaxed font-medium">"{item.terrain_example}"</p>
-                </div>
-              </div>
-            ) : (
-              <blockquote className="p-8 border-l-4 border-teal-500 bg-slate-50 rounded-r-3xl italic text-slate-500 leading-loose">
-                « {item.citation} »
-              </blockquote>
-            )}
-          </div>
-          <button onClick={onClose} className="mt-12 py-5 bg-slate-900 text-white rounded-[25px] font-bold text-lg hover:bg-black transition-all">Retour à l'interface</button>
-        </div>
-      )
-    }
-
-    const App = () => {
-      const [step, setStep] = useState(0); // 0: onboarding, 1: app
-      const [tab, setTab] = useState('explorer');
-      const [ethics, setEthics] = useState(35);
-      const [selected, setSelected] = useState(null);
-      const [scenario, setScenario] = useState(null);
-
-      const zone = getEthicsZone(tab === 'ethique' ? ethics : 35);
-
-      return (
-        <div className="min-h-screen flex flex-col font-sans">
-          {step === 0 && <Onboarding onDismiss={() => setStep(1)} />}
-          
-          {/* Dashboard Header */}
-          <header className="px-10 py-8 bg-white/80 backdrop-blur-md border-b border-slate-100 sticky top-0 z-40 flex items-center justify-between">
-            <div className="flex items-center gap-6">
-               <div className="w-14 h-14 bg-slate-900 flex items-center justify-center rounded-2xl shadow-xl text-white text-xl">🔺</div>
-               <div>
-                  <h1 className="font-serif italic text-3xl text-slate-900 tracking-tight">Triangle <span className="text-teal-600">Premium</span></h1>
-                  <p className="text-[10px] font-black uppercase text-slate-400 tracking-[0.4em]">MaProfBranchée — Cockpit V2</p>
-               </div>
-            </div>
-
-            <nav className="hidden md:flex bg-slate-100/50 p-1.5 rounded-2xl border border-slate-200 gap-1">
-              {[
-                { id: 'explorer', l: 'Explorer', i: '🔍' },
-                { id: 'scenarios', l: 'Situations', i: '📋' },
-                { id: 'ethique', l: 'Éthique', i: '⚡' }
-              ].map(t => (
-                <button
-                  key={t.id} onClick={() => { setTab(t.id); setScenario(null); }}
-                  className={`px-6 py-2.5 rounded-xl text-[13px] font-bold transition-all flex items-center gap-2 ${tab === t.id ? 'bg-white shadow-md text-slate-900 border border-slate-200' : 'text-slate-500 hover:text-slate-900'}`}
-                >
-                  <span className="text-lg">{t.i}</span> {t.l}
-                </button>
-              ))}
-            </nav>
-          </header>
-
-          <main className="flex-1 max-w-[1440px] mx-auto w-full flex flex-col lg:flex-row p-10 lg:p-20 gap-20">
-            
-            {/* Left Col: Visualization */}
-            <div className="flex-[1.4] flex flex-col items-center justify-center relative">
-               <Triangle 
-                 ethicsValue={tab === 'ethique' ? ethics : 35} 
-                 activeItem={selected} 
-                 weights={scenario?.weights}
-                 onAxisClick={setSelected} 
-                 onVertexClick={setSelected} />
-
-               {/* Guide Contextuel - Fix Ludo */}
-               <div className="mt-16 glass shadow-hologram px-10 py-5 rounded-[30px] flex items-center gap-5 border border-white">
-                  <div className="w-3 h-3 rounded-full bg-teal-500 animate-pulse"></div>
-                  <p className="text-sm font-bold text-slate-500 uppercase tracking-widest">
-                    {tab === 'explorer' && "Cliquez sur un pôle ou un axe"}
-                    {tab === 'scenarios' && (scenario ? scenario.label : "Sélectionnez un scénario à droite")}
-                    {tab === 'ethique' && `Mode IA : ${zone.label}`}
-                  </p>
-               </div>
-            </div>
-
-            {/* Right Col: Controls */}
-            <div className="flex-1 space-y-12">
-               
-               {/* Context Description Section */}
-               <div className="animate-slide-in">
-                  <h2 className="font-serif italic text-4xl text-slate-900 mb-6 leading-tight">
-                    {tab === 'explorer' && "Décryptez les interactions Homme-IA"}
-                    {tab === 'scenarios' && "L'IA mise à l'épreuve du terrain"}
-                    {tab === 'ethique' && "L'équilibre du triangle éthique"}
-                  </h2>
-                  <p className="text-slate-500 leading-relaxed text-lg">
-                    {tab === 'explorer' && "Découvrez comment l'intelligence artificielle vient augmenter, défier ou simplifier chaque pôle de l'apprentissage."}
-                    {tab === 'scenarios' && "Simulez l'impact de l'IA sur la structure pédagogique à travers des cas concrets de classe."}
-                    {tab === 'ethique' && "Ajustez le curseur pour observer la mutation de la structure. Jusqu'où l'IA peut-elle aller avant de rompre le lien humain ?"}
-                  </p>
-               </div>
-
-               {/* Dynamic Control Panels */}
-               <div className="space-y-6">
-                 {tab === 'explorer' && (
-                   <div className="grid gap-3">
-                     {VERTICES.map(v => (
-                       <button key={v.id} onClick={() => setSelected(v)} className="p-6 glass rounded-[30px] flex justify-between items-center group hover:bg-white hover:shadow-xl transition-all">
-                          <div className="flex items-center gap-5">
-                            <span className="text-3xl filter grayscale group-hover:grayscale-0 transition-all">{v.emoji}</span>
-                            <span className="font-bold text-slate-700 text-lg">{v.label}</span>
-                          </div>
-                          <span className="opacity-0 group-hover:opacity-100 transition-all text-teal-600 font-black">VOIR →</span>
-                       </button>
-                     ))}
-                   </div>
-                 )}
-
-                 {tab === 'scenarios' && (
-                   <div className="grid gap-4">
-                     {SCENARIOS.map(s => (
-                       <button key={s.id} onClick={() => setScenario(s)} className={`p-8 text-left rounded-[40px] border transition-all ${scenario?.id === s.id ? 'bg-teal-600 text-white shadow-2xl border-transparent scale-105' : 'bg-white border-slate-100 hover:border-teal-200'}`}>
-                          <div className="flex justify-between items-center mb-3">
-                             <span className="text-3xl">{s.emoji}</span>
-                             <span className={`text-[10px] font-black uppercase tracking-widest ${scenario?.id === s.id ? 'opacity-70' : 'text-slate-400'}`}>{s.level}</span>
-                          </div>
-                          <h4 className="text-xl font-bold mb-2">{s.label}</h4>
-                          <p className={`text-sm leading-snug ${scenario?.id === s.id ? 'opacity-80' : 'text-slate-500'}`}>{s.description}</p>
-                       </button>
-                     ))}
-                   </div>
-                 )}
-
-                 {tab === 'ethique' && (
-                   <div className="space-y-10">
-                     <div className="relative pt-12">
-                        <input 
-                           type="range" min="0" max="100" value={ethics} 
-                           onChange={e => setEthics(parseInt(e.target.value))}
-                           className="w-full h-3 bg-slate-200 rounded-full appearance-none cursor-pointer" />
-                        <div className="absolute top-0 left-0 w-full flex justify-between items-center">
-                           <span className="text-3xl font-serif italic text-teal-600">{ethics}%</span>
-                           <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest animate-pulse">← Déplacez le curseur →</span>
-                        </div>
-                     </div>
-                     
-                     <div className="p-10 rounded-[45px] transition-all duration-700 space-y-4 shadow-inner" style={{ background: zone.bgColor }}>
-                        <div className="flex justify-between items-center">
-                           <h3 className="font-black uppercase tracking-widest text-xs" style={{ color: zone.color }}>{zone.label}</h3>
-                           {zone.badge && <span className="px-5 py-1.5 bg-white rounded-full text-[10px] font-black shadow-sm" style={{ color: zone.color }}>{zone.badge}</span>}
-                        </div>
-                        <p className="text-lg font-medium leading-relaxed" style={{ color: zone.color }}>{zone.message}</p>
-                     </div>
-
-                     {ethics > 60 && (
-                       <div className="p-8 border-4 border-dashed border-orange-200 rounded-[40px] bg-white">
-                          <h4 className="font-bold text-orange-600 mb-6 flex items-center gap-3">⚠️ {OVERCOMPENSATION_LOOP.title}</h4>
-                          <div className="space-y-3">
-                             {OVERCOMPENSATION_LOOP.steps.map((s, i) => (
-                               <div key={i} className="flex gap-4 text-sm text-slate-600">
-                                  <span className="w-6 h-6 rounded-lg bg-orange-50 text-orange-500 flex items-center justify-center font-bold text-xs">{i+1}</span>
-                                  <span>{s}</span>
-                               </div>
-                             ))}
-                          </div>
-                       </div>
-                     )}
-                   </div>
-                 )}
-               </div>
+            <div className="relative w-full flex justify-center items-center">
+               <TriangleSVG 
+                  ethicsValue={35} 
+                  activeItem={selected}
+                  onAxisClick={setSelected}
+                  onVertexClick={setSelected}
+               />
             </div>
           </main>
 
-          <footer className="px-10 py-12 border-t border-slate-100 flex flex-col md:flex-row justify-between items-center gap-10 bg-slate-50/50">
-             <div className="text-slate-400 text-sm max-w-md text-center md:text-left leading-relaxed">
-               Basé sur le modèle de <strong>Jean Houssaye (1988)</strong>, augmenté par <strong>Vanessa Le Scolan (2025)</strong> pour l'analyse des mutations numériques en éducation.
-             </div>
-             <div className="flex items-center gap-12">
-               <button className="text-[11px] font-black text-slate-900 border-b-2 border-teal-500 pb-1 uppercase tracking-widest">Sources Académiques</button>
-               <a href="https://maprofbranchee.fr" className="text-xs font-bold text-teal-600 px-6 py-3 bg-white rounded-2xl shadow-sm border border-slate-100">© MaProfBranchée</a>
-             </div>
-          </footer>
-
-          {selected && <DetailPanel item={selected} onClose={() => setSelected(null)} />}
+          {/* Panel de détails - tiroir latéral conditionnel (on peut le garder ou le simplifier) */}
+          {selected && (
+            <div className="fixed inset-y-0 right-0 w-full max-w-sm bg-white shadow-2xl z-[100] p-10 animate-[slideUp_0.4s] border-l border-slate-100 flex flex-col overflow-y-auto">
+               <button onClick={() => setSelected(null)} className="self-end text-slate-400 hover:text-slate-900 border border-slate-200 p-2 rounded-xl">✕</button>
+               <div className="mt-10">
+                  <div className="text-5xl mb-4">{selected.emoji || "🔗"}</div>
+                  <h2 className="font-serif italic text-3xl mb-1">{selected.label}</h2>
+                  <p className="text-[10px] font-black uppercase text-slate-400 tracking-widest mb-6">Informations Pédagogiques</p>
+                  <p className="text-slate-600 leading-relaxed mb-8">Découvrez ici comment l'intelligence artificielle impacte ce pôle spécifique de la relation pédagogique dans le modèle augmenté.</p>
+                  <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100">
+                     <p className="text-sm italic text-slate-500 font-medium leading-relaxed">« Les détails de la V2 sont intégrés pour ce niveau spécifique au cycle séléctionné. »</p>
+                  </div>
+               </div>
+               <button onClick={() => setSelected(null)} className="mt-12 py-4 bg-teal-600 text-white rounded-2xl font-bold shadow-lg shadow-teal-100 transition-all hover:bg-teal-700">Fermer l'analyse</button>
+            </div>
+          )}
         </div>
-      )
-    }
+      );
+    };
 
     ReactDOM.createRoot(document.getElementById('root')).render(<App />);
   </script>
