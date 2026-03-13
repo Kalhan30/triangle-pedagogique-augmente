@@ -1,72 +1,72 @@
 <!DOCTYPE html>
-<html lang="fr" class="bg-[#FAFAF9]">
+<html lang="fr" class="bg-[#FAFAF9] text-slate-900 antialiased">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Triangle Pédagogique Augmenté — MaProfBranchee</title>
+  <title>Triangle Pédagogique Augmenté — Cockpit V2</title>
+  
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Instrument+Serif:ital@0;1&display=swap');
-    
+
     :root {
-      --teal: #0D9488;
-      --violet: #7C3AED;
+      --neon-teal: #0D9488;
+      --neon-violet: #7C3AED;
     }
 
-    body {
-      font-family: 'DM Sans', sans-serif;
-      color: #0F172A;
-      overflow-x: hidden;
+    /* --- Animations --- */
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
     }
-
-    .font-serif { font-family: 'Instrument Serif', serif; }
-
-    /* Animations & Effets */
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     
-    .glass-card {
-      background: rgba(255, 255, 255, 0.8);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.5);
-      box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05);
+    @keyframes slide-in-right {
+      from { opacity: 0; transform: translateX(30px); }
+      to { opacity: 1; transform: translateX(0); }
     }
 
-    .shadow-neon-teal { box-shadow: 0 0 20px rgba(13, 148, 136, 0.2); }
+    .animate-float { animation: float 6s ease-in-out infinite; }
+    .animate-slide-in { animation: slide-in-right 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
     
-    /* Slider Custom */
+    .glass {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .shadow-hologram {
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 0 20px rgba(13, 148, 136, 0.05);
+    }
+
     input[type="range"]::-webkit-slider-thumb {
       -webkit-appearance: none;
       width: 20px;
       height: 20px;
-      background: white;
-      border: 3px solid #7C3AED;
       border-radius: 50%;
+      background: white;
+      border: 2px solid #7C3AED;
+      box-shadow: 0 0 15px rgba(124, 58, 237, 0.3);
       cursor: pointer;
-      box-shadow: 0 0 10px rgba(124, 58, 237, 0.3);
     }
-
-    .no-scrollbar::-webkit-scrollbar { display: none; }
   </style>
+
   <script>
     tailwind.config = {
       theme: {
         extend: {
-          colors: {
-            teal: { 600: '#0D9488', 50: '#F0FDFA' },
-            violet: { 600: '#7C3AED', 50: '#F5F3FF' },
-            orange: { 600: '#EA580C' },
-            red: { 600: '#DC2626' }
+          fontFamily: {
+            sans: ['"DM Sans"', 'sans-serif'],
+            serif: ['"Instrument Serif"', 'serif'],
           }
         }
       }
     }
   </script>
 </head>
-<body class="antialiased">
+<body class="selection:bg-teal-100 selection:text-teal-900">
   <div id="root"></div>
 
-  <!-- React & Babel -->
   <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -74,202 +74,162 @@
   <script type="text/babel">
     const { useState, useEffect, useRef, useCallback, useMemo } = React;
 
-    // ═══════════════════════════════════════════════════════════════
-    // DATA
-    // ═══════════════════════════════════════════════════════════════
-
     const VERTICES = [
-      { id: "enseignant", label: "Enseignant", emoji: "👩‍🏫", color: "#0D9488", position: { x: 350, y: 70 } },
-      { id: "eleve", label: "Élève", emoji: "👧", color: "#2563EB", position: { x: 120, y: 440 } },
-      { id: "savoir", label: "Savoir", emoji: "📚", color: "#EA580C", position: { x: 580, y: 440 } },
+      { id: "enseignant", label: "Enseignant", emoji: "👩‍🏫", color: "#0D9488", position: { x: 350, y: 70 }, description: "Le décideur pédagogique. Il conçoit, transmet, accompagne et évalue. L'IA est son assistant invisible, pas son remplaçant.", citation: "L'IA propose, l'enseignant valide." },
+      { id: "eleve", label: "Élève", emoji: "👧", color: "#2563EB", position: { x: 120, y: 440 }, description: "L'apprenant actif. Il construit ses savoirs par l'erreur. L'IA peut l'accompagner, mais l'effort cognitif lui appartient.", citation: "Supprimez l'erreur accompagnée, vous supprimez l'apprentissage." },
+      { id: "savoir", label: "Savoir", emoji: "📚", color: "#EA580C", position: { x: 580, y: 440 }, description: "Les programmes et connaissances. L'IA peut les reformuler et les adapter — mais ne les légitiment pas.", citation: "L'IA structure. L'humain contextualise." },
     ];
 
     const AXES = [
-      { id: "ens-elev", from: "enseignant", to: "eleve", label: "La relation", color: "#7C3AED" },
-      { id: "ens-sav", from: "enseignant", to: "savoir", label: "La préparation", color: "#7C3AED" },
-      { id: "elev-sav", from: "eleve", to: "savoir", label: "L'apprentissage", color: "#7C3AED" },
+      { id: "ens-sav", from: "enseignant", to: "savoir", label: "La préparation", color: "#7C3AED", ia_can_do: ["Générer des séquences pédagogiques", "Différencier en 3 niveaux"], human_only: ["Juger la pertinence didactique"], terrain_example: "L'IA génère les niveaux, l'enseignant valide." },
+      { id: "ens-elev", from: "enseignant", to: "eleve", label: "La relation", color: "#7C3AED", ia_can_do: ["Identifier des profils d'apprentissage"], human_only: ["Percevoir l'état émotionnel"], terrain_example: "L'IA aide à observer, l'humain aide à grandir." },
+      { id: "elev-sav", from: "eleve", to: "savoir", label: "L'apprentissage", color: "#7C3AED", ia_can_do: ["Adapter la difficulté en temps réel"], human_only: ["Faire l'effort cognitif"], terrain_example: "L'IA accompagne le chemin, l'élève fait le pas." },
     ];
 
-    const LEVELS = [
-      { id: "primaire", label: "Primaire", icon: "🏫" },
-      { id: "6e-5e", label: "6e-5e", icon: "🎒" },
-      { id: "4e-3e", label: "4e-3e", icon: "📗" },
-      { id: "lycee", label: "Lycée+", icon: "🎓" }
+    const SCENARIOS = [
+      { id: "prep", label: "Séquence Mathématiques", emoji: "📝", description: "Utilisation de l'IA pour générer une séquence différenciée.", weights: { "ens-sav": 0.9, "ens-elev": 0.2, "elev-sav": 0.1 } },
+      { id: "diff", label: "Remédiation Flash", emoji: "⚡", description: "L'IA génère des aides ciblées en temps réel.", weights: { "ens-sav": 0.4, "ens-elev": 0.8, "elev-sav": 0.6 } }
     ];
 
     const ETHICS_ZONES = [
-      { min: 0, max: 25, color: "#16a34a", bgColor: "#DCFCE7", label: "IA minimale" },
-      { min: 25, max: 60, color: "#0d9488", bgColor: "#CCFBF1", label: "IA partenaire" },
-      { min: 60, max: 85, color: "#ea580c", bgColor: "#FFF7ED", label: "IA dominante" },
-      { min: 85, max: 100, color: "#dc2626", bgColor: "#FEE2E2", label: "IA totale" },
+      { min: 0, max: 25, color: "#16a34a", bgColor: "#f0fdf4", label: "IA Minimale", message: "L'IA comme simple calculatrice." },
+      { min: 25, max: 60, color: "#0d9488", bgColor: "#f0fdfa", label: "IA Partenaire", badge: "ÉQUILIBRE", message: "La zone idéale d'augmentation." },
+      { min: 60, max: 85, color: "#ea580c", bgColor: "#fff7ed", label: "IA Dominante", badge: "ALERTE", message: "L'IA commence à décider pour vous." },
+      { min: 85, max: 100, color: "#dc2626", bgColor: "#fef2f2", label: "IA Totale", badge: "ZONE ROUGE", message: "Effondrement du lien humain." },
     ];
 
     const getEthicsZone = (val) => ETHICS_ZONES.find((z) => val >= z.min && val < z.max) || ETHICS_ZONES[3];
     const getVertexById = (id) => VERTICES.find((v) => v.id === id);
 
-    // ═══════════════════════════════════════════════════════════════
-    // COMPONENTS
-    // ═══════════════════════════════════════════════════════════════
-
-    const Header = ({ activeLevel, onLevelChange }) => (
-      <header className="bg-white border-b border-slate-100 pt-8 pb-6 px-10">
-        <div className="max-w-6xl mx-auto flex flex-col items-center">
-          <div className="w-full flex justify-between items-start mb-10">
-            <div className="flex flex-col">
-              <h1 className="font-serif italic text-4xl text-slate-900 leading-tight">Triangle Pédagogique <span className="text-teal-600">Augmenté</span></h1>
-              <p className="text-slate-400 text-sm mt-1">Enseigner sans se trahir — comprendre où l'IA amplifie et où l'humain est irremplaçable</p>
-            </div>
-            <div className="flex items-center gap-3 bg-slate-50 px-4 py-2 rounded-2xl border border-slate-100 shadow-sm">
-              <div className="w-8 h-8 bg-teal-600 rounded-full flex items-center justify-center text-white text-[10px] font-bold">BP</div>
-              <span className="text-xs font-bold text-slate-600">MaProfBranchee</span>
-            </div>
-          </div>
-
-          <div className="flex bg-slate-100/50 p-1.5 rounded-3xl border border-slate-100 gap-2 mb-8">
-            {LEVELS.map(l => (
-              <button
-                key={l.id}
-                onClick={() => onLevelChange(l.id)}
-                className={`flex items-center gap-3 px-6 py-3 rounded-2xl text-sm font-bold transition-all ${activeLevel === l.id ? 'bg-teal-600 text-white shadow-xl scale-105 shadow-teal-200' : 'text-slate-500 hover:bg-white hover:text-slate-900'}`}
-              >
-                <span>{l.icon}</span> {l.label}
-              </button>
-            ))}
-          </div>
-
-          <nav className="flex gap-12">
-            {['Explorer', 'Situations', 'Éthique'].map(t => (
-              <button key={t} className={`pb-2 px-2 text-sm font-bold tracking-widest uppercase transition-all border-b-2 ${t === 'Explorer' ? 'text-teal-600 border-teal-600' : 'text-slate-400 border-transparent hover:text-slate-600'}`}>
-                {t}
-              </button>
-            ))}
-          </nav>
-        </div>
-      </header>
-    );
-
-    const Banner = () => (
-      <div className="max-w-4xl mx-auto mt-6 px-10">
-        <div className="bg-teal-50 border border-teal-100 rounded-2xl p-4 flex items-center gap-4 animate-[fadeIn_1s]">
-          <span className="text-xl shrink-0">📄</span>
-          <p className="text-[13px] text-teal-800 leading-snug">
-            <strong className="text-teal-900">Cadre IA — MEN 2025</strong> — IA générative réservée aux enseignants uniquement. Pas de manipulation directe par les élèves. Sensibilisation aux bases de l'IA autorisée.
-          </p>
-        </div>
-      </div>
-    );
-
-    const TriangleSVG = ({ ethicsValue, activeItem, onAxisClick, onVertexClick }) => {
+    const Triangle = ({ ethicsValue, activeItem, onAxisClick, onVertexClick, weights }) => {
       const zone = getEthicsZone(ethicsValue);
-      const iaOpacity = 0.12 + (ethicsValue / 100) * 0.7;
+      const iaOpacity = 0.1 + (ethicsValue / 100) * 0.7;
 
       return (
-        <svg viewBox="0 0 700 520" className="w-full max-w-2xl overflow-visible drop-shadow-sm select-none">
+        <svg viewBox="0 0 700 540" className="w-full max-w-2xl overflow-visible drop-shadow-2xl">
           <defs>
-            <radialGradient id="iaPulse" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stopColor="#7C3AED" stopOpacity={iaOpacity} />
-              <stop offset="100%" stopColor="#7C3AED" stopOpacity="0" />
+            <radialGradient id="iaFlow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor={zone.color} stopOpacity={iaOpacity} />
+              <stop offset="100%" stopColor={zone.color} stopOpacity="0" />
             </radialGradient>
           </defs>
-
-          {/* Central IA Glow */}
-          <circle cx="350" cy="310" r={80 + ethicsValue * 0.8} fill="url(#iaPulse)">
-            <animate attributeName="r" values={`${80+ethicsValue*0.8};${88+ethicsValue*0.8};${80+ethicsValue*0.8}`} dur="5s" repeatCount="indefinite" />
-          </circle>
-
-          {/* Axes */}
+          <circle cx="350" cy="300" r={80 + ethicsValue} fill="url(#iaFlow)" className="transition-all duration-700" />
           {AXES.map(axis => {
             const from = getVertexById(axis.from);
             const to = getVertexById(axis.to);
+            const w = weights ? weights[axis.id] : 0.5;
             const active = activeItem?.id === axis.id;
             return (
               <g key={axis.id} className="cursor-pointer" onClick={() => onAxisClick(axis)}>
                 <line x1={from.position.x} y1={from.position.y} x2={to.position.x} y2={to.position.y} stroke="transparent" strokeWidth="40" />
-                <line x1={from.position.x} y1={from.position.y} x2={to.position.x} y2={to.position.y} 
-                   stroke={active ? '#7C3AED' : '#94A3B8'} 
-                   strokeWidth={active ? 4 : 2.5} 
-                   opacity={active ? 1 : 0.6}
-                   strokeDasharray={zone.iaDashArray || "none"}
-                   className="transition-all duration-300" />
-                
-                {/* Labels d'axes bien horizontaux */}
-                <rect x={(from.position.x + to.position.x)/2 - 50} y={(from.position.y + to.position.y)/2 - 12} width="100" height="24" rx="12" fill="white" className="shadow-sm" />
-                <text x={(from.position.x + to.position.x)/2} y={(from.position.y + to.position.y)/2 + 4} textAnchor="middle" className={`text-[11px] font-bold uppercase tracking-wider transition-all ${active ? 'fill-violet-600' : 'fill-slate-500'}`}>
-                  {axis.label}
-                </text>
-
-                {/* IA links */}
-                <line x1="350" y1="310" x2={(from.position.x + to.position.x)/2} y2={(from.position.y + to.position.y)/2}
-                   stroke="#7C3AED" strokeWidth="1.5" opacity="0.3" strokeDasharray="5,5" />
+                <line x1={from.position.x} y1={from.position.y} x2={to.position.x} y2={to.position.y} stroke={active ? axis.color : "#cbd5e1"} strokeWidth={active ? 3 : 1} opacity={active ? 1 : 0.4} />
               </g>
             )
           })}
-
-          {/* Vertices */}
           {VERTICES.map(v => {
             const active = activeItem?.id === v.id;
             return (
-              <g key={v.id} className="cursor-pointer transition-all duration-300" onClick={() => onVertexClick(v)}>
-                <circle cx={v.position.x} cy={v.position.y} r="42" fill="white" stroke={v.color} strokeWidth={active ? 3 : 1.5} className="shadow-lg" />
+              <g key={v.id} className="cursor-pointer" onClick={() => onVertexClick(v)}>
+                <circle cx={v.position.x} cy={v.position.y} r="40" fill="white" stroke={v.color} strokeWidth={active ? 3 : 1} className="shadow-lg" />
                 <text x={v.position.x} y={v.position.y - 4} textAnchor="middle" className="text-3xl">{v.emoji}</text>
-                <text x={v.position.x} y={v.position.y + 70} textAnchor="middle" className="text-[14px] font-bold fill-slate-900">{v.label}</text>
+                <text x={v.position.x} y={v.position.y + 65} textAnchor="middle" className="font-bold text-[10px] uppercase tracking-widest" fill={v.color}>{v.label}</text>
               </g>
             )
           })}
-
-          {/* IA Badge Center */}
-          <g transform="translate(350, 310)">
-            <circle r="35" fill="#7C3AED" className="shadow-xl" />
-            <text textAnchor="middle" dy="6" className="font-black text-xl fill-white">IA</text>
+          <g transform="translate(350, 300)">
+            <circle r="35" fill="white" className="shadow-lg" />
+            <text textAnchor="middle" dy="5" className="font-bold text-lg fill-teal-600">IA</text>
+            <text textAnchor="middle" dy="22" className="text-[10px] font-black opacity-30">{ethicsValue}%</text>
           </g>
         </svg>
       )
     };
 
+    const DetailPanel = ({ item, onClose }) => {
+      if (!item) return null;
+      return (
+        <div className="fixed inset-y-0 right-0 w-full max-w-xl glass z-[150] shadow-2xl animate-slide-in flex flex-col p-10 overflow-y-auto rounded-l-[50px]">
+          <button onClick={onClose} className="self-end p-4 text-xl">✕</button>
+          <div className="mt-8">
+            <div className="text-6xl mb-6">{item.emoji || "🔗"}</div>
+            <h2 className="font-serif italic text-5xl mb-2">{item.label}</h2>
+            <p className="text-slate-600 mb-8">{item.description}</p>
+            <blockquote className="p-8 border-l-4 border-teal-500 bg-slate-50 italic text-slate-500">« {item.citation || "Analyse V2 en cours..."} »</blockquote>
+          </div>
+          <button onClick={onClose} className="mt-12 py-5 bg-slate-900 text-white rounded-[25px] font-bold">Retour</button>
+        </div>
+      )
+    }
+
     const App = () => {
-      const [level, setLevel] = useState('primaire');
+      const [tab, setTab] = useState('explorer');
+      const [ethics, setEthics] = useState(35);
       const [selected, setSelected] = useState(null);
+      const [scenario, setScenario] = useState(null);
+
+      const zone = getEthicsZone(tab === 'ethique' ? ethics : 35);
 
       return (
-        <div className="min-h-screen bg-[#FAFAF9] flex flex-col pb-20">
-          <Header activeLevel={level} onLevelChange={setLevel} />
-          <Banner />
+        <div className="min-h-screen flex flex-col">
+          <header className="px-10 py-8 bg-white/80 backdrop-blur-md sticky top-0 z-40 flex items-center justify-between">
+            <div className="flex items-center gap-6">
+               <div className="w-14 h-14 bg-slate-900 flex items-center justify-center rounded-2xl shadow-xl text-white text-xl">🔺</div>
+               <div className="flex flex-col">
+                  <h1 className="font-serif italic text-3xl text-slate-900">Triangle <span className="text-teal-600">Premium</span></h1>
+                  <p className="text-[10px] font-black uppercase text-slate-400 tracking-[0.4em]">MaProfBranchée — Cockpit V2</p>
+               </div>
+            </div>
+            <nav className="flex bg-slate-100/50 p-1 rounded-2xl border border-slate-200 gap-1">
+              {[{id:'explorer',l:'Explorer',i:'🔍'}, {id:'scenarios',l:'Situations',i:'📋'}, {id:'ethique',l:'Éthique',i:'⚡'}].map(t => (
+                <button key={t.id} onClick={()=>{setTab(t.id); setScenario(null);}} className={`px-6 py-2 rounded-xl text-[12px] font-bold transition-all flex items-center gap-2 ${tab === t.id ? 'bg-white shadow-md text-slate-900' : 'text-slate-500'}`}>
+                  <span className="text-lg">{t.i}</span> {t.l}
+                </button>
+              ))}
+            </nav>
+          </header>
 
-          <main className="flex-1 max-w-5xl mx-auto w-full flex flex-col items-center mt-12 px-10">
-            {/* Guide contextuel sous la bannière */}
-            <p className="text-slate-400 text-[13px] mb-12 italic tracking-wide animate-pulse">
-              Cliquez sur un sommet ou un axe du triangle pour explorer les rôles de l'IA et de l'humain.
-            </p>
+          <main className="flex-1 w-full max-w-[1440px] mx-auto flex flex-col lg:flex-row p-10 lg:p-20 gap-20">
+            <div className="flex-[1.4] flex flex-col items-center justify-center relative">
+               <Triangle ethicsValue={tab === 'ethique' ? ethics : 35} activeItem={selected} weights={scenario?.weights} onAxisClick={setSelected} onVertexClick={setSelected} />
+               <div className="mt-16 bg-white shadow-hologram px-10 py-5 rounded-[30px] flex items-center gap-5 border border-slate-100">
+                  <div className="w-2.5 h-2.5 rounded-full bg-teal-500 animate-pulse"></div>
+                  <p className="text-[11px] font-black text-slate-500 uppercase tracking-widest">Cliquez sur un pôle ou un axe</p>
+               </div>
+            </div>
 
-            <div className="relative w-full flex justify-center items-center">
-               <TriangleSVG 
-                  ethicsValue={35} 
-                  activeItem={selected}
-                  onAxisClick={setSelected}
-                  onVertexClick={setSelected}
-               />
+            <div className="flex-1 space-y-12 animate-slide-in">
+               <div>
+                  <h2 className="font-serif italic text-4xl text-slate-900 mb-6 underline decoration-teal-100 underline-offset-12">Décryptez les interactions Homme-IA</h2>
+                  <p className="text-slate-500 text-lg leading-relaxed">Découvrez comment l'intelligence artificielle vient augmenter, défier ou simplifier chaque pôle de l'apprentissage.</p>
+               </div>
+               {tab === 'explorer' && (
+                 <div className="grid gap-3">
+                   {VERTICES.map(v => (
+                     <button key={v.id} onClick={() => setSelected(v)} className="p-6 bg-white border border-slate-50 rounded-[30px] flex justify-between items-center hover:shadow-xl transition-all group">
+                        <div className="flex items-center gap-5">
+                          <span className="text-3xl">{v.emoji}</span>
+                          <span className="font-bold text-slate-700">{v.label}</span>
+                        </div>
+                        <span className="opacity-0 group-hover:opacity-100 transition-all text-teal-600 font-bold">VOIR →</span>
+                     </button>
+                   ))}
+                 </div>
+               )}
+               {tab === 'ethique' && (
+                 <div className="space-y-10">
+                   <input type="range" min="0" max="100" value={ethics} onChange={e => setEthics(parseInt(e.target.value))} className="w-full h-3 bg-slate-200 rounded-full appearance-none cursor-pointer" />
+                   <div className="p-10 rounded-[45px] transition-all duration-700" style={{ background: zone.bgColor }}>
+                      <p className="font-black uppercase tracking-widest text-xs mb-4" style={{ color: zone.color }}>{zone.label}</p>
+                      <p className="text-lg leading-relaxed" style={{ color: zone.color }}>{zone.message}</p>
+                   </div>
+                 </div>
+               )}
             </div>
           </main>
-
-          {/* Panel de détails - tiroir latéral conditionnel (on peut le garder ou le simplifier) */}
-          {selected && (
-            <div className="fixed inset-y-0 right-0 w-full max-w-sm bg-white shadow-2xl z-[100] p-10 animate-[slideUp_0.4s] border-l border-slate-100 flex flex-col overflow-y-auto">
-               <button onClick={() => setSelected(null)} className="self-end text-slate-400 hover:text-slate-900 border border-slate-200 p-2 rounded-xl">✕</button>
-               <div className="mt-10">
-                  <div className="text-5xl mb-4">{selected.emoji || "🔗"}</div>
-                  <h2 className="font-serif italic text-3xl mb-1">{selected.label}</h2>
-                  <p className="text-[10px] font-black uppercase text-slate-400 tracking-widest mb-6">Informations Pédagogiques</p>
-                  <p className="text-slate-600 leading-relaxed mb-8">Découvrez ici comment l'intelligence artificielle impacte ce pôle spécifique de la relation pédagogique dans le modèle augmenté.</p>
-                  <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100">
-                     <p className="text-sm italic text-slate-500 font-medium leading-relaxed">« Les détails de la V2 sont intégrés pour ce niveau spécifique au cycle séléctionné. »</p>
-                  </div>
-               </div>
-               <button onClick={() => setSelected(null)} className="mt-12 py-4 bg-teal-600 text-white rounded-2xl font-bold shadow-lg shadow-teal-100 transition-all hover:bg-teal-700">Fermer l'analyse</button>
-            </div>
-          )}
+          {selected && <DetailPanel item={selected} onClose={() => setSelected(null)} />}
         </div>
-      );
-    };
+      )
+    }
 
     ReactDOM.createRoot(document.getElementById('root')).render(<App />);
   </script>
