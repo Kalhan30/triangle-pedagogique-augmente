@@ -1,69 +1,98 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="bg-[#FAFAF9] text-slate-900 antialiased">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Triangle Pédagogique Augmenté — MaProfBranchee</title>
+  <title>Triangle Pédagogique Augmenté — Version Spéciale V2</title>
+  
+  <!-- Fonts & Core -->
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&family=Instrument+Serif:ital@0;1&display=swap');
-    
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: 'DM Sans', system-ui, sans-serif;
-      background: #FAFAF9;
-      color: #0f172a;
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Instrument+Serif:ital@0;1&display=swap');
+
+    :root {
+      --neon-teal: #0D9488;
+      --neon-violet: #7C3AED;
     }
 
-    /* Scrollbar minimaliste */
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
-    ::-webkit-scrollbar-thumb:hover { background: #cbd5e1; }
-
-    @keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
-    @keyframes slideUp { from { opacity: 0; transform: translateY(24px) } to { opacity: 1; transform: translateY(0) } }
-    @keyframes slideIn { from { transform: translateX(100%) } to { transform: translateX(0) } }
+    /* --- Animations Premium --- */
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
     
+    @keyframes slide-in {
+      from { opacity: 0; transform: translateX(30px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes pulse-soft {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.8; transform: scale(1.05); }
+    }
+
+    .animate-float { animation: float 6s ease-in-out infinite; }
+    .animate-slide-in { animation: slide-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    
+    /* --- Glassmorphism & Effects --- */
+    .glass {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .shadow-hologram {
+      box-shadow: 
+        0 10px 15px -3px rgba(0, 0, 0, 0.05),
+        0 0 20px rgba(13, 148, 136, 0.05),
+        inset 0 0 15px rgba(255, 255, 255, 0.5);
+    }
+
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+
+    /* Custom Input Slider */
     input[type="range"]::-webkit-slider-thumb {
       -webkit-appearance: none;
-      width: 22px;
-      height: 22px;
+      width: 20px;
+      height: 20px;
       border-radius: 50%;
-      background: #fff;
-      border: 3px solid #7C3AED;
-      box-shadow: 0 2px 8px rgba(124, 58, 237, 0.3);
-      cursor: grab;
+      background: white;
+      border: 2px solid #7C3AED;
+      box-shadow: 0 0 15px rgba(124, 58, 237, 0.3);
+      cursor: pointer;
+      transition: all 0.2s;
     }
-    input[type="range"]::-moz-range-thumb {
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      background: #fff;
-      border: 3px solid #7C3AED;
-      box-shadow: 0 2px 8px rgba(124, 58, 237, 0.3);
-      cursor: grab;
-    }
-    
-    * { box-sizing: border-box; }
-    
-    @media (max-width: 768px) {
-      .desktop-sidebar { display: none !important; }
-      .mobile-bottom { display: block !important; }
-      .main-container { flex-direction: column !important; }
-      .nav-tabs { width: 100% !important; overflow-x: auto !important; }
-    }
-    @media (min-width: 769px) {
-      .desktop-sidebar { display: flex !important; }
-      .mobile-bottom { display: none !important; }
-      .main-container { flex-direction: row !important; }
+    input[type="range"]::-webkit-slider-thumb:hover {
+      transform: scale(1.2);
+      box-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
     }
   </style>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"DM Sans"', 'sans-serif'],
+            serif: ['"Instrument Serif"', 'serif'],
+          },
+          colors: {
+            neonCyan: '#00f5ff',
+            neonViolet: '#7C3AED',
+            neonTeal: '#0D9488',
+            neonOrange: '#EA580C',
+            neonRed: '#dc2626',
+          }
+        }
+      }
+    }
+  </script>
 </head>
-<body>
+<body class="overflow-x-hidden selection:bg-teal-100 selection:text-teal-900">
   <div id="root"></div>
 
-  <!-- Scripts React & Babel -->
+  <!-- React & Babel -->
   <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -72,198 +101,32 @@
     const { useState, useEffect, useRef, useCallback, useMemo } = React;
 
     // ═══════════════════════════════════════════════════════════════
-    // DATA
+    // DATA (V2 Standalone)
     // ═══════════════════════════════════════════════════════════════
 
     const VERTICES = [
-      {
-        id: "enseignant",
-        label: "Enseignant",
-        emoji: "👩‍🏫",
-        color: "#0D9488",
-        position: { x: 350, y: 45 },
-        description: "Le décideur pédagogique. Il conçoit, transmet, accompagne et évalue. L'IA est son assistant invisible, pas son remplaçant. Chaque choix pédagogique lui appartient.",
-        citation: "L'IA propose, l'enseignant valide.",
-      },
-      {
-        id: "eleve",
-        label: "Élève",
-        emoji: "👧",
-        color: "#2563EB",
-        position: { x: 120, y: 440 },
-        description: "L'apprenant actif. Il construit ses savoirs par l'erreur, l'engagement et la répétition espacée. L'IA peut l'accompagner, mais l'effort cognitif lui appartient.",
-        citation: "Supprimez l'erreur accompagnée, vous supprimez l'apprentissage.",
-      },
-      {
-        id: "savoir",
-        label: "Savoir",
-        emoji: "📚",
-        color: "#EA580C",
-        position: { x: 580, y: 440 },
-        description: "Les programmes, les compétences, les connaissances. L'IA peut les reformuler, les structurer, les adapter — mais ne les légitime pas. Seuls les cadres institutionnels et l'expertise enseignante le font.",
-        citation: "L'IA accélère, reformule, structure. L'humain contextualise, juge, invente.",
-      },
+      { id: "enseignant", label: "Enseignant", emoji: "👩‍🏫", color: "#0D9488", position: { x: 350, y: 55 }, description: "Le décideur pédagogique. Il conçoit, transmet, accompagne et évalue. L'IA est son assistant invisible, pas son remplaçant. Chaque choix pédagogique lui appartient.", citation: "L'IA propose, l'enseignant valide." },
+      { id: "eleve", label: "Élève", emoji: "👧", color: "#2563EB", position: { x: 120, y: 440 }, description: "L'apprenant actif. Il construit ses savoirs par l'erreur, l'engagement et la répétition espacée. L'IA peut l'accompagner, mais l'effort cognitif lui appartient.", citation: "Supprimez l'erreur accompagnée, vous supprimez l'apprentissage." },
+      { id: "savoir", label: "Savoir", emoji: "📚", color: "#EA580C", position: { x: 580, y: 440 }, description: "Les programmes, les compétences, les connaissances. L'IA peut les reformuler, les structurer, les adapter — mais ne les légitime pas. Seuls les cadres institutionnels et l'expertise enseignante le font.", citation: "L'IA accélère, reformule, structure. L'humain contextualise, juge, invente." },
     ];
 
     const AXES = [
-      {
-        id: "ens-sav",
-        from: "enseignant",
-        to: "savoir",
-        label: "La préparation",
-        color: "#7C3AED",
-        ia_can_do: [
-          "Générer des séquences pédagogiques complètes",
-          "Différencier les exercices en 3 niveaux",
-          "Structurer des programmations annuelles",
-          "Créer des évaluations avec grille de compétences",
-          "Proposer des ressources alignées sur les programmes",
-        ],
-        human_only: [
-          "Juger la pertinence didactique pour SA classe",
-          "Adapter au contexte local et au vécu des élèves",
-          "Choisir la progression en fonction du groupe",
-          "Prioriser selon les besoins observés au quotidien",
-          "Valider la conformité aux programmes officiels",
-        ],
-        terrain_example: "En CE2, j'utilise Claude pour générer 3 niveaux de différenciation sur une leçon de grammaire. L'IA me propose les variantes en 2 minutes. Mais c'est moi qui décide laquelle colle à ma classe, à mes élèves, à ce qu'on a fait la semaine dernière.",
-      },
-      {
-        id: "ens-elev",
-        from: "enseignant",
-        to: "eleve",
-        label: "L'accompagnement",
-        color: "#7C3AED",
-        ia_can_do: [
-          "Identifier des profils d'apprentissage par analyse de résultats",
-          "Générer des feedbacks personnalisés par compétence",
-          "Proposer des parcours de remédiation ciblés",
-          "Créer des supports adaptés (DYS, allophones, HP)",
-          "Automatiser le suivi de progression individuelle",
-        ],
-        human_only: [
-          "Percevoir l'état émotionnel d'un élève en difficulté",
-          "Créer le lien de confiance nécessaire à l'apprentissage",
-          "Décider d'une intervention éducative en situation",
-          "Motiver par la relation humaine (regard, voix, présence)",
-          "Gérer les dynamiques de groupe et les conflits",
-        ],
-        terrain_example: "Quand un élève de CE2 bloque sur une consigne, l'IA peut lui reformuler la question. Mais c'est mon regard qui capte qu'il n'a pas compris parce qu'il s'est disputé à la récréation. Aucune IA ne lit ça.",
-      },
-      {
-        id: "elev-sav",
-        from: "eleve",
-        to: "savoir",
-        label: "L'apprentissage",
-        color: "#7C3AED",
-        ia_can_do: [
-          "Adapter le niveau de difficulté en temps réel",
-          "Fournir des exercices de répétition espacée",
-          "Proposer des explications alternatives quand l'élève bloque",
-          "Générer des quiz d'auto-évaluation personnalisés",
-          "Offrir un tutorat disponible hors temps scolaire",
-        ],
-        human_only: [
-          "Faire l'effort cognitif — c'est non négociable",
-          "Développer l'esprit critique face aux réponses de l'IA",
-          "Construire du sens à partir de l'erreur accompagnée",
-          "Transférer un savoir dans un contexte réel et nouveau",
-          "Développer la métacognition ('comment j'apprends')",
-        ],
-        terrain_example: "Un élève qui demande à l'IA de résumer un texte au lieu de le lire n'apprend rien. L'IA doit accompagner la lecture, pas la remplacer. Le guidage enseignant garantit que l'effort cognitif reste chez l'élève.",
-      },
+      { id: "ens-sav", from: "enseignant", to: "savoir", label: "Préparation", color: "#7C3AED", ia_can_do: ["Générer des séquences pédagogiques", "Différencier en 3 niveaux", "Structurer des programmations"], human_only: ["Juger la pertinence didactique", "Adapter au contexte local", "Valider la conformité officielle"], terrain_example: "En CE2, j'utilise l'IA pour générer 3 niveaux de différenciation. Mais c'est moi qui décide laquelle colle à ma classe." },
+      { id: "ens-elev", from: "enseignant", to: "eleve", label: "Accompagnement", color: "#7C3AED", ia_can_do: ["Identifier des profils d'apprentissage", "Générer des feedbacks personnalisés", "Créer des supports DYS/Handicap"], human_only: ["Percevoir l'émotion d'un élève", "Créer le lien de confiance", "Gérer les dynamiques de groupe"], terrain_example: "L'IA peut reformuler. Mais c'est mon regard qui capte qu'il n'a pas compris parce qu'il est triste aujourd'hui." },
+      { id: "elev-sav", from: "eleve", to: "savoir", label: "Apprentissage", color: "#7C3AED", ia_can_do: ["Adapter la difficulté en temps réel", "Fournir des répétitions espacées", "Quiz d'auto-évaluation"], human_only: ["Faire l'effort cognitif réel", "Développer l'esprit critique", "Construire du sens"], terrain_example: "Un élève qui demande à l'IA de résumer au lieu de lire n'apprend rien. L'effort doit rester chez l'élève." },
     ];
 
     const SCENARIOS = [
-      {
-        id: "preparation",
-        label: "Préparer une séquence",
-        emoji: "📝",
-        level: "Tous niveaux",
-        description: "L'enseignant utilise l'IA pour générer une séquence de mathématiques différenciée en 3 niveaux. L'IA structure, l'enseignant valide et adapte.",
-        weights: { "ens-sav": 0.9, "ens-elev": 0.3, "elev-sav": 0.2 },
-        ia_role: "Générateur de contenu structuré : séquences, exercices, grilles d'évaluation.",
-        human_role: "Validation didactique, adaptation au contexte de classe, choix de progression.",
-      },
-      {
-        id: "differenciation",
-        label: "Différencier en temps réel",
-        emoji: "🎯",
-        level: "Cycle 2-3",
-        description: "Pendant une séance, l'enseignant utilise l'IA pour générer instantanément des variantes d'exercices adaptées aux besoins repérés.",
-        weights: { "ens-sav": 0.7, "ens-elev": 0.8, "elev-sav": 0.5 },
-        ia_role: "Assistant de différenciation : variantes d'exercices, supports adaptés DYS/allophones.",
-        human_role: "Observation fine des besoins, choix du support adapté, accompagnement humain.",
-      },
-      {
-        id: "evaluation",
-        label: "Évaluer par compétences",
-        emoji: "✅",
-        level: "Tous niveaux",
-        description: "L'IA génère des évaluations alignées sur le socle commun avec grille A/PA/NA. L'enseignant ajuste et interprète les résultats.",
-        weights: { "ens-sav": 0.8, "ens-elev": 0.6, "elev-sav": 0.4 },
-        ia_role: "Créateur d'évaluations, générateur de grilles, analyse statistique des résultats.",
-        human_role: "Interprétation pédagogique des résultats, décision de remédiation, communication aux familles.",
-      },
-      {
-        id: "remediation",
-        label: "Remédier après évaluation",
-        emoji: "🔄",
-        level: "Cycle 2-3",
-        description: "Après une évaluation, l'IA propose des parcours de remédiation personnalisés. L'enseignant accompagne et motive.",
-        weights: { "ens-sav": 0.5, "ens-elev": 0.9, "elev-sav": 0.7 },
-        ia_role: "Diagnostic des erreurs récurrentes, parcours de remédiation ciblés, exercices adaptatifs.",
-        human_role: "Motivation, accompagnement émotionnel, ajustement du parcours selon l'état de l'élève.",
-      },
-      {
-        id: "lecture",
-        label: "Accompagner la lecture",
-        emoji: "📖",
-        level: "Cycle 2",
-        description: "L'IA aide à adapter des textes au niveau de lecture de l'élève, propose des exercices de fluence, génère des questions de compréhension différenciées.",
-        weights: { "ens-sav": 0.6, "ens-elev": 0.5, "elev-sav": 0.8 },
-        ia_role: "Adaptation de textes, exercices de fluence, questions de compréhension graduées.",
-        human_role: "L'enseignant guide la compréhension fine, repère les stratégies de décodage de l'élève et maintient la motivation par la relation de confiance.",
-      },
-      {
-        id: "inclusion",
-        label: "Adapter pour l'inclusion",
-        emoji: "♿",
-        level: "Tous niveaux",
-        description: "L'IA génère des supports adaptés (DYS, TDAH, allophones, HP) à partir d'un même contenu de base. L'enseignant personnalise selon le PPS/PAP.",
-        weights: { "ens-sav": 0.7, "ens-elev": 0.7, "elev-sav": 0.6 },
-        ia_role: "Reformulation, mise en page adaptée, traduction, simplification du vocabulaire.",
-        human_role: "Connaissance du profil individuel, lien avec les familles et les professionnels, ajustement en situation.",
-      },
+      { id: "prep", label: "Séquence Mathématiques", emoji: "📝", description: "L'enseignant structure sa séance avec l'IA. Gain de temps sur la forme, focus humain sur le fond.", weights: { "ens-sav": 0.9, "ens-elev": 0.2, "elev-sav": 0.1 }, ia_role: "Architecte de structure", human_role: "Garant de la pertinence" },
+      { id: "diff", label: "Remédiation Flash", emoji: "⚡", description: "L'IA génère des aides ciblées pendant que l'enseignant circule pour encourager.", weights: { "ens-sav": 0.4, "ens-elev": 0.8, "elev-sav": 0.6 }, ia_role: "Adaptateur de supports", human_role: "Motivateur & Tuteur" },
+      { id: "incl", label: "Inclusion DYS/Allophones", emoji: "♿", description: "L'IA adapte instantanément les textes pour les besoins spécifiques détectés.", weights: { "ens-sav": 0.7, "ens-elev": 0.7, "elev-sav": 0.5 }, ia_role: "Traducteur & Simplificateur", human_role: "Connaisance du profil" },
     ];
 
     const ETHICS_ZONES = [
-      { min: 0, max: 25, color: "#16a34a", bgColor: "#DCFCE7", label: "IA minimale", message: "L'IA comme calculatrice — un outil ponctuel. L'enseignant fait l'essentiel. L'IA intervient sur des tâches isolées.", iaStrokeWidth: 1, iaDashArray: "6 4" },
-      { min: 25, max: 60, color: "#0d9488", bgColor: "#CCFBF1", label: "IA partenaire", badge: "RECOMMANDÉ", message: "L'assistant invisible — l'IA assiste sur la préparation et la différenciation. L'enseignant reste le pilote.", iaStrokeWidth: 2.5, iaDashArray: "none" },
-      { min: 60, max: 85, color: "#ea580c", bgColor: "#FFF7ED", label: "IA dominante", badge: "ATTENTION", message: "L'IA génère la majorité des contenus. Risque : la boucle de surcompensation s'enclenche.", iaStrokeWidth: 4.5, iaDashArray: "none" },
-      { min: 85, max: 100, color: "#dc2626", bgColor: "#FEE2E2", label: "IA totale", badge: "ZONE ROUGE", message: "Enseigner en se trahissant. L'IA fait tout. L'enseignant n'a plus de rôle pédagogique.", iaStrokeWidth: 8, iaDashArray: "none" },
-    ];
-
-    const OVERCOMPENSATION_LOOP = {
-      title: "⚠️ La boucle de surcompensation",
-      steps: [
-        "L'IA fait de plus en plus de tâches à la place de l'enseignant",
-        "L'enseignant ressent un sentiment d'illégitimité",
-        "Il surcompense en travaillant plus pour « justifier » sa valeur",
-        "Épuisement professionnel et perte de repères pédagogiques",
-        "Dépendance accrue à l'IA pour compenser la fatigue",
-        "Retour à l'étape 1 — la boucle se referme",
-      ],
-      conclusion: "La solution : rester dans la zone « IA partenaire » (25-60 %).",
-    };
-
-    const REFERENCES = [
-      { author: "Houssaye, J.", year: 1988, title: "Le Triangle pédagogique", detail: "Modèle fondateur des relations Enseignant-Élève-Savoir" },
-      { author: "Dehaene, S.", year: 2018, title: "Apprendre !", detail: "Attention, engagement actif, retour sur erreur, consolidation" },
-      { author: "MEN", year: 2025, title: "Cadre d'usage de l'IA en éducation", detail: "IA générative réservée enseignants" },
-      { author: "UNESCO", year: 2024, title: "Compétences IA pour les enseignants", detail: "15 compétences en 5 dimensions" },
-      { author: "Hattie, J.", year: 2009, title: "Visible Learning", detail: "Méta-analyse sur l'efficacité du feedback" },
-      { author: "Bloom", year: 2001, title: "Taxonomie révisée", detail: "Mémoriser, comprendre, appliquer, analyser, évaluer, créer" },
+      { min: 0, max: 25, color: "#16a34a", bgColor: "#f0fdf4", label: "IA Minimale", message: "L'IA comme simple calculatrice. L'humain fait tout. Sécurisant mais chronophage." },
+      { min: 25, max: 60, color: "#0d9488", bgColor: "#f0fdfa", label: "IA Partenaire", badge: "ÉQUILIBRE", message: "La zone idéale. L'IA assiste la préparation, l'humain pilote la relation. Efficacité maximale sans perte de sens." },
+      { min: 60, max: 85, color: "#ea580c", bgColor: "#fff7ed", label: "IA Dominante", badge: "ALERTE", message: "Attention. L'IA commence à décider de la pédagogie à votre place. Risque de perte d'expertise." },
+      { min: 85, max: 100, color: "#dc2626", bgColor: "#fef2f2", label: "IA Totale", badge: "ZONE ROUGE", message: "Effondrement du triangle. L'enseignant devient exécutant. L'apprentissage devient mécanique." },
     ];
 
     // — Helpers
@@ -274,312 +137,297 @@
     // COMPONENTS
     // ═══════════════════════════════════════════════════════════════
 
-    const OnboardingOverlay = ({ onDismiss }) => (
-      <div onClick={onDismiss} style={{ position: "fixed", inset: 0, background: "rgba(15, 23, 42, 0.6)", backdropFilter: "blur(4px)", zIndex: 100, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", animation: "fadeIn 0.4s ease" }}>
-        <div onClick={(e) => e.stopPropagation()} style={{ background: "#fff", borderRadius: 20, padding: "36px 32px", maxWidth: 440, margin: "0 20px", boxShadow: "0 25px 60px rgba(0,0,0,0.25)", textAlign: "center", animation: "slideUp 0.5s ease" }}>
-          <div style={{ fontSize: 48, marginBottom: 12 }}>🔺</div>
-          <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: 26, fontStyle: "italic", margin: "0 0 12px" }}>Bienvenue dans le Triangle</h2>
-          <p style={{ fontSize: 15, color: "#475569", lineHeight: 1.6, margin: "0 0 24px" }}>Explorez comment l'IA module les 3 relations pédagogiques fondamentales.</p>
-          <div style={{ display: "flex", flexDirection: "column", gap: 10, margin: "0 0 32px", textAlign: "left" }}>
+    const Onboarding = ({ onDismiss }) => (
+      <div className="fixed inset-0 z-[200] flex items-center justify-center p-6 bg-slate-900/40 backdrop-blur-md animate-in fade-in duration-500">
+        <div className="bg-white rounded-[40px] p-10 max-w-lg shadow-2xl text-center animate-slide-in">
+          <div className="w-24 h-24 bg-teal-50 rounded-full flex items-center justify-center mx-auto mb-6 text-4xl shadow-inner animate-bounce">🔺</div>
+          <h2 className="font-serif italic text-3xl mb-4 text-slate-900">Nouveau Cockpit Pédagogique</h2>
+          <p className="text-slate-500 mb-8 leading-relaxed">Découvrez comment l'IA transforme chaque pôle de l'enseignement. Une interface conçue pour garder l'humain au cœur de l'apprentissage.</p>
+          <div className="grid gap-4 mb-8 text-left">
             {[
-              { icon: "👆", text: "Cliquez sur un axe ou un sommet du triangle" },
-              { icon: "📋", text: "Choisissez un scénario pour voir l'IA en situation" },
-              { icon: "⚡", text: "Déplacez le curseur éthique pour tester les limites" },
+              { icon: "🔍", t: "Explorez les 3 axes fondamentaux" },
+              { icon: "🚥", t: "Testez les limites avec le curseur éthique" },
+              { icon: "🎯", t: "Pratiquez avec des scénarios de terrain" }
             ].map((item, i) => (
-              <div key={i} style={{ display: "flex", alignItems: "center", gap: 12, padding: "10px 14px", background: "#f8fafc", borderRadius: 10, fontSize: 14 }}>
-                <span style={{ fontSize: 20 }}>{item.icon}</span>
-                <span>{item.text}</span>
+              <div key={i} className="flex items-center gap-4 p-4 bg-slate-50 rounded-3xl border border-slate-100">
+                <span className="text-2xl">{item.icon}</span>
+                <span className="text-sm font-medium text-slate-700">{item.t}</span>
               </div>
             ))}
           </div>
-          <button onClick={onDismiss} style={{ width: "100%", padding: "14px", background: "#0D9488", color: "#fff", border: "none", borderRadius: 12, fontSize: 15, fontWeight: 700, cursor: "pointer" }}>Explorer le triangle →</button>
+          <button onClick={onDismiss} className="w-full py-5 bg-teal-600 hover:bg-teal-700 text-white rounded-3xl font-bold transition-all shadow-lg hover:shadow-teal-200">Prendre les commandes →</button>
         </div>
       </div>
     );
 
-    const TriangleSVG = ({ ethicsValue, activeAxis, activeVertex, scenarioWeights, onAxisClick, onVertexClick }) => {
+    const Triangle = ({ ethicsValue, activeItem, onAxisClick, onVertexClick, weights }) => {
       const zone = getEthicsZone(ethicsValue);
-      const iaOpacity = 0.15 + (ethicsValue / 100) * 0.7;
-      const vertexOpacity = ethicsValue > 85 ? 0.4 : 1;
-      const midpoints = AXES.map((axis) => {
-        const from = getVertexById(axis.from);
-        const to = getVertexById(axis.to);
-        return { id: axis.id, x: (from.position.x + to.position.x) / 2, y: (from.position.y + to.position.y) / 2 };
-      });
+      const iaOpacity = 0.1 + (ethicsValue / 100) * 0.7;
 
       return (
-        <svg viewBox="0 0 700 510" style={{ width: "100%", maxWidth: 600, display: "block", margin: "0 auto", overflow: "visible" }}>
+        <svg viewBox="0 0 700 540" className="w-full max-w-2xl overflow-visible drop-shadow-2xl">
           <defs>
-            <filter id="glow"><feGaussianBlur stdDeviation="4" result="blur" /><feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge></filter>
-            <radialGradient id="iaGrad" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stopColor="#7C3AED" stopOpacity={iaOpacity} />
-              <stop offset="100%" stopColor="#7C3AED" stopOpacity="0" />
+            <filter id="neon"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            <radialGradient id="iaFlow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor={zone.color} stopOpacity={iaOpacity} />
+              <stop offset="100%" stopColor={zone.color} stopOpacity="0" />
             </radialGradient>
           </defs>
-          <circle cx="350" cy="310" r={70 + ethicsValue * 0.8} fill="url(#iaGrad)"><animate attributeName="r" values={`${70 + ethicsValue * 0.8};${76 + ethicsValue * 0.8};${70 + ethicsValue * 0.8}`} dur="3s" repeatCount="indefinite" /></circle>
-          {AXES.map((axis) => {
+          
+          {/* IA Pulse Center */}
+          <circle cx="350" cy="300" r={80 + ethicsValue} fill="url(#iaFlow)" className="transition-all duration-700">
+             <animate attributeName="r" values={`${80+ethicsValue};${86+ethicsValue};${80+ethicsValue}`} dur="4s" repeatCount="indefinite" />
+          </circle>
+
+          {/* Lines (Axes) */}
+          {AXES.map(axis => {
             const from = getVertexById(axis.from);
             const to = getVertexById(axis.to);
-            const weight = scenarioWeights ? scenarioWeights[axis.id] || 0.5 : 0.5;
-            const isActive = activeAxis === axis.id;
-            const mp = midpoints.find(m => m.id === axis.id);
+            const w = weights ? weights[axis.id] : 0.5;
+            const active = activeItem?.id === axis.id;
             return (
-              <g key={axis.id}>
-                <line x1={from.position.x} y1={from.position.y} x2={to.position.x} y2={to.position.y} stroke="transparent" strokeWidth={30} style={{ cursor: "pointer" }} onClick={() => onAxisClick(axis.id)} />
-                <line x1={from.position.x} y1={from.position.y} x2={to.position.x} y2={to.position.y} stroke={isActive ? "#7C3AED" : "#94a3b8"} strokeWidth={isActive ? 3.5 : 1.5 + weight * 3} strokeDasharray={zone.iaDashArray !== "none" ? zone.iaDashArray : "none"} opacity={isActive ? 1 : 0.5 + weight * 0.5} style={{ transition: "all 0.3s", filter: isActive ? "url(#glow)" : "none", pointerEvents: "none" }} />
-                <line x1="350" y1="310" x2={mp.x} y2={mp.y} stroke="#7C3AED" strokeWidth={zone.iaStrokeWidth} strokeDasharray={zone.iaDashArray} opacity={0.3 + (ethicsValue / 100) * 0.5} style={{ transition: "all 0.3s", pointerEvents: "none" }} />
+              <g key={axis.id} className="cursor-pointer group" onClick={() => onAxisClick(axis)}>
+                <line x1={from.position.x} y1={from.position.y} x2={to.position.x} y2={to.position.y} stroke="transparent" strokeWidth="40" />
+                <line x1={from.position.x} y1={from.position.y} x2={to.position.x} y2={to.position.y} 
+                  stroke={active ? axis.color : "#cbd5e1"} 
+                  strokeWidth={active ? 4 : 1.5 + w*3} 
+                  strokeDasharray={zone.iaDashArray || "none"}
+                  className="transition-all duration-500" 
+                  style={{ filter: active ? "url(#neon)" : "none" }} />
+                {/* ID Link from center */}
+                <line x1="350" y1="300" x2={(from.position.x + to.position.x)/2} y2={(from.position.y + to.position.y)/2}
+                   stroke={zone.color} strokeWidth={active ? 3 : 1} opacity="0.3" strokeDasharray="5,5" />
               </g>
-            );
+            )
           })}
-          {AXES.map((axis, i) => {
-            const mp = midpoints[i];
-            const offsets = [{ dx: 0, dy: -25 }, { dx: -90, dy: 10 }, { dx: 90, dy: 10 }];
-            return <text key={axis.id + "-l"} x={mp.x + offsets[i].dx} y={mp.y + offsets[i].dy} textAnchor="middle" style={{ fontSize: 12, fill: activeAxis === axis.id ? "#7C3AED" : "#64748b", fontWeight: activeAxis === axis.id ? 700 : 400, pointerEvents: "none", transition: "all 0.2s" }}>{axis.label}</text>;
+
+          {/* Vertices */}
+          {VERTICES.map(v => {
+            const active = activeItem?.id === v.id;
+            return (
+              <g key={v.id} className="cursor-pointer" onClick={() => onVertexClick(v)}>
+                <circle cx={v.position.x} cy={v.position.y} r={active ? 42 : 38} fill="white" stroke={v.color} strokeWidth={active ? 3 : 1.5} className="transition-all duration-300 shadow-xl" />
+                <text x={v.position.x} y={v.position.y - 4} textAnchor="middle" className="text-3xl select-none">{v.emoji}</text>
+                <text x={v.position.x} y={v.position.y + 65} textAnchor="middle" className="font-bold text-[13px] uppercase tracking-widest" fill={v.color}>{v.label}</text>
+              </g>
+            )
           })}
-          <g style={{ transition: "all 0.3s" }}>
-            <circle cx="350" cy="310" r={30 + ethicsValue * 0.15} fill="#7C3AED" opacity={0.12 + (ethicsValue / 100) * 0.2} />
-            <text x="350" y="305" textAnchor="middle" style={{ fontSize: 13, fontWeight: 700, fill: "#7C3AED" }}>IA</text>
-            <text x="350" y="322" textAnchor="middle" style={{ fontSize: 10, fill: "#7c3aed", opacity: 0.7 }}>{ethicsValue}%</text>
+
+          {/* Center Label */}
+          <g transform="translate(350, 300)">
+            <circle r="35" fill="white" className="shadow-lg" />
+            <text textAnchor="middle" dy="5" className="font-bold text-lg fill-teal-600">IA</text>
+            <text textAnchor="middle" dy="22" className="text-[10px] font-black opacity-30 select-none">{ethicsValue}%</text>
           </g>
-          {VERTICES.map((v) => {
-            const isActive = activeVertex === v.id;
-            return (
-              <g key={v.id} onClick={() => onVertexClick(v.id)} style={{ cursor: "pointer", transition: "all 0.3s", opacity: vertexOpacity }}>
-                <circle cx={v.position.x} cy={v.position.y} r={isActive ? 38 : 34} fill="#fff" stroke={v.color} strokeWidth={isActive ? 3 : 2} style={{ filter: isActive ? "url(#glow)" : "none" }} />
-                <text x={v.position.x} y={v.position.y - 4} textAnchor="middle" style={{ fontSize: 24, pointerEvents: "none" }}>{v.emoji}</text>
-                <text x={v.position.x} y={v.position.y + 58} textAnchor="middle" style={{ fontSize: 13, fontWeight: 700, fill: v.color }}>{v.label}</text>
-              </g>
-            );
-          })}
         </svg>
-      );
+      )
     };
 
-    const DetailPanel = ({ type, data, onClose }) => (
-      <div style={{ position: "fixed", top: 0, right: 0, width: "min(480px, 92vw)", height: "100vh", background: "#fff", boxShadow: "-8px 0 40px rgba(0,0,0,0.12)", zIndex: 110, overflowY: "auto", animation: "slideIn 0.3s ease" }}>
-        <button onClick={onClose} style={{ position: "sticky", top: 12, float: "right", margin: "12px 16px 0 0", width: 40, height: 40, borderRadius: 10, border: "1px solid #e2e8f0", background: "#fff", fontSize: 20, cursor: "pointer", boxShadow: "0 2px 8px rgba(0,0,0,0.08)" }}>✕</button>
-        <div style={{ padding: "32px 28px 40px" }}>
-          {type === "vertex" ? (
-            <>
-              <div style={{ fontSize: 40, marginBottom: 8 }}>{data.emoji}</div>
-              <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: 28, fontStyle: "italic", color: data.color, margin: "0 0 16px" }}>{data.label}</h2>
-              <p style={{ fontSize: 15, lineHeight: 1.7, color: "#334155", margin: "0 0 20px" }}>{data.description}</p>
-              <blockquote style={{ borderLeft: `3px solid ${data.color}`, paddingLeft: 16, margin: 0, fontStyle: "italic", color: "#64748b", fontSize: 14 }}>{data.citation}</blockquote>
-            </>
-          ) : (
-            <>
-              <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: 26, fontStyle: "italic", margin: "0 0 6px" }}>{data.label}</h2>
-              <p style={{ fontSize: 13, color: "#64748b", margin: "0 0 24px" }}>{getVertexById(data.from).label} ↔ {getVertexById(data.to).label}</p>
-              <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-                <div style={{ background: "#f5f3ff", borderRadius: 12, padding: "18px 20px", borderLeft: "3px solid #7C3AED" }}>
-                  <h3 style={{ fontSize: 14, fontWeight: 700, color: "#7C3AED", margin: "0 0 12px", textTransform: "uppercase" }}>🤖 Ce que l'IA peut faire</h3>
-                  {data.ia_can_do.map((item, i) => <div key={i} style={{ display: "flex", gap: 8, marginBottom: 8, fontSize: 13.5 }}><span style={{ color: "#7C3AED" }}>▸</span><span>{item}</span></div>)}
-                </div>
-                <div style={{ background: "#f0fdf4", borderRadius: 12, padding: "18px 20px", borderLeft: "3px solid #16a34a" }}>
-                  <h3 style={{ fontSize: 14, fontWeight: 700, color: "#16a34a", margin: "0 0 12px", textTransform: "uppercase" }}>💚 Irremplaçable humain</h3>
-                  {data.human_only.map((item, i) => <div key={i} style={{ display: "flex", gap: 8, marginBottom: 8, fontSize: 13.5 }}><span style={{ color: "#16a34a" }}>▸</span><span>{item}</span></div>)}
-                </div>
-              </div>
-              <div style={{ marginTop: 20, background: "#fffbeb", borderRadius: 12, padding: "16px 18px", borderLeft: "3px solid #f59e0b" }}>
-                <h4 style={{ fontSize: 13, fontWeight: 700, color: "#92400e", margin: "0 0 8px" }}>💬 Exemple terrain</h4>
-                <p style={{ fontSize: 13.5, color: "#78350f", fontStyle: "italic", margin: 0 }}>{data.terrain_example}</p>
-              </div>
-            </>
-          )}
-          <button onClick={onClose} style={{ width: "100%", marginTop: 32, padding: "16px", background: "#0f172a", color: "#fff", border: "none", borderRadius: 12, fontWeight: 700, cursor: "pointer" }}>Fermer l'analyse</button>
-        </div>
-      </div>
-    );
-
-    const EthicsSlider = ({ value, onChange }) => {
-      const zone = getEthicsZone(value);
+    const DetailPanel = ({ item, onClose }) => {
+      if (!item) return null;
+      const isAxis = !!item.ia_can_do;
       return (
-        <div style={{ background: "#fff", borderRadius: 16, padding: "20px 24px", border: "1px solid #e2e8f0", boxShadow: "0 2px 12px rgba(0,0,0,0.04)" }}>
-          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 10 }}><h3 style={{ fontSize: 14, fontWeight: 700 }}>⚡ Curseur éthique</h3><span style={{ fontSize: 12, color: "#64748b", fontStyle: "italic" }}>← Déplacez-moi →</span></div>
-          <input type="range" min="0" max="99" value={value} onChange={(e) => onChange(Number(e.target.value))} style={{ width: "100%", height: 8, appearance: "none", background: `linear-gradient(to right, #16a34a 0%, #0d9488 25%, #ea580c 60%, #dc2626 85%, #dc2626 100%)`, borderRadius: 4, outline: "none", cursor: "pointer" }} />
-          <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 8 }}>
-            <span style={{ width: 10, height: 10, borderRadius: "50%", background: zone.color }} />
-            <span style={{ fontSize: 14, fontWeight: 600, color: zone.color }}>{zone.label}</span>
-            {zone.badge && <span style={{ fontSize: 10, fontWeight: 700, color: "#fff", background: zone.color, padding: "2px 8px", borderRadius: 6, textTransform: "uppercase" }}>{zone.badge}</span>}
-            <span style={{ fontSize: 13, color: "#94a3b8", marginLeft: "auto" }}>{value} %</span>
-          </div>
-          <p style={{ fontSize: 13, color: "#475569", marginTop: 12, padding: "12px", background: zone.bgColor, borderRadius: 10 }}>{zone.message}</p>
-          {value >= 60 && (
-            <div style={{ marginTop: 14, padding: "14px", background: value >= 85 ? "#fef2f2" : "#fff7ed", border: `1px solid ${value >= 85 ? "#fecaca" : "#fed7aa"}`, borderRadius: 10 }}>
-              <h4 style={{ fontSize: 13, fontWeight: 700, color: value >= 85 ? "#dc2626" : "#ea580c", margin: "0 0 10px" }}>{OVERCOMPENSATION_LOOP.title}</h4>
-              <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-                {OVERCOMPENSATION_LOOP.steps.map((s, i) => <div key={i} style={{ fontSize: 12, color: "#78350f", display: "flex", gap: 6 }}><span style={{ color: value >= 85 ? "#dc2626" : "#ea580c", fontWeight: 700 }}>{i + 1}.</span><span>{s}</span></div>)}
-              </div>
-              <p style={{ fontSize: 12, fontWeight: 600, color: "#0d9488", marginTop: 10, fontStyle: "italic" }}>{OVERCOMPENSATION_LOOP.conclusion}</p>
-            </div>
-          )}
-        </div>
-      );
-    };
+        <div className="fixed inset-y-0 right-0 w-full max-w-xl glass z-[150] shadow-2xl animate-slide-in flex flex-col p-10 overflow-y-auto no-scrollbar rounded-l-[50px]">
+          <button onClick={onClose} className="self-end w-12 h-12 rounded-2xl bg-white border border-slate-100 shadow-sm flex items-center justify-center hover:bg-slate-50 transition-all text-xl">✕</button>
+          
+          <div className="mt-8">
+            <div className="text-6xl mb-6">{item.emoji || "🔗"}</div>
+            <h2 className="font-serif italic text-5xl text-slate-900 mb-2 leading-tight">{item.label}</h2>
+            <p className="text-slate-400 uppercase font-black tracking-widest text-[11px] mb-8">
+              {isAxis ? `Relation ${getVertexById(item.from).label} ↔ ${getVertexById(item.to).label}` : "Pôle d'influence principal"}
+            </p>
 
-    const ScenarioSelector = ({ activeScenario, onSelect }) => (
-      <div style={{ background: "#fff", borderRadius: 16, padding: "20px 24px", border: "1px solid #e2e8f0", boxShadow: "0 2px 12px rgba(0,0,0,0.04)" }}>
-        <h3 style={{ fontSize: 14, fontWeight: 700, margin: "0 0 14px" }}>📋 Scénarios terrain</h3>
-        <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-          {SCENARIOS.map((s) => {
-            const isActive = activeScenario?.id === s.id;
-            return (
-              <button key={s.id} onClick={() => onSelect(isActive ? null : s)} style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 14px", borderRadius: 10, border: isActive ? "2px solid #7C3AED" : "1px solid #e2e8f0", background: isActive ? "#f5f3ff" : "#fafafa", cursor: "pointer", transition: "all 0.2s" }}>
-                <span style={{ fontSize: 18 }}>{s.emoji}</span>
-                <div style={{ textAlign: "left" }}>
-                  <div style={{ fontSize: 13, fontWeight: isActive ? 600 : 500, color: isActive ? "#7C3AED" : "#334155" }}>{s.label}</div>
-                  <div style={{ fontSize: 11, color: "#94a3b8" }}>{s.level}</div>
+            <p className="text-lg leading-relaxed text-slate-600 mb-10">{item.description}</p>
+            
+            {isAxis ? (
+              <div className="space-y-8">
+                <div className="p-8 rounded-[40px] bg-violet-50/50 border border-violet-100">
+                  <h3 className="flex items-center gap-3 font-bold text-violet-700 mb-6 underline decoration-violet-200 underline-offset-8">🤖 Potentiel IA</h3>
+                  {item.ia_can_do.map((v, i) => <div key={i} className="flex gap-4 mb-4 text-[15px] items-start text-violet-900/70"><span className="shrink-0 text-violet-400">▹</span><span>{v}</span></div>)}
                 </div>
-              </button>
-            );
-          })}
-        </div>
-        {activeScenario && (
-          <div style={{ marginTop: 16, padding: "16px", background: "#f5f3ff", borderRadius: 12 }}>
-            <p style={{ fontSize: 13, color: "#334155", lineHeight: 1.6, margin: "0 0 12px" }}>{activeScenario.description}</p>
-            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-              <div style={{ padding: "8px 12px", background: "#ede9fe", borderRadius: 8, fontSize: 12, color: "#5b21b6" }}><strong>🤖 Rôle IA :</strong> {activeScenario.ia_role}</div>
-              <div style={{ padding: "8px 12px", background: "#dcfce7", borderRadius: 8, fontSize: 12, color: "#166534" }}><strong>💚 Rôle humain :</strong> {activeScenario.human_role}</div>
-            </div>
-            <div style={{ marginTop: 12 }}>
-              <div style={{ fontSize: 11, fontWeight: 600, color: "#64748b", margin: "0 0 8px", textTransform: "uppercase" }}>Activation des axes</div>
-              {AXES.map(axis => {
-                const w = activeScenario.weights[axis.id] || 0;
-                return (
-                  <div key={axis.id} style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
-                    <span style={{ fontSize: 11, color: "#64748b", width: 110 }}>{axis.label}</span>
-                    <div style={{ flex: 1, height: 6, background: "#e2e8f0", borderRadius: 3, overflow: "hidden" }}>
-                      <div style={{ width: `${w * 100}%`, height: "100%", background: "#7C3AED", transition: "width 0.3s ease" }} />
-                    </div>
-                    <span style={{ fontSize: 11, color: "#94a3b8", width: 32, textAlign: "right" }}>{Math.round(w * 100)}%</span>
-                  </div>
-                );
-              })}
-            </div>
+                <div className="p-8 rounded-[40px] bg-teal-50/50 border border-teal-100">
+                  <h3 className="flex items-center gap-3 font-bold text-teal-700 mb-6 underline decoration-teal-200 underline-offset-8">👤 Valeur Humaine</h3>
+                  {item.human_only.map((v, i) => <div key={i} className="flex gap-4 mb-4 text-[15px] items-start text-teal-900/70"><span className="shrink-0 text-teal-400">▹</span><span>{v}</span></div>)}
+                </div>
+                <div className="p-8 rounded-[40px] bg-amber-50/50 border border-amber-100">
+                   <p className="text-xs font-black text-amber-600 uppercase mb-3 tracking-widest">Exemple Terrain</p>
+                   <p className="italic text-amber-900/60 leading-relaxed font-medium">"{item.terrain_example}"</p>
+                </div>
+              </div>
+            ) : (
+              <blockquote className="p-8 border-l-4 border-teal-500 bg-slate-50 rounded-r-3xl italic text-slate-500 leading-loose">
+                « {item.citation} »
+              </blockquote>
+            )}
           </div>
-        )}
-      </div>
-    );
-
-    const ReferencesModal = ({ onClose }) => (
-      <div onClick={onClose} style={{ position: "fixed", inset: 0, background: "rgba(15,23,42,0.5)", backdropFilter: "blur(4px)", zIndex: 120, display: "flex", alignItems: "center", justifyContent: "center", animation: "fadeIn 0.2s ease" }}>
-        <div onClick={(e) => e.stopPropagation()} style={{ background: "#fff", borderRadius: 16, padding: "32px 28px", maxWidth: 520, maxHeight: "80vh", overflowY: "auto", margin: "0 20px", boxShadow: "0 25px 60px rgba(0,0,0,0.2)" }}>
-          <div style={{ display: "flex", justifyBetween: "center", alignItems: "center", marginBottom: 20 }}>
-            <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: 22, fontStyle: "italic", margin: 0 }}>Sources & Références</h2>
-            <button onClick={onClose} style={{ marginLeft: "auto", width: 36, height: 36, borderRadius: 8, border: "1px solid #e2e8f0", background: "#fff", cursor: "pointer" }}>✕</button>
-          </div>
-          {REFERENCES.map((ref, i) => (
-            <div key={i} style={{ padding: "12px 0", borderBottom: i < REFERENCES.length - 1 ? "1px solid #f1f5f9" : "none" }}>
-              <div style={{ fontSize: 13, fontWeight: 600 }}>{ref.author} ({ref.year})</div>
-              <div style={{ fontSize: 13, fontStyle: "italic", color: "#7C3AED", margin: "2px 0" }}>{ref.title}</div>
-              <div style={{ fontSize: 12, color: "#64748b" }}>{ref.detail}</div>
-            </div>
-          ))}
-          <p style={{ fontSize: 12, color: "#94a3b8", marginTop: 16, fontStyle: "italic" }}>Cadre théorique conçu par Vanessa Le Scolan — MaProfBranchée</p>
+          <button onClick={onClose} className="mt-12 py-5 bg-slate-900 text-white rounded-[25px] font-bold text-lg hover:bg-black transition-all">Retour à l'interface</button>
         </div>
-      </div>
-    );
-
-    // ═══════════════════════════════════════════════════════════════
-    // MAIN APP
-    // ═══════════════════════════════════════════════════════════════
+      )
+    }
 
     const App = () => {
-      const [showOnboarding, setShowOnboarding] = useState(true);
-      const [activeTab, setActiveTab] = useState("explorer");
-      const [ethicsValue, setEthicsValue] = useState(40);
-      const [activeAxis, setActiveAxis] = useState(null);
-      const [activeVertex, setActiveVertex] = useState(null);
-      const [activeScenario, setActiveScenario] = useState(null);
-      const [showRefs, setShowRefs] = useState(false);
+      const [step, setStep] = useState(0); // 0: onboarding, 1: app
+      const [tab, setTab] = useState('explorer');
+      const [ethics, setEthics] = useState(35);
+      const [selected, setSelected] = useState(null);
+      const [scenario, setScenario] = useState(null);
 
-      const handleAxisClick = useCallback((id) => { setActiveVertex(null); setActiveAxis(activeAxis === id ? null : id); }, [activeAxis]);
-      const handleVertexClick = useCallback((id) => { setActiveAxis(null); setActiveVertex(activeVertex === id ? null : id); }, [activeVertex]);
-      const handleScenarioSelect = useCallback((s) => { setActiveScenario(s); setActiveAxis(null); setActiveVertex(null); }, []);
-
-      const panelData = activeAxis ? AXES.find(a => a.id === activeAxis) : activeVertex ? VERTICES.find(v => v.id === activeVertex) : null;
-      const panelType = activeAxis ? "axis" : activeVertex ? "vertex" : null;
-
-      const tabs = [
-        { id: "explorer", label: "Explorer", emoji: "🔍" },
-        { id: "scenarios", label: "Situations", emoji: "📋" },
-        { id: "ethique", label: "Éthique", emoji: "⚡" },
-      ];
+      const zone = getEthicsZone(tab === 'ethique' ? ethics : 35);
 
       return (
-        <div style={{ minHeight: "100vh", background: "#FAFAF9", position: "relative" }}>
-          {showOnboarding && <OnboardingOverlay onDismiss={() => setShowOnboarding(false)} />}
-          {showRefs && <ReferencesModal onClose={() => setShowRefs(false)} />}
+        <div className="min-h-screen flex flex-col font-sans">
+          {step === 0 && <Onboarding onDismiss={() => setStep(1)} />}
           
-          <header style={{ padding: "20px 24px 16px", borderBottom: "1px solid #e2e8f0", background: "#fff" }}>
-            <div style={{ maxWidth: 1200, margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
-              <div>
-                <h1 style={{ fontFamily: "'Instrument Serif', serif", fontSize: 24, fontStyle: "italic", margin: 0 }}>Triangle pédagogique augmenté</h1>
-                <p style={{ fontSize: 13, color: "#64748b", margin: "4px 0 0" }}>Enseigner sans se trahir — où l'IA amplifie, où l'humain est irremplaçable</p>
-              </div>
-              <div style={{ display: "flex", gap: 8 }}>
-                <button onClick={() => setShowRefs(true)} style={{ padding: "8px 14px", borderRadius: 8, border: "1px solid #e2e8f0", background: "#fff", fontSize: 12, cursor: "pointer" }}>📚 Sources</button>
-                <a href="https://maprofbranchee.fr" target="_blank" style={{ padding: "8px 14px", borderRadius: 8, background: "#0D9488", color: "#fff", fontSize: 12, textDecoration: "none", fontWeight: 600 }}>MaProfBranchée</a>
-              </div>
+          {/* Dashboard Header */}
+          <header className="px-10 py-8 bg-white/80 backdrop-blur-md border-b border-slate-100 sticky top-0 z-40 flex items-center justify-between">
+            <div className="flex items-center gap-6">
+               <div className="w-14 h-14 bg-slate-900 flex items-center justify-center rounded-2xl shadow-xl text-white text-xl">🔺</div>
+               <div>
+                  <h1 className="font-serif italic text-3xl text-slate-900 tracking-tight">Triangle <span className="text-teal-600">Premium</span></h1>
+                  <p className="text-[10px] font-black uppercase text-slate-400 tracking-[0.4em]">MaProfBranchée — Cockpit V2</p>
+               </div>
             </div>
+
+            <nav className="hidden md:flex bg-slate-100/50 p-1.5 rounded-2xl border border-slate-200 gap-1">
+              {[
+                { id: 'explorer', l: 'Explorer', i: '🔍' },
+                { id: 'scenarios', l: 'Situations', i: '📋' },
+                { id: 'ethique', l: 'Éthique', i: '⚡' }
+              ].map(t => (
+                <button
+                  key={t.id} onClick={() => { setTab(t.id); setScenario(null); }}
+                  className={`px-6 py-2.5 rounded-xl text-[13px] font-bold transition-all flex items-center gap-2 ${tab === t.id ? 'bg-white shadow-md text-slate-900 border border-slate-200' : 'text-slate-500 hover:text-slate-900'}`}
+                >
+                  <span className="text-lg">{t.i}</span> {t.l}
+                </button>
+              ))}
+            </nav>
           </header>
 
-          <nav className="nav-tabs" style={{ maxWidth: 1200, margin: "0 auto", padding: "12px 24px 0", display: "flex", gap: 4 }}>
-            {tabs.map(tab => (
-              <button key={tab.id} onClick={() => { setActiveTab(tab.id); if (tab.id !== "scenarios") setActiveScenario(null); }} style={{ padding: "10px 18px", borderRadius: "10px 10px 0 0", border: "none", background: activeTab === tab.id ? "#fff" : "transparent", fontSize: 13, fontWeight: activeTab === tab.id ? 600 : 400, color: activeTab === tab.id ? "#0f172a" : "#64748b", cursor: "pointer", borderBottom: activeTab === tab.id ? "2px solid #7C3AED" : "2px solid transparent" }}>{tab.emoji} {tab.label}</button>
-            ))}
-          </nav>
+          <main className="flex-1 max-w-[1440px] mx-auto w-full flex flex-col lg:flex-row p-10 lg:p-20 gap-20">
+            
+            {/* Left Col: Visualization */}
+            <div className="flex-[1.4] flex flex-col items-center justify-center relative">
+               <Triangle 
+                 ethicsValue={tab === 'ethique' ? ethics : 35} 
+                 activeItem={selected} 
+                 weights={scenario?.weights}
+                 onAxisClick={setSelected} 
+                 onVertexClick={setSelected} />
 
-          <main className="main-container" style={{ maxWidth: 1200, margin: "0 auto", padding: "20px 24px 40px", display: "flex", gap: 24, alignItems: "flex-start" }}>
-            <div style={{ flex: "1 1 auto", minWidth: 0 }}>
-              <TriangleSVG ethicsValue={activeTab === 'ethique' ? ethicsValue : 40} activeAxis={activeAxis} activeVertex={activeVertex} scenarioWeights={activeScenario?.weights} onAxisClick={handleAxisClick} onVertexClick={handleVertexClick} />
-              
-              {/* Contextual Guide - Fix Ludo */}
-              <div style={{ marginTop: 16, padding: "14px 18px", background: "#f8fafc", borderRadius: 12, border: "1px solid #e2e8f0", textAlign: "center" }}>
-                {!activeAxis && !activeVertex && !activeScenario && (
-                  <p style={{ fontSize: 13, color: "#64748b", margin: 0, fontStyle: "italic" }}>👆 Cliquez sur un <strong style={{ color: "#7C3AED" }}>axe</strong> ou un <strong style={{ color: "#0D9488" }}>sommet</strong> du triangle pour commencer l'exploration</p>
-                )}
-                {activeAxis && <p style={{ fontSize: 13, color: "#7C3AED", margin: 0, fontWeight: 500 }}>📖 Panneau ouvert : {AXES.find(a => a.id === activeAxis)?.label} →</p>}
-                {activeVertex && <p style={{ fontSize: 13, color: "#0D9488", margin: 0, fontWeight: 500 }}>📖 Panneau ouvert : {VERTICES.find(v => v.id === activeVertex)?.label} →</p>}
-                {activeScenario && !activeAxis && !activeVertex && <p style={{ fontSize: 13, color: "#7C3AED", margin: 0, fontWeight: 500 }}>📋 Scénario actif : {activeScenario.emoji} {activeScenario.label}</p>}
-              </div>
-
-              {activeTab === "ethique" && <div style={{ marginTop: 16 }}><EthicsSlider value={ethicsValue} onChange={setEthicsValue} /></div>}
+               {/* Guide Contextuel - Fix Ludo */}
+               <div className="mt-16 glass shadow-hologram px-10 py-5 rounded-[30px] flex items-center gap-5 border border-white">
+                  <div className="w-3 h-3 rounded-full bg-teal-500 animate-pulse"></div>
+                  <p className="text-sm font-bold text-slate-500 uppercase tracking-widest">
+                    {tab === 'explorer' && "Cliquez sur un pôle ou un axe"}
+                    {tab === 'scenarios' && (scenario ? scenario.label : "Sélectionnez un scénario à droite")}
+                    {tab === 'ethique' && `Mode IA : ${zone.label}`}
+                  </p>
+               </div>
             </div>
 
-            <aside className="desktop-sidebar" style={{ width: 340, flexShrink: 0, flexDirection: "column", gap: 16 }}>
-              {activeTab === "scenarios" && <ScenarioSelector activeScenario={activeScenario} onSelect={handleScenarioSelect} />}
-              {activeTab === "ethique" && (
-                <div style={{ background: "#fff", borderRadius: 16, padding: "20px 24px", border: "1px solid #e2e8f0", boxShadow: "0 2px 12px rgba(0,0,0,0.04)" }}>
-                  <h3 style={{ fontSize: 14, fontWeight: 700, margin: "0 0 12px" }}>Les 4 zones éthiques</h3>
-                  {ETHICS_ZONES.map((z, i) => (
-                    <div key={i} style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 12px", borderRadius: 8, background: getEthicsZone(ethicsValue) === z ? z.bgColor : "transparent", marginBottom: 4 }}>
-                      <span style={{ width: 10, height: 10, borderRadius: "50%", background: z.color }} />
-                      <span style={{ fontSize: 12, fontWeight: getEthicsZone(ethicsValue) === z ? 600 : 400 }}>{z.label} ({z.min}–{z.max}%)</span>
-                    </div>
-                  ))}
-                </div>
-              )}
-              {activeTab === "explorer" && (
-                <div style={{ background: "#fff", borderRadius: 16, padding: "20px 24px", border: "1px solid #e2e8f0", boxShadow: "0 2px 12px rgba(0,0,0,0.04)" }}>
-                  <h3 style={{ fontSize: 14, fontWeight: 700, margin: "0 0 12px" }}>🔍 Mode Explorer</h3>
-                  <p style={{ fontSize: 13, color: "#475569", lineHeight: 1.6, margin: "0 0 16px" }}>Cliquez sur chaque axe ou chaque sommet pour découvrir le rôle de l'IA et les limites de l'humain.</p>
-                  <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                    {AXES.map(axis => <button key={axis.id} onClick={() => handleAxisClick(axis.id)} style={{ padding: "10px 14px", borderRadius: 10, border: activeAxis === axis.id ? "2px solid #7C3AED" : "1px solid #e2e8f0", background: activeAxis === axis.id ? "#f5f3ff" : "#fafafa", cursor: "pointer", textAlign: "left", fontSize: 13, fontWeight: activeAxis === axis.id ? 600 : 400, color: activeAxis === axis.id ? "#7C3AED" : "#334155" }}>{axis.label} <span style={{ fontSize: 11, color: "#94a3b8" }}>({getVertexById(axis.from).label} ↔ {getVertexById(axis.to).label})</span></button>)}
-                  </div>
-                </div>
-              )}
-            </aside>
+            {/* Right Col: Controls */}
+            <div className="flex-1 space-y-12">
+               
+               {/* Context Description Section */}
+               <div className="animate-slide-in">
+                  <h2 className="font-serif italic text-4xl text-slate-900 mb-6 leading-tight">
+                    {tab === 'explorer' && "Décryptez les interactions Homme-IA"}
+                    {tab === 'scenarios' && "L'IA mise à l'épreuve du terrain"}
+                    {tab === 'ethique' && "L'équilibre du triangle éthique"}
+                  </h2>
+                  <p className="text-slate-500 leading-relaxed text-lg">
+                    {tab === 'explorer' && "Découvrez comment l'intelligence artificielle vient augmenter, défier ou simplifier chaque pôle de l'apprentissage."}
+                    {tab === 'scenarios' && "Simulez l'impact de l'IA sur la structure pédagogique à travers des cas concrets de classe."}
+                    {tab === 'ethique' && "Ajustez le curseur pour observer la mutation de la structure. Jusqu'où l'IA peut-elle aller avant de rompre le lien humain ?"}
+                  </p>
+               </div>
+
+               {/* Dynamic Control Panels */}
+               <div className="space-y-6">
+                 {tab === 'explorer' && (
+                   <div className="grid gap-3">
+                     {VERTICES.map(v => (
+                       <button key={v.id} onClick={() => setSelected(v)} className="p-6 glass rounded-[30px] flex justify-between items-center group hover:bg-white hover:shadow-xl transition-all">
+                          <div className="flex items-center gap-5">
+                            <span className="text-3xl filter grayscale group-hover:grayscale-0 transition-all">{v.emoji}</span>
+                            <span className="font-bold text-slate-700 text-lg">{v.label}</span>
+                          </div>
+                          <span className="opacity-0 group-hover:opacity-100 transition-all text-teal-600 font-black">VOIR →</span>
+                       </button>
+                     ))}
+                   </div>
+                 )}
+
+                 {tab === 'scenarios' && (
+                   <div className="grid gap-4">
+                     {SCENARIOS.map(s => (
+                       <button key={s.id} onClick={() => setScenario(s)} className={`p-8 text-left rounded-[40px] border transition-all ${scenario?.id === s.id ? 'bg-teal-600 text-white shadow-2xl border-transparent scale-105' : 'bg-white border-slate-100 hover:border-teal-200'}`}>
+                          <div className="flex justify-between items-center mb-3">
+                             <span className="text-3xl">{s.emoji}</span>
+                             <span className={`text-[10px] font-black uppercase tracking-widest ${scenario?.id === s.id ? 'opacity-70' : 'text-slate-400'}`}>{s.level}</span>
+                          </div>
+                          <h4 className="text-xl font-bold mb-2">{s.label}</h4>
+                          <p className={`text-sm leading-snug ${scenario?.id === s.id ? 'opacity-80' : 'text-slate-500'}`}>{s.description}</p>
+                       </button>
+                     ))}
+                   </div>
+                 )}
+
+                 {tab === 'ethique' && (
+                   <div className="space-y-10">
+                     <div className="relative pt-12">
+                        <input 
+                           type="range" min="0" max="100" value={ethics} 
+                           onChange={e => setEthics(parseInt(e.target.value))}
+                           className="w-full h-3 bg-slate-200 rounded-full appearance-none cursor-pointer" />
+                        <div className="absolute top-0 left-0 w-full flex justify-between items-center">
+                           <span className="text-3xl font-serif italic text-teal-600">{ethics}%</span>
+                           <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest animate-pulse">← Déplacez le curseur →</span>
+                        </div>
+                     </div>
+                     
+                     <div className="p-10 rounded-[45px] transition-all duration-700 space-y-4 shadow-inner" style={{ background: zone.bgColor }}>
+                        <div className="flex justify-between items-center">
+                           <h3 className="font-black uppercase tracking-widest text-xs" style={{ color: zone.color }}>{zone.label}</h3>
+                           {zone.badge && <span className="px-5 py-1.5 bg-white rounded-full text-[10px] font-black shadow-sm" style={{ color: zone.color }}>{zone.badge}</span>}
+                        </div>
+                        <p className="text-lg font-medium leading-relaxed" style={{ color: zone.color }}>{zone.message}</p>
+                     </div>
+
+                     {ethics > 60 && (
+                       <div className="p-8 border-4 border-dashed border-orange-200 rounded-[40px] bg-white">
+                          <h4 className="font-bold text-orange-600 mb-6 flex items-center gap-3">⚠️ {OVERCOMPENSATION_LOOP.title}</h4>
+                          <div className="space-y-3">
+                             {OVERCOMPENSATION_LOOP.steps.map((s, i) => (
+                               <div key={i} className="flex gap-4 text-sm text-slate-600">
+                                  <span className="w-6 h-6 rounded-lg bg-orange-50 text-orange-500 flex items-center justify-center font-bold text-xs">{i+1}</span>
+                                  <span>{s}</span>
+                               </div>
+                             ))}
+                          </div>
+                       </div>
+                     )}
+                   </div>
+                 )}
+               </div>
+            </div>
           </main>
 
-          <footer style={{ textAlign: "center", padding: "16px 24px 24px", borderTop: "1px solid #f1f5f9" }}>
-            <p style={{ fontSize: 12, color: "#94a3b8", margin: 0 }}>Cadre théorique conçu par <a href="https://maprofbranchee.fr" target="_blank" style={{ color: "#0D9488", textDecoration: "none", fontWeight: 600 }}>Vanessa Le Scolan — MaProfBranchée</a> · Basé sur le Triangle de Houssaye (1988)</p>
+          <footer className="px-10 py-12 border-t border-slate-100 flex flex-col md:flex-row justify-between items-center gap-10 bg-slate-50/50">
+             <div className="text-slate-400 text-sm max-w-md text-center md:text-left leading-relaxed">
+               Basé sur le modèle de <strong>Jean Houssaye (1988)</strong>, augmenté par <strong>Vanessa Le Scolan (2025)</strong> pour l'analyse des mutations numériques en éducation.
+             </div>
+             <div className="flex items-center gap-12">
+               <button className="text-[11px] font-black text-slate-900 border-b-2 border-teal-500 pb-1 uppercase tracking-widest">Sources Académiques</button>
+               <a href="https://maprofbranchee.fr" className="text-xs font-bold text-teal-600 px-6 py-3 bg-white rounded-2xl shadow-sm border border-slate-100">© MaProfBranchée</a>
+             </div>
           </footer>
 
-          {panelData && <DetailPanel type={panelType} data={panelData} onClose={() => { setActiveAxis(null); setActiveVertex(null); }} />}
+          {selected && <DetailPanel item={selected} onClose={() => setSelected(null)} />}
         </div>
-      );
-    };
+      )
+    }
 
     ReactDOM.createRoot(document.getElementById('root')).render(<App />);
   </script>
