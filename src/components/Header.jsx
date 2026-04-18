@@ -17,7 +17,8 @@ export default function Header({ onExport }) {
           aria-label="Retour à l'accueil"
         >
           <ArrowLeft size={18} />
-          <span className="hidden sm:inline text-sm">Accueil</span>
+          <img src="/avatar-mpb.png" alt="MaProfBranchee" className="w-7 h-7 rounded-full object-cover ring-1 ring-brand-teal-light/40" />
+          <span className="hidden sm:inline text-sm font-semibold">MaProfBranchee</span>
         </button>
 
         <div className="relative">

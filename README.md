@@ -1,6 +1,6 @@
 # Triangle Pédagogique Augmenté — V2
 
-Application React + Vite + Tailwind. Dark mode par défaut, palette MaProfBranchée (teal/violet/ambre), proxy serverless Claude Anthropic.
+Application React + Vite + Tailwind. Dark mode par défaut, palette MaProfBranchee (teal/violet/ambre), proxy serverless Claude Anthropic.
 
 ## Stack
 - React 18 + Vite

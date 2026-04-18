@@ -5,7 +5,7 @@ const MOTS_PEDAGOGIQUES = new Set([
   'Mathématiques', 'Mathematiques', 'Français', 'Francais', 'Histoire', 'Géographie',
   'SVT', 'Physique', 'Chimie', 'EPS', 'Arts', 'Musique', 'Anglais', 'Espagnol',
   'Primaire', 'Collège', 'College', 'Lycée', 'Lycee', 'CE1', 'CE2', 'CM1', 'CM2',
-  'CP', 'GS', 'MS', 'PS', 'IA', 'Claude', 'MaProfBranchée', 'MaProfBranchee',
+  'CP', 'GS', 'MS', 'PS', 'IA', 'Claude', 'MaProfBranchee',
   'MEN', 'DRANE', 'ERUN', 'DNB', 'Bac', 'Paris', 'France', 'Cycle',
 ]);
 

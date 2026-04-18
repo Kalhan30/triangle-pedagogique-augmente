@@ -18,7 +18,7 @@ export async function exporterFichePdf(diagnostic) {
   pdf.setTextColor(203, 213, 225);
   pdf.setFontSize(10);
   pdf.setFont('helvetica', 'normal');
-  pdf.text('Fiche synthèse — MaProfBranchée', 14, 18);
+  pdf.text('Fiche synthèse — MaProfBranchee', 14, 18);
 
   pdf.setTextColor(30, 41, 59);
   pdf.setFontSize(14);

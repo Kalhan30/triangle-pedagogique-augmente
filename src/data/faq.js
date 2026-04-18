@@ -15,7 +15,7 @@ export const FAQ_ENTRIES = [
     id: 'faq-3',
     ordre: 3,
     question: "Mes données pédagogiques sont-elles enregistrées quelque part ?",
-    reponse: "Non. Seul ton diagnostic actif est enregistré dans le navigateur (localStorage), uniquement sur ta machine. Aucune donnée n'est transmise à un serveur MaProfBranchée. Les appels à l'IA Claude ne persistent pas et ne sont pas utilisés à des fins d'entraînement.",
+    reponse: "Non. Seul ton diagnostic actif est enregistré dans le navigateur (localStorage), uniquement sur ta machine. Aucune donnée n'est transmise à un serveur MaProfBranchee. Les appels à l'IA Claude ne persistent pas et ne sont pas utilisés à des fins d'entraînement.",
   },
   {
     id: 'faq-4',
@@ -45,6 +45,6 @@ export const FAQ_ENTRIES = [
     id: 'faq-8',
     ordre: 8,
     question: "Qui a conçu cet outil ?",
-    reponse: "Vanessa Le Scolan-Nguyen, auteure du blog MaProfBranchée, coach scolaire et formatrice. L'outil s'inscrit dans sa feuille de route SINPA 2026 autour de la formation des enseignants au numérique pédagogique responsable.",
+    reponse: "Vanessa Le Scolan-Nguyen, auteure du blog MaProfBranchee, coach scolaire et formatrice. L'outil s'inscrit dans sa feuille de route SINPA 2026 autour de la formation des enseignants au numérique pédagogique responsable.",
   },
 ];

@@ -21,7 +21,14 @@ export default function Accueil() {
     <main className="min-h-screen flex flex-col items-center justify-center px-6 py-12 animate-fade">
       <div className="max-w-4xl w-full">
         <div className="text-center mb-10">
-          <p className="text-sm uppercase tracking-[0.2em] text-brand-teal-light mb-3">MaProfBranchée</p>
+          <div className="flex flex-col items-center gap-3 mb-4">
+            <img
+              src="/avatar-mpb.png"
+              alt="Avatar MaProfBranchee"
+              className="w-20 h-20 rounded-full object-cover ring-2 ring-brand-teal-light/40 shadow-lg"
+            />
+            <p className="text-sm uppercase tracking-[0.2em] text-brand-teal-light">MaProfBranchee</p>
+          </div>
           <h1 className="text-4xl md:text-5xl font-bold mb-4 text-text">
             Triangle Pédagogique <span className="text-brand-teal">Augmenté</span>
           </h1>
