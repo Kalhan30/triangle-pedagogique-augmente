@@ -114,10 +114,29 @@ export async function exporterFichePdf(diagnostic) {
     });
   }
 
+  if (diagnostic.recommandationsFull?.referenceCadre) {
+    if (y > 250) { pdf.addPage(); y = 20; }
+    pdf.setFont('helvetica', 'bold');
+    pdf.setFontSize(10);
+    pdf.setTextColor(245, 158, 11);
+    pdf.text(`Référence : ${diagnostic.recommandationsFull.referenceCadre.principe}`, 14, y);
+    y += 5;
+    pdf.setFont('helvetica', 'italic');
+    pdf.setTextColor(71, 85, 105);
+    const cit = pdf.splitTextToSize(`« ${diagnostic.recommandationsFull.referenceCadre.citation} »`, 180);
+    pdf.text(cit, 14, y);
+    y += cit.length * 5 + 3;
+  }
+
   pdf.setFontSize(8);
   pdf.setTextColor(148, 163, 184);
+  pdf.setFont('helvetica', 'italic');
+  const mention = pdf.splitTextToSize("Analyse effectuée en cohérence avec le Cadre d'usage de l'IA en éducation, Ministère de l'Éducation nationale, juin 2025.", 180);
+  pdf.text(mention, 14, 280);
+
+  pdf.setFont('helvetica', 'normal');
   const date = new Date().toLocaleDateString('fr-FR');
-  pdf.text(`Généré le ${date} via triangle.maprofbranchee.fr`, 14, 290);
+  pdf.text(`Généré le ${date} — MaProfBranchee`, 14, 290);
 
   pdf.save(`diagnostic-triangle-${Date.now()}.pdf`);
 }

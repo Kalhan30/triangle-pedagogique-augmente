@@ -5,6 +5,17 @@ export const NIVEAUX = [
     shortLabel: 'Primaire',
     citation: "À 6 ans, l'enfant a besoin d'un regard, pas d'un écran.",
     cadreReglementaire: "IA générative réservée EXCLUSIVEMENT aux enseignants. Les élèves ne manipulent pas d'IA. L'enseignant utilise l'IA pour préparer et différencier (Cadre MEN 2025).",
+    regleAutorisation: "Les élèves du 1er degré sont sensibilisés aux connaissances de base sur les IA, mais ne manipulent pas directement des services d'IA générative.",
+    autorises: [
+      "Sensibilisation aux notions de base de l'IA",
+      "Développement de l'esprit critique sur l'IA",
+      "Usage par l'enseignant pour préparer ses cours (sans données élèves)",
+    ],
+    nonAutorises: [
+      "Manipulation directe d'IA génératives par les élèves",
+      "Saisie de données personnelles d'élèves dans des services grand public",
+    ],
+    formulationAffichage: "Au primaire, l'IA est un outil professionnel de l'enseignant. Les élèves n'y accèdent pas directement.",
   },
   {
     id: 'college_6_5',
@@ -12,6 +23,16 @@ export const NIVEAUX = [
     shortLabel: '6e-5e',
     citation: "Avant la 4e, l'IA reste en coulisse : l'enseignant prépare, l'élève apprend sans médiation algorithmique.",
     cadreReglementaire: "IA générative INTERDITE aux élèves avant la 4e (Cadre MEN 2025). Sensibilisation possible sans manipulation directe.",
+    regleAutorisation: "La manipulation d'outils d'IA générative par les élèves n'est pas autorisée avant la 4e.",
+    autorises: [
+      "Sensibilisation à l'IA, ses potentialités, ses risques et ses limites",
+      "Usage par l'enseignant pour préparer ses cours",
+      "Éveil à la citoyenneté numérique et à l'EMI",
+    ],
+    nonAutorises: [
+      "Utilisation autonome d'IA génératives par les élèves de 6e et 5e",
+    ],
+    formulationAffichage: "Avant la 4e, l'IA reste l'outil de l'enseignant. La sensibilisation des élèves passe par la pensée critique, pas par la manipulation.",
   },
   {
     id: 'college_4_3',
@@ -19,6 +40,17 @@ export const NIVEAUX = [
     shortLabel: '4e-3e',
     citation: "La 4e ouvre un nouveau territoire : l'IA devient objet d'apprentissage, sous l'œil attentif de l'enseignant.",
     cadreReglementaire: "IA générative AUTORISÉE à partir de la 4e, strictement encadrée. Formation obligatoire à l'IA en 4e.",
+    regleAutorisation: "L'utilisation pédagogique des IA génératives par les élèves, limitée, encadrée, expliquée et accompagnée par l'enseignant, est autorisée en classe à partir de la 4e, en lien avec les objectifs des programmes scolaires et du CRCN.",
+    autorises: [
+      "Usage encadré en classe sous la responsabilité de l'enseignant",
+      "Formation obligatoire à l'IA via parcours Pix IA (4e obligatoire)",
+      "Supports pédagogiques construits avec IA",
+    ],
+    nonAutorises: [
+      "Usage d'IA générative pour réaliser un devoir sans autorisation explicite (considéré comme fraude)",
+      "Création de comptes sur services IA grand public à la demande de l'école",
+    ],
+    formulationAffichage: "À partir de la 4e, l'IA devient un objet pédagogique pour les élèves — encadrée, expliquée, accompagnée.",
   },
   {
     id: 'lycee_sup',
@@ -26,6 +58,18 @@ export const NIVEAUX = [
     shortLabel: 'Lycée+',
     citation: "L'autonomie numérique se gagne quand l'esprit critique a été outillé.",
     cadreReglementaire: "Usage autonome par les élèves dans un cadre défini. Focus sur l'esprit critique, l'éthique et l'appropriation personnelle.",
+    regleAutorisation: "Au lycée, les élèves peuvent utiliser les IA génératives de manière autonome dans un cadre d'apprentissage et de formation explicitement défini par l'enseignant.",
+    autorises: [
+      "Usage autonome par les élèves dans un cadre défini",
+      "Formation obligatoire à l'IA en seconde (voies générales, technologiques, professionnelles)",
+      "Formation obligatoire en 1re année de CAP",
+      "Intégration aux projets d'évaluation pour préserver l'équité",
+    ],
+    nonAutorises: [
+      "Usage non autorisé d'IA générative pour produire un devoir (assimilé à une fraude)",
+      "Substitution à l'effort cognitif de l'élève dans les productions évaluées",
+    ],
+    formulationAffichage: "Au lycée, l'élève utilise l'IA en autonomie — mais toujours dans un cadre explicitement défini par l'enseignant.",
   },
 ];
 
@@ -88,4 +132,21 @@ export const getZoneEthique = (value) => {
   if (value < 60) return ETHICS_ZONES[1];
   if (value < 85) return ETHICS_ZONES[2];
   return ETHICS_ZONES[3];
+};
+
+export const CONTENU_ACCUEIL = {
+  titre: 'Triangle Pédagogique Augmenté',
+  baseline: "L'IA en périphérie, l'humain au cœur.",
+  blocHoussaye: {
+    titre: 'Le cadre de base — Jean Houssaye, 1988',
+    texte: "Une situation d'enseignement, c'est toujours un équilibre entre trois pôles : l'enseignant, l'élève et le savoir. Entre eux, trois axes de relation : préparer (Enseignant–Savoir), enseigner (Enseignant–Élève), apprendre (Élève–Savoir). Quand un axe devient trop fort, les deux autres s'affaiblissent.",
+  },
+  blocAugmentation: {
+    titre: "L'augmentation par l'IA",
+    texte: "L'IA ne remplace aucun des trois pôles. Elle agit en périphérie, sur les axes. Elle peut absorber certaines tâches pour que l'enseignant garde du temps sur la relation humaine et la médiation. La question n'est plus « faut-il utiliser l'IA ? » mais « où a-t-elle sa place sans faire disparaître les liens qui constituent l'apprentissage ? ».",
+  },
+  modaleDetail: {
+    titre: 'À propos du triangle pédagogique',
+    texte: "Le triangle pédagogique de Jean Houssaye, publié en 1988 dans son ouvrage « Le triangle pédagogique », propose trois processus constitutifs de la situation d'enseignement : ENSEIGNER (l'axe Enseignant-Savoir, où l'enseignant prépare et structure le contenu) ; FORMER (l'axe Enseignant-Élève, relation humaine et médiation pédagogique) ; APPRENDRE (l'axe Élève-Savoir, l'effort cognitif de l'élève pour s'approprier le contenu). Houssaye démontre que privilégier un axe aboutit toujours à faire le mort le troisième pôle : une pédagogie qui sur-investit la préparation oublie l'élève, une pédagogie relationnelle perd parfois le savoir, une pédagogie centrée sur l'apprentissage autonome peut effacer l'enseignant. Le Triangle Augmenté par l'IA conserve ce cadre : l'IA n'est jamais un pôle du triangle — elle n'est ni enseignant, ni élève, ni savoir. Elle module les axes, en périphérie. Cette distinction est essentielle pour ne pas la laisser coloniser la relation pédagogique.",
+  },
 };

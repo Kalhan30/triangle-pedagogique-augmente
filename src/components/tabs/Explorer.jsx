@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { X } from 'lucide-react';
+import { X, ChevronDown, Scale, CheckCircle2, XCircle } from 'lucide-react';
 import Triangle from '../Triangle.jsx';
 import { AXES_META, VERTICES_META, getNiveau } from '../../data/niveaux.js';
 import { AXES_DETAILS } from '../../data/axesDetails.js';
@@ -10,12 +10,14 @@ export default function Explorer() {
   const niveau = getNiveau(niveauId);
   const [selectedVertex, setSelectedVertex] = useState(null);
   const [selectedAxis, setSelectedAxis] = useState(null);
+  const [cadreOpen, setCadreOpen] = useState(false);
 
   const detail = niveauId && selectedAxis ? AXES_DETAILS[niveauId]?.[selectedAxis] : null;
   const vertexInfo = selectedVertex ? VERTICES_META[selectedVertex] : null;
 
   return (
-    <section className="max-w-6xl mx-auto px-4 md:px-6 py-6 grid md:grid-cols-[1fr_380px] gap-6 animate-fade">
+    <section className="max-w-6xl mx-auto px-4 md:px-6 py-6 animate-fade">
+      <div className="grid md:grid-cols-[1fr_380px] gap-6">
       <div className="card p-6">
         <div className="mb-4">
           <h2 className="text-xl font-semibold mb-1">{niveau?.label}</h2>
@@ -76,6 +78,53 @@ export default function Explorer() {
           </div>
         )}
       </aside>
+      </div>
+
+      <section className="card mt-6 overflow-hidden" aria-labelledby="cadre-title">
+        <button
+          onClick={() => setCadreOpen((v) => !v)}
+          className="w-full flex items-center justify-between p-5 text-left hover:bg-background-elevated transition"
+          aria-expanded={cadreOpen}
+          aria-controls="cadre-panel"
+        >
+          <div className="flex items-center gap-3">
+            <Scale size={18} className="text-brand-amber-light" strokeWidth={1.75} />
+            <h3 id="cadre-title" className="text-base font-semibold">Cadre réglementaire — {niveau?.label}</h3>
+          </div>
+          <ChevronDown size={18} className={`text-text-muted transition ${cadreOpen ? 'rotate-180' : ''}`} />
+        </button>
+        {cadreOpen && (
+          <div id="cadre-panel" className="px-5 pb-5 pt-1 border-t border-background-elevated space-y-4">
+            <div className="p-4 rounded-lg" style={{ background: 'rgba(245, 158, 11, 0.08)', borderLeft: '3px solid #F59E0B' }}>
+              <p className="text-xs uppercase tracking-wider text-brand-amber-light font-semibold mb-2">Règle centrale</p>
+              <p className="text-sm text-text-secondary italic">« {niveau?.regleAutorisation} »</p>
+            </div>
+            <div className="grid md:grid-cols-2 gap-4">
+              <div>
+                <div className="flex items-center gap-2 mb-2">
+                  <CheckCircle2 size={15} className="text-semantic-success" />
+                  <p className="text-xs uppercase tracking-wider font-semibold text-semantic-success">Autorisé</p>
+                </div>
+                <ul className="space-y-1 text-sm text-text-secondary">
+                  {niveau?.autorises.map((a, i) => <li key={i}>▸ {a}</li>)}
+                </ul>
+              </div>
+              <div>
+                <div className="flex items-center gap-2 mb-2">
+                  <XCircle size={15} className="text-semantic-error" />
+                  <p className="text-xs uppercase tracking-wider font-semibold text-semantic-error">Non autorisé</p>
+                </div>
+                <ul className="space-y-1 text-sm text-text-secondary">
+                  {niveau?.nonAutorises.map((a, i) => <li key={i}>▸ {a}</li>)}
+                </ul>
+              </div>
+            </div>
+            <p className="text-xs text-text-muted pt-2 border-t border-background-elevated">
+              Source : Cadre d'usage de l'IA en éducation, Ministère de l'Éducation nationale, juin 2025.
+            </p>
+          </div>
+        )}
+      </section>
     </section>
   );
 }

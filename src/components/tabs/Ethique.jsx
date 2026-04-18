@@ -1,10 +1,12 @@
 import Triangle from '../Triangle.jsx';
 import { ETHICS_ZONES, getZoneEthique } from '../../data/niveaux.js';
+import { ZONE_CITATIONS } from '../../data/cadre.js';
 import { useApp } from '../../contexts/AppContext.jsx';
 
 export default function Ethique() {
   const { ethicsValue, setEthicsValue } = useApp();
   const zone = getZoneEthique(ethicsValue);
+  const cadreZone = ZONE_CITATIONS[zone.id];
 
   return (
     <section className="max-w-6xl mx-auto px-4 md:px-6 py-6 grid md:grid-cols-[1fr_380px] gap-6 animate-fade">
@@ -59,6 +61,14 @@ export default function Ethique() {
         </div>
         <p className="text-2xl font-bold mb-3 text-text">{ethicsValue} %</p>
         <p className="text-sm leading-relaxed mb-4" style={{ color: zone.color }}>{zone.message}</p>
+
+        {cadreZone && (
+          <div className="p-3 rounded-lg bg-background-secondary border border-background-elevated mb-4">
+            <p className="text-[10px] uppercase tracking-wider font-semibold text-text-muted mb-2">Citation du Cadre d'usage — Juin 2025</p>
+            <p className="text-xs italic text-text-secondary leading-relaxed mb-2">« {cadreZone.citation} »</p>
+            <p className="text-xs text-text-muted">{cadreZone.interpretation}</p>
+          </div>
+        )}
 
         <div className="border-t border-background-elevated pt-4 mt-4">
           <p className="text-xs uppercase tracking-wide text-text-muted mb-2">Toutes les zones</p>

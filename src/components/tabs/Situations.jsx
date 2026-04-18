@@ -46,6 +46,7 @@ export default function Situations() {
         roleIA: result.roleIA,
         roleHumain: result.roleHumain,
         pointsAttention: result.pointsAttention || [],
+        referenceCadre: result.referenceCadre || null,
         custom: true,
       });
     } catch (e) {
@@ -144,6 +145,14 @@ function ScenarioDetail({ scenario, ethicsValue }) {
       )}
       {scenario.citation && (
         <blockquote className="mt-4 italic text-sm text-text-muted border-l-2 border-background-elevated pl-3">« {scenario.citation} »</blockquote>
+      )}
+      {scenario.referenceCadre && (
+        <div className="mt-4 p-3 rounded-lg bg-background-secondary border border-background-elevated">
+          <p className="text-[10px] uppercase tracking-wider font-semibold text-text-muted mb-1">Référence cadre</p>
+          <p className="text-sm font-semibold text-brand-amber-light mb-1">{scenario.referenceCadre.principe}</p>
+          <p className="text-xs italic text-text-secondary">« {scenario.referenceCadre.citation} »</p>
+          <p className="text-[10px] text-text-muted mt-2">Cadre d'usage de l'IA en éducation — MEN, juin 2025</p>
+        </div>
       )}
     </div>
   );

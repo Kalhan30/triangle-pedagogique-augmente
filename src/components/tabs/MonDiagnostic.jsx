@@ -175,6 +175,14 @@ export default function MonDiagnostic() {
                 <strong className="text-brand-amber-light">Vigilance : </strong>{recommendations.pointVigilance}
               </p>
             )}
+            {recommendations.referenceCadre && (
+              <div className="p-3 rounded-lg bg-background-secondary border border-background-elevated">
+                <p className="text-[10px] uppercase tracking-wider font-semibold text-text-muted mb-1">Référence cadre</p>
+                <p className="text-sm font-semibold text-brand-amber-light mb-1">{recommendations.referenceCadre.principe}</p>
+                <p className="text-xs italic text-text-secondary">« {recommendations.referenceCadre.citation} »</p>
+                <p className="text-[10px] text-text-muted mt-2">Cadre d'usage de l'IA en éducation — MEN, juin 2025</p>
+              </div>
+            )}
           </div>
         )}
       </div>
