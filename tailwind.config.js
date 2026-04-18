@@ -35,7 +35,8 @@ export default {
         },
         text: {
           DEFAULT: '#F8FAFC',
-          secondary: '#CBD5E1',
+          emphasized: '#F1F5F9',
+          secondary: '#E2E8F0',
           muted: '#64748B',
         },
         semantic: {

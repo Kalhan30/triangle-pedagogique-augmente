@@ -21,7 +21,7 @@ export default function Explorer() {
       <div className="card p-6">
         <div className="mb-4">
           <h2 className="text-xl font-semibold mb-1">{niveau?.label}</h2>
-          <p className="text-sm text-text-secondary italic">« {niveau?.citation} »</p>
+          <p className="text-sm text-text-emphasized italic">« {niveau?.citation} »</p>
         </div>
         <Triangle
           axes={{ enseignantSavoir: 60, enseignantEleve: 60, eleveSavoir: 60 }}
@@ -31,7 +31,7 @@ export default function Explorer() {
           onSelectAxis={(a) => { setSelectedAxis(a); setSelectedVertex(null); }}
           ethicsValue={ethicsValue}
         />
-        <p className="text-xs text-text-muted mt-4 text-center">
+        <p className="text-sm text-text-emphasized mt-4 text-center">
           Cliquez sur un <span className="text-brand-teal-light">sommet</span> ou un <span className="text-brand-violet-light">axe</span> pour en explorer le contenu.
         </p>
       </div>

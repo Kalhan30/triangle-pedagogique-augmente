@@ -20,9 +20,9 @@ export const TriangleHoussayeBase = () => (
     <line x1="60" y1="220" x2="260" y2="220" stroke="#F59E0B" strokeWidth="2" strokeOpacity="0.6" />
     <line x1="260" y1="220" x2="160" y2="50" stroke="#8B5CF6" strokeWidth="2" strokeOpacity="0.6" />
 
-    <text x="90" y="130" fill="#CBD5E1" fontSize="11" fontFamily="Inter, sans-serif" fontStyle="italic" transform="rotate(-60 90 130)" textAnchor="middle">préparer</text>
-    <text x="160" y="240" fill="#CBD5E1" fontSize="11" fontFamily="Inter, sans-serif" fontStyle="italic" textAnchor="middle">enseigner</text>
-    <text x="230" y="130" fill="#CBD5E1" fontSize="11" fontFamily="Inter, sans-serif" fontStyle="italic" transform="rotate(60 230 130)" textAnchor="middle">apprendre</text>
+    <text x="90" y="130" fill="#E2E8F0" fontSize="11" fontFamily="Inter, sans-serif" fontStyle="italic" transform="rotate(-60 90 130)" textAnchor="middle">préparer</text>
+    <text x="160" y="240" fill="#E2E8F0" fontSize="11" fontFamily="Inter, sans-serif" fontStyle="italic" textAnchor="middle">enseigner</text>
+    <text x="230" y="130" fill="#E2E8F0" fontSize="11" fontFamily="Inter, sans-serif" fontStyle="italic" transform="rotate(60 230 130)" textAnchor="middle">apprendre</text>
 
     <circle cx="160" cy="50" r="24" fill="#1E293B" stroke="#14B8A6" strokeWidth="2.5" filter="url(#glowTeal)" />
     <text x="160" y="54" fill="#F8FAFC" fontSize="12" fontFamily="Inter, sans-serif" fontWeight="600" textAnchor="middle">Savoir</text>
@@ -97,6 +97,6 @@ export const TriangleAugmenteIA = () => (
     <circle cx="260" cy="220" r="24" fill="#1E293B" stroke="#14B8A6" strokeWidth="2.5" filter="url(#glowTealAug)" />
     <text x="260" y="224" fill="#F8FAFC" fontSize="12" fontFamily="Inter, sans-serif" fontWeight="600" textAnchor="middle">Élève</text>
 
-    <text x="160" y="268" fill="#CBD5E1" fontSize="11" fontFamily="Inter, sans-serif" fontWeight="500" fontStyle="italic" textAnchor="middle">Humain au cœur — IA en périphérie</text>
+    <text x="160" y="268" fill="#FDE68A" fontSize="11" fontFamily="Inter, sans-serif" fontWeight="500" fontStyle="italic" textAnchor="middle">Humain au cœur — IA en périphérie</text>
   </svg>
 );

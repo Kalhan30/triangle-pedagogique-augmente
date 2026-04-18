@@ -51,7 +51,7 @@ export default function Accueil() {
           </header>
 
           <section aria-labelledby="comprendre-title" className="mb-10" style={{ animation: 'fadeIn 0.4s 200ms ease-out both' }}>
-            <h2 id="comprendre-title" className="text-xs uppercase tracking-[0.2em] text-text-muted text-center mb-5">
+            <h2 id="comprendre-title" className="text-xs uppercase tracking-[0.2em] text-slate-200 opacity-90 text-center mb-5">
               Comprendre en 30 secondes
             </h2>
             <div className="grid md:grid-cols-2 gap-5">
@@ -106,7 +106,7 @@ export default function Accueil() {
                       </div>
                       <div className="flex-1 min-w-0">
                         <h3 className="text-base font-semibold text-text">{n.label}</h3>
-                        <p className="text-xs text-text-muted mt-0.5">{NIVEAU_DESCRIPTIONS[n.id]}</p>
+                        <p className="text-xs text-text-emphasized mt-0.5">{NIVEAU_DESCRIPTIONS[n.id]}</p>
                       </div>
                       <ArrowRight size={18} className="shrink-0 text-text-muted group-hover:text-brand-teal-light transition" />
                     </div>
@@ -117,14 +117,14 @@ export default function Accueil() {
           </section>
 
           <footer className="mt-12 pt-6 border-t border-background-elevated" style={{ animation: 'fadeIn 0.4s 600ms ease-out both' }}>
-            <p className="text-center text-xs text-text-muted mb-2">
+            <p className="text-center text-xs text-slate-300 mb-2">
               Application alignée sur le{' '}
               <a href={CADRE_SOURCE.url} target="_blank" rel="noopener noreferrer" className="text-brand-teal-light hover:underline">
                 Cadre d'usage de l'IA en éducation
               </a>
               {' '}— Juin 2025
             </p>
-            <p className="text-center text-[11px] text-text-muted">MaProfBranchee — V. Le Scolan</p>
+            <p className="text-center text-[11px] text-slate-300">MaProfBranchee — V. Le Scolan</p>
           </footer>
         </div>
       </main>
