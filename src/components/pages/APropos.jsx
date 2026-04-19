@@ -14,7 +14,7 @@ export default function APropos() {
     if (mentionCfg.formulaireRetourUrl) {
       window.open(mentionCfg.formulaireRetourUrl, '_blank', 'noopener');
     } else {
-      window.location.href = 'mailto:vanessa.coachscolaire@gmail.com?subject=Retour%20d%27usage%20—%20Triangle%20P%C3%A9dagogique%20Augment%C3%A9%20V2';
+      window.location.href = 'mailto:vanessa.le-scolan@ac-montpellier.fr?subject=Retour%20d%27usage%20—%20Triangle%20P%C3%A9dagogique%20Augment%C3%A9%20V2';
     }
   };
 
