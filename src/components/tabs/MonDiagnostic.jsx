@@ -164,6 +164,25 @@ export default function MonDiagnostic() {
         </div>
 
         <div className="card p-6">
+          <div className="mb-4 flex items-center gap-1 p-1 rounded-lg bg-background-secondary border border-background-elevated w-fit" role="tablist" aria-label="Mode de saisie">
+            <button
+              onClick={() => setMode('questionnaire')}
+              role="tab"
+              aria-selected={mode === 'questionnaire'}
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-semibold transition ${mode === 'questionnaire' ? 'bg-brand-teal text-background' : 'text-text-secondary hover:text-text'}`}
+            >
+              <ListChecks size={13} /> Questionnaire
+            </button>
+            <button
+              onClick={() => setMode('avance')}
+              role="tab"
+              aria-selected={mode === 'avance'}
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-semibold transition ${mode === 'avance' ? 'bg-brand-violet text-background' : 'text-text-secondary hover:text-text'}`}
+            >
+              <Sliders size={13} /> Mode avancé
+            </button>
+          </div>
+
           {mode === 'questionnaire' ? (
             <>
               <div className="mb-4 p-3 rounded-lg" style={{ background: 'rgba(20, 184, 166, 0.08)', borderLeft: '3px solid #14B8A6' }}>
@@ -175,18 +194,10 @@ export default function MonDiagnostic() {
                 niveauId={niveauId}
                 initialResponses={wizardResponses}
                 onValidate={onValidateQuestionnaire}
-                onSwitchAdvanced={() => setMode('avance')}
               />
             </>
           ) : (
             <>
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="text-sm font-semibold flex items-center gap-2"><Sliders size={15} className="text-brand-violet-light" /> Mode avancé — sliders</h3>
-                <button onClick={() => setMode('questionnaire')} className="text-[11px] text-text-muted hover:text-brand-teal-light transition underline-offset-4 hover:underline inline-flex items-center gap-1">
-                  <ListChecks size={12} /> Revenir au questionnaire
-                </button>
-              </div>
-
               <div className="pt-2">
                 <p className="text-xs uppercase tracking-wide text-text-emphasized font-semibold mb-3">Activation IA côté enseignant</p>
                 <AxisSlider label="Enseignant–Savoir (préparation)" color="#14B8A6" value={form.axeEnseignantSavoir} onChange={(v) => setField('axeEnseignantSavoir', v)} onHelp={() => setHelpSlider(AIDE_SLIDERS.enseignantSavoir)} />
