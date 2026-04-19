@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { ArrowRight, School, BookOpen, BookMarked, GraduationCap, Info } from 'lucide-react';
 import { NIVEAUX, CONTENU_ACCUEIL } from '../data/niveaux.js';
-import { CADRE_SOURCE } from '../data/cadre.js';
 import { useApp } from '../contexts/AppContext.jsx';
 import { TriangleHoussayeBase, TriangleAugmenteIA } from './accueil/SVG_Triangles_Accueil.jsx';
 import AboutModale from './accueil/AboutModale.jsx';
@@ -21,13 +20,8 @@ const NIVEAU_DESCRIPTIONS = {
 };
 
 export default function Accueil() {
-  const { setNiveauId, setActiveTab } = useApp();
+  const { chooseNiveau } = useApp();
   const [modaleOpen, setModaleOpen] = useState(false);
-
-  const chooseNiveau = (id) => {
-    setNiveauId(id);
-    setActiveTab('explorer');
-  };
 
   return (
     <>
@@ -116,16 +110,6 @@ export default function Accueil() {
             </div>
           </section>
 
-          <footer className="mt-12 pt-6 border-t border-background-elevated" style={{ animation: 'fadeIn 0.4s 600ms ease-out both' }}>
-            <p className="text-center text-xs text-slate-300 mb-2">
-              Application alignée sur le{' '}
-              <a href={CADRE_SOURCE.url} target="_blank" rel="noopener noreferrer" className="text-brand-teal-light hover:underline">
-                Cadre d'usage de l'IA en éducation
-              </a>
-              {' '}— Juin 2025
-            </p>
-            <p className="text-center text-[11px] text-slate-300">MaProfBranchee — V. Le Scolan</p>
-          </footer>
         </div>
       </main>
 

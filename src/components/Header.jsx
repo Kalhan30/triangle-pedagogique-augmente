@@ -4,7 +4,7 @@ import { NIVEAUX, getNiveau } from '../data/niveaux.js';
 import { useApp } from '../contexts/AppContext.jsx';
 
 export default function Header({ onExport }) {
-  const { niveauId, setNiveauId, setActiveTab } = useApp();
+  const { niveauId, setNiveauId, resetToAccueil, setAppScreen } = useApp();
   const [open, setOpen] = useState(false);
   const niveau = getNiveau(niveauId);
 
@@ -12,7 +12,7 @@ export default function Header({ onExport }) {
     <header className="sticky top-0 z-40 bg-background/85 backdrop-blur border-b border-background-elevated">
       <div className="max-w-6xl mx-auto px-4 md:px-6 py-3 flex items-center justify-between gap-3">
         <button
-          onClick={() => { setNiveauId(null); setActiveTab('explorer'); }}
+          onClick={resetToAccueil}
           className="flex items-center gap-2 text-text-secondary hover:text-text transition"
           aria-label="Retour à l'accueil"
         >
@@ -52,14 +52,23 @@ export default function Header({ onExport }) {
           )}
         </div>
 
-        <button
-          onClick={onExport}
-          className="flex items-center gap-2 px-3 py-2 rounded-lg bg-brand-teal text-background font-semibold hover:bg-brand-teal-light transition text-sm"
-          aria-label="Exporter ma fiche PDF"
-        >
-          <Download size={16} />
-          <span className="hidden sm:inline">Exporter</span>
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => setAppScreen('apropos')}
+            className="hidden md:inline-flex items-center gap-1 px-2 py-2 rounded-lg text-text-secondary hover:text-text transition text-sm"
+            aria-label="À propos de la démarche"
+          >
+            À propos
+          </button>
+          <button
+            onClick={onExport}
+            className="flex items-center gap-2 px-3 py-2 rounded-lg bg-brand-teal text-background font-semibold hover:bg-brand-teal-light transition text-sm"
+            aria-label="Exporter ma fiche PDF"
+          >
+            <Download size={16} />
+            <span className="hidden sm:inline">Exporter</span>
+          </button>
+        </div>
       </div>
     </header>
   );

@@ -1,13 +1,15 @@
 import { useState } from 'react';
-import { X, ChevronDown, Scale, CheckCircle2, XCircle } from 'lucide-react';
+import { X, ChevronDown, Scale, CheckCircle2, XCircle, AlertTriangle } from 'lucide-react';
 import Triangle from '../Triangle.jsx';
 import { AXES_META, VERTICES_META, getNiveau } from '../../data/niveaux.js';
 import { AXES_DETAILS } from '../../data/axesDetails.js';
+import { getContrainte } from '../../data/contraintes.js';
 import { useApp } from '../../contexts/AppContext.jsx';
 
 export default function Explorer() {
   const { niveauId, ethicsValue } = useApp();
   const niveau = getNiveau(niveauId);
+  const contrainte = getContrainte(niveauId);
   const [selectedVertex, setSelectedVertex] = useState(null);
   const [selectedAxis, setSelectedAxis] = useState(null);
   const [cadreOpen, setCadreOpen] = useState(false);
@@ -62,7 +64,13 @@ export default function Explorer() {
               </h3>
               <button onClick={() => setSelectedAxis(null)} aria-label="Fermer"><X size={16} className="text-text-muted hover:text-text" /></button>
             </div>
-            <Section color={AXES_META[selectedAxis].color} title="IA peut">
+            {selectedAxis === 'eleveSavoir' && contrainte?.bandeauExplorer && (
+              <div className="mb-4 p-3 rounded-lg flex gap-2 text-[13px]" style={{ background: 'rgba(245, 158, 11, 0.08)', borderLeft: '3px solid #F59E0B' }}>
+                <AlertTriangle size={14} className="shrink-0 mt-0.5 text-brand-amber-light" />
+                <span className="text-text-emphasized leading-relaxed">{contrainte.bandeauExplorer}</span>
+              </div>
+            )}
+            <Section color={AXES_META[selectedAxis].color} title={selectedAxis === 'eleveSavoir' && (niveauId === 'primaire' || niveauId === 'college_6_5') ? "Ce que l'IA peut (via l'enseignant)" : "IA peut"}>
               <ul className="space-y-1 text-sm text-text-secondary">
                 {detail.iaPeut.map((it, i) => <li key={i}>▸ {it}</li>)}
               </ul>

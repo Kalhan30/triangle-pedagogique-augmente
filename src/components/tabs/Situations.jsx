@@ -29,11 +29,13 @@ export default function Situations() {
     setLoading(true);
     setError('');
     try {
-      const result = await analyserSituation(situationText, niveau.label);
+      const result = await analyserSituation(situationText, niveau.label, niveauId);
+      const manipulation = clamp(result.axes?.eleveSavoirManipulation ?? 0);
+      const impact = clamp(result.axes?.eleveSavoirImpactMediatise ?? 0);
       const axes = {
         enseignantSavoir: clamp(result.axes?.enseignantSavoir),
         enseignantEleve: clamp(result.axes?.enseignantEleve),
-        eleveSavoir: clamp(result.axes?.eleveSavoir),
+        eleveSavoir: Math.round(0.7 * manipulation + 0.3 * impact),
       };
       setSelected({
         id: `custom-${Date.now()}`,
@@ -43,10 +45,13 @@ export default function Situations() {
         axeEnseignantSavoir: axes.enseignantSavoir,
         axeEnseignantEleve: axes.enseignantEleve,
         axeEleveSavoir: axes.eleveSavoir,
+        axeEleveSavoirManipulation: manipulation,
+        axeEleveSavoirImpactMediatise: impact,
         roleIA: result.roleIA,
         roleHumain: result.roleHumain,
         pointsAttention: result.pointsAttention || [],
         referenceCadre: result.referenceCadre || null,
+        conformiteCadre: result.conformiteCadre || null,
         custom: true,
       });
     } catch (e) {
@@ -152,6 +157,11 @@ function ScenarioDetail({ scenario, ethicsValue }) {
           <p className="text-sm font-semibold text-brand-amber-light mb-1">{scenario.referenceCadre.principe}</p>
           <p className="text-xs italic text-text-secondary">« {scenario.referenceCadre.citation} »</p>
           <p className="text-[10px] text-text-muted mt-2">Cadre d'usage de l'IA en éducation — MEN, juin 2025</p>
+        </div>
+      )}
+      {scenario.conformiteCadre && scenario.conformiteCadre.estConforme === false && (
+        <div className="mt-3 p-3 rounded-lg" style={{ background: 'rgba(239, 68, 68, 0.1)', borderLeft: '3px solid #EF4444' }}>
+          <p className="text-xs text-semantic-error"><strong>Conformité Cadre :</strong> {scenario.conformiteCadre.observation}</p>
         </div>
       )}
     </div>

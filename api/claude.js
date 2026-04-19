@@ -1,8 +1,33 @@
+const MANIPULATION_LOCKED = new Set(['primaire', 'college_6_5']);
+const MANIPULATION_PLAFOND_CAP = { college_4_3: 65 };
+
+function enforceCadreConformity(parsed, niveauId) {
+  if (!parsed || !niveauId || !parsed.axes) return parsed;
+  if (MANIPULATION_LOCKED.has(niveauId) && parsed.axes.eleveSavoirManipulation > 0) {
+    console.warn(`[Cadre] Forcing eleveSavoirManipulation=0 (niveau=${niveauId})`);
+    parsed.axes.eleveSavoirManipulation = 0;
+    parsed.conformiteCadre = {
+      estConforme: false,
+      observation: "Valeur forcée à 0 par validation serveur (manipulation directe interdite avant la 4e).",
+    };
+  }
+  const cap = MANIPULATION_PLAFOND_CAP[niveauId];
+  if (cap !== undefined && parsed.axes.eleveSavoirManipulation > cap) {
+    console.warn(`[Cadre] Capping eleveSavoirManipulation to ${cap} (niveau=${niveauId})`);
+    parsed.axes.eleveSavoirManipulation = cap;
+    parsed.conformiteCadre = {
+      estConforme: false,
+      observation: `Valeur plafonnée à ${cap} par validation serveur (usage autonome non autorisé en 4e-3e).`,
+    };
+  }
+  return parsed;
+}
+
 export default async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const { systemPrompt, userPrompt, maxTokens = 1024 } = req.body || {};
+  const { systemPrompt, userPrompt, maxTokens = 1024, niveauId } = req.body || {};
 
   if (!systemPrompt || !userPrompt) {
     return res.status(400).json({ error: 'Missing prompts' });
@@ -47,6 +72,8 @@ export default async function handler(req, res) {
       console.error('JSON parse error:', parseError.message, 'Content:', content);
       return res.status(502).json({ error: 'Invalid JSON response' });
     }
+
+    parsed = enforceCadreConformity(parsed, niveauId);
 
     return res.status(200).json(parsed);
   } catch (error) {

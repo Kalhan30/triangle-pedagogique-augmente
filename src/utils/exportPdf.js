@@ -1,13 +1,17 @@
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { getNiveau, getZoneEthique, AXES_META } from '../data/niveaux.js';
+import mentionCfg from '../config/mention-recherche-action.json';
 
 export async function exporterFichePdf(diagnostic) {
   if (!diagnostic) throw new Error('Aucun diagnostic à exporter');
 
   const pdf = new jsPDF({ format: 'a4', unit: 'mm', orientation: 'portrait' });
   const niveau = getNiveau(diagnostic.niveau);
-  const zone = getZoneEthique(Math.round((diagnostic.axeEnseignantSavoir + diagnostic.axeEnseignantEleve + diagnostic.axeEleveSavoir) / 3));
+  const axeEleveVisu = typeof diagnostic.axeEleveSavoirVisualise === 'number'
+    ? diagnostic.axeEleveSavoirVisualise
+    : Math.round(0.7 * (diagnostic.axeEleveSavoirManipulation || 0) + 0.3 * (diagnostic.axeEleveSavoirImpactMediatise || 0));
+  const zone = getZoneEthique(Math.round((diagnostic.axeEnseignantSavoir + diagnostic.axeEnseignantEleve + axeEleveVisu) / 3));
 
   pdf.setFillColor(15, 23, 42);
   pdf.rect(0, 0, 210, 24, 'F');
@@ -56,7 +60,9 @@ export async function exporterFichePdf(diagnostic) {
   const axesData = [
     { meta: AXES_META.enseignantSavoir, value: diagnostic.axeEnseignantSavoir },
     { meta: AXES_META.enseignantEleve, value: diagnostic.axeEnseignantEleve },
-    { meta: AXES_META.eleveSavoir, value: diagnostic.axeEleveSavoir },
+    { meta: { label: 'Élève–Savoir (manipulation directe)', color: '#8B5CF6' }, value: diagnostic.axeEleveSavoirManipulation ?? 0 },
+    { meta: { label: 'Élève–Savoir (impact médiatisé)', color: '#C4B5FD' }, value: diagnostic.axeEleveSavoirImpactMediatise ?? 0 },
+    { meta: { label: 'Élève–Savoir (visualisé, 0.7 × manip + 0.3 × impact)', color: '#8B5CF6' }, value: axeEleveVisu },
   ];
   axesData.forEach(({ meta, value }) => {
     pdf.setFont('helvetica', 'bold');
@@ -132,11 +138,15 @@ export async function exporterFichePdf(diagnostic) {
   pdf.setTextColor(148, 163, 184);
   pdf.setFont('helvetica', 'italic');
   const mention = pdf.splitTextToSize("Analyse effectuée en cohérence avec le Cadre d'usage de l'IA en éducation, Ministère de l'Éducation nationale, juin 2025.", 180);
-  pdf.text(mention, 14, 280);
+  pdf.text(mention, 14, 276);
 
   pdf.setFont('helvetica', 'normal');
+  pdf.setTextColor(139, 92, 246);
+  pdf.text(`Artefact de recherche-action — ${mentionCfg.marque} — ${mentionCfg.auteure} — ${mentionCfg.version}`, 14, 284);
+
+  pdf.setTextColor(148, 163, 184);
   const date = new Date().toLocaleDateString('fr-FR');
-  pdf.text(`Généré le ${date} — MaProfBranchee`, 14, 290);
+  pdf.text(`Généré le ${date}`, 14, 290);
 
   pdf.save(`diagnostic-triangle-${Date.now()}.pdf`);
 }
