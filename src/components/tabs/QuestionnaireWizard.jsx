@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { ArrowLeft, ArrowRight, Check, Lock, AlertTriangle, Sparkles, Pencil } from 'lucide-react';
 import { QUESTIONS, choixEtat, computeAxesFromResponses } from '../../data/questionnaire.js';
 
-export default function QuestionnaireWizard({ niveauId, initialResponses = {}, onValidate, onSwitchAdvanced }) {
+export default function QuestionnaireWizard({ niveauId, initialResponses = {}, onValidate, onSwitchAdvanced, contextComplete = true, missingContextFields = [], loading = false }) {
   const [responses, setResponses] = useState(initialResponses);
   const [index, setIndex] = useState(0);
   const [showRecap, setShowRecap] = useState(false);
@@ -40,6 +40,9 @@ export default function QuestionnaireWizard({ niveauId, initialResponses = {}, o
         onModify={() => setShowRecap(false)}
         onValidate={() => onValidate({ ...axes, responses, mode: 'questionnaire' })}
         onSwitchAdvanced={onSwitchAdvanced}
+        contextComplete={contextComplete}
+        missingContextFields={missingContextFields}
+        loading={loading}
       />
     );
   }
@@ -132,7 +135,7 @@ export default function QuestionnaireWizard({ niveauId, initialResponses = {}, o
   );
 }
 
-function Recap({ responses, axes, onModify, onValidate, onSwitchAdvanced }) {
+function Recap({ responses, axes, onModify, onValidate, onSwitchAdvanced, contextComplete, missingContextFields, loading }) {
   const lines = [
     { label: 'Enseignant–Savoir (préparation)', value: axes.libelleQ1 },
     { label: 'Enseignant–Élève (relation)', value: axes.libelleQ2 },
@@ -157,18 +160,27 @@ function Recap({ responses, axes, onModify, onValidate, onSwitchAdvanced }) {
         ))}
       </ul>
 
-      <div className="flex items-center justify-between gap-3 pt-4 border-t border-background-elevated">
+      {!contextComplete && (
+        <div className="mb-4 p-3 rounded-lg" style={{ background: 'rgba(245, 158, 11, 0.12)', borderLeft: '3px solid #F59E0B' }}>
+          <p className="text-[13px] text-brand-amber-light leading-relaxed font-semibold mb-1">Contexte incomplet</p>
+          <p className="text-[13px] text-text-emphasized leading-relaxed">
+            Remplissez les champs ci-dessus avant de lancer l'analyse :{' '}
+            <span className="font-semibold">{missingContextFields.join(', ')}</span>.
+          </p>
+        </div>
+      )}
+
+      <div className="flex items-center justify-between gap-3 pt-4 border-t border-background-elevated flex-wrap">
         <button onClick={onModify} className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm text-text-secondary hover:text-text transition">
           <Pencil size={14} /> Modifier mes réponses
         </button>
         <div className="flex items-center gap-2">
-          {onSwitchAdvanced && (
-            <button onClick={onSwitchAdvanced} className="text-[11px] text-text-muted hover:text-brand-teal-light transition underline-offset-4 hover:underline">
-              Mode avancé
-            </button>
-          )}
-          <button onClick={onValidate} className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-brand-teal text-background font-semibold text-sm hover:bg-brand-teal-light transition">
-            <Sparkles size={14} /> Analyser mon diagnostic
+          <button
+            onClick={onValidate}
+            disabled={!contextComplete || loading}
+            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-brand-teal text-background font-semibold text-sm hover:bg-brand-teal-light disabled:opacity-40 disabled:cursor-not-allowed transition"
+          >
+            {loading ? <>Analyse…</> : <><Sparkles size={14} /> Analyser mon diagnostic</>}
           </button>
         </div>
       </div>

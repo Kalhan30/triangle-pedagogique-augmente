@@ -69,13 +69,15 @@ export default function MonDiagnostic() {
 
   const setField = (key, value) => setForm((f) => ({ ...f, [key]: value }));
 
-  const validateContext = () => {
-    if (!form.discipline.trim()) return 'discipline';
-    if (!form.typeActivite.trim()) return 'typeActivite';
-    if (!form.profilEleve.trim()) return 'profilEleve';
-    if (!form.objectif.trim()) return 'objectif';
-    return null;
-  };
+  const contextMissing = [
+    !form.discipline.trim() && 'Discipline',
+    !form.typeActivite.trim() && "Type d'activité",
+    !form.profilEleve.trim() && "Profil d'élève",
+    !form.objectif.trim() && 'Objectif',
+  ].filter(Boolean);
+  const contextComplete = contextMissing.length === 0;
+
+  const validateContext = () => (contextComplete ? null : 'missing');
 
   const runAnalysis = async (enrichedForm, diagPayload) => {
     const allText = [enrichedForm.discipline, enrichedForm.typeActivite, enrichedForm.profilEleve, enrichedForm.objectif].join(' ');
@@ -164,6 +166,14 @@ export default function MonDiagnostic() {
         </div>
 
         <div className="card p-6">
+          {!contextComplete && (
+            <div className="mb-4 p-3 rounded-lg" style={{ background: 'rgba(245, 158, 11, 0.1)', borderLeft: '3px solid #F59E0B' }}>
+              <p className="text-[13px] text-brand-amber-light font-semibold mb-1">Avant de commencer</p>
+              <p className="text-[13px] text-text-emphasized leading-relaxed">
+                Complétez d'abord : <span className="font-semibold">{contextMissing.join(', ')}</span> (champs ci-dessus).
+              </p>
+            </div>
+          )}
           <div className="mb-4 flex items-center gap-1 p-1 rounded-lg bg-background-secondary border border-background-elevated w-fit" role="tablist" aria-label="Mode de saisie">
             <button
               onClick={() => setMode('questionnaire')}
@@ -194,6 +204,9 @@ export default function MonDiagnostic() {
                 niveauId={niveauId}
                 initialResponses={wizardResponses}
                 onValidate={onValidateQuestionnaire}
+                contextComplete={contextComplete}
+                missingContextFields={contextMissing}
+                loading={loading}
               />
             </>
           ) : (
