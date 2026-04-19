@@ -51,9 +51,37 @@ export async function exporterFichePdf(diagnostic) {
   });
 
   y += 4;
+  if (diagnostic.libelleQ1 && diagnostic.libelleQ5) {
+    pdf.setFont('helvetica', 'bold');
+    pdf.setFontSize(12);
+    pdf.text('Positionnement qualitatif (questionnaire guidé)', 14, y);
+    y += 6;
+    pdf.setFontSize(9);
+    const qs = [
+      { label: 'Q1 — Préparation', value: diagnostic.libelleQ1 },
+      { label: 'Q2 — Relation', value: diagnostic.libelleQ2 },
+      { label: 'Q3 — Manipulation élève', value: diagnostic.libelleQ3 },
+      { label: 'Q4 — Impact médiatisé', value: diagnostic.libelleQ4 },
+      { label: 'Q5 — Intention éthique', value: diagnostic.libelleQ5 },
+    ];
+    qs.forEach(({ label, value }) => {
+      pdf.setFont('helvetica', 'bold');
+      pdf.setTextColor(20, 184, 166);
+      pdf.text(label, 14, y);
+      y += 4;
+      pdf.setFont('helvetica', 'italic');
+      pdf.setTextColor(71, 85, 105);
+      const split = pdf.splitTextToSize(`« ${value} »`, 180);
+      pdf.text(split, 14, y);
+      y += split.length * 4 + 2;
+    });
+    y += 2;
+  }
+
   pdf.setFont('helvetica', 'bold');
   pdf.setFontSize(12);
-  pdf.text('Positionnement des axes', 14, y);
+  pdf.setTextColor(30, 41, 59);
+  pdf.text('Positionnement chiffré', 14, y);
   y += 6;
 
   pdf.setFontSize(10);

@@ -99,6 +99,30 @@ Retourne uniquement le JSON, sans balises, sans commentaires.`;
 }
 
 export async function genererRecommandations(diagnostic, niveauLabel, zoneEthiqueLabel) {
+  const hasLibelles = diagnostic.libelleQ1 && diagnostic.libelleQ5;
+  const positionnement = hasLibelles
+    ? `Positionnement qualitatif (questionnaire guidé) :
+
+Question 1 — Préparation :
+"${diagnostic.libelleQ1}" (valeur : ${diagnostic.axeEnseignantSavoir}/100)
+
+Question 2 — Relation :
+"${diagnostic.libelleQ2}" (valeur : ${diagnostic.axeEnseignantEleve}/100)
+
+Question 3 — Manipulation directe élève :
+"${diagnostic.libelleQ3}" (valeur : ${diagnostic.axeEleveSavoirManipulation}/100)
+
+Question 4 — Impact médiatisé :
+"${diagnostic.libelleQ4}" (valeur : ${diagnostic.axeEleveSavoirImpactMediatise}/100)
+
+Question 5 — Intention éthique :
+"${diagnostic.libelleQ5}" (valeur : ${diagnostic.valeurEthiqueGlobale}/100)`
+    : `Axes d'activation IA positionnés par l'enseignant (mode avancé) :
+- Axe Enseignant-Savoir (préparation) : ${diagnostic.axeEnseignantSavoir}/100
+- Axe Enseignant-Élève (relation) : ${diagnostic.axeEnseignantEleve}/100
+- Axe Élève-Savoir — manipulation directe : ${diagnostic.axeEleveSavoirManipulation}/100
+- Axe Élève-Savoir — impact médiatisé : ${diagnostic.axeEleveSavoirImpactMediatise}/100`;
+
   const userPrompt = `Diagnostic saisi par un enseignant :
 
 - Niveau : ${niveauLabel} (id: ${diagnostic.niveau || 'unknown'})
@@ -107,15 +131,11 @@ export async function genererRecommandations(diagnostic, niveauLabel, zoneEthiqu
 - Profil d'élève cible : ${diagnostic.profilEleve}
 - Objectif pédagogique : ${diagnostic.objectif}
 
-Axes d'activation IA positionnés par l'enseignant :
-- Axe Enseignant-Savoir (préparation) : ${diagnostic.axeEnseignantSavoir}/100
-- Axe Enseignant-Élève (relation) : ${diagnostic.axeEnseignantEleve}/100
-- Axe Élève-Savoir — manipulation directe : ${diagnostic.axeEleveSavoirManipulation}/100
-- Axe Élève-Savoir — impact médiatisé : ${diagnostic.axeEleveSavoirImpactMediatise}/100
+${positionnement}
 
 Zone éthique calculée : ${zoneEthiqueLabel}
 
-Produis 3 recommandations personnalisées au format JSON strict suivant :
+${hasLibelles ? 'IMPORTANT : au moins une de tes 3 recommandations doit citer explicitement le libellé qualitatif d\'une des réponses (ex: "Vous avez indiqué que l\'IA génère une base que vous retravaillez...").\n\n' : ''}Produis 3 recommandations personnalisées au format JSON strict suivant :
 
 {
   "recommandations": [
