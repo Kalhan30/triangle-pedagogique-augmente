@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { useApp } from './contexts/AppContext.jsx';
 import Accueil from './components/Accueil.jsx';
 import Header from './components/Header.jsx';
@@ -10,15 +10,22 @@ import Ethique from './components/tabs/Ethique.jsx';
 import MonDiagnostic from './components/tabs/MonDiagnostic.jsx';
 import FloatingFAQ from './components/FloatingFAQ.jsx';
 import APropos from './components/pages/APropos.jsx';
+import ModaleChoixThemePDF from './components/ModaleChoixThemePDF.jsx';
 import { exporterFichePdf } from './utils/exportPdf.js';
 
 export default function App() {
   const { appScreen, niveauId, activeTab, diagnostic } = useApp();
+  const [pdfModalOpen, setPdfModalOpen] = useState(false);
 
-  const onExport = useCallback(async () => {
+  const onExport = useCallback(() => {
     if (!diagnostic) { alert('Complétez votre diagnostic personnel avant l\'export.'); return; }
-    try { await exporterFichePdf(diagnostic); } catch (e) { console.error('Export failed:', e); alert('L\'export a échoué.'); }
+    setPdfModalOpen(true);
   }, [diagnostic]);
+
+  const onPdfChoice = async (theme) => {
+    setPdfModalOpen(false);
+    try { await exporterFichePdf(diagnostic, theme); } catch (e) { console.error('Export failed:', e); alert('L\'export a échoué.'); }
+  };
 
   if (appScreen === 'apropos') {
     return (
@@ -26,6 +33,7 @@ export default function App() {
         <APropos />
         <Footer />
         <FloatingFAQ />
+        {pdfModalOpen && <ModaleChoixThemePDF onChoice={onPdfChoice} onClose={() => setPdfModalOpen(false)} />}
       </>
     );
   }
@@ -36,6 +44,7 @@ export default function App() {
         <Accueil />
         <Footer />
         <FloatingFAQ />
+        {pdfModalOpen && <ModaleChoixThemePDF onChoice={onPdfChoice} onClose={() => setPdfModalOpen(false)} />}
       </>
     );
   }
@@ -50,6 +59,7 @@ export default function App() {
       {activeTab === 'diagnostic' && <MonDiagnostic />}
       <Footer />
       <FloatingFAQ />
+      {pdfModalOpen && <ModaleChoixThemePDF onChoice={onPdfChoice} onClose={() => setPdfModalOpen(false)} />}
     </>
   );
 }

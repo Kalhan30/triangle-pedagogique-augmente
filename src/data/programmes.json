@@ -1,0 +1,126 @@
+{
+  "version": "1.0.0",
+  "dateMiseAJour": "2026-04-20",
+  "extraits": [
+    {
+      "id": "primaire-c2-francais",
+      "niveaux": ["primaire"],
+      "motsClesDiscipline": ["français", "francais", "lecture", "écriture", "ecriture", "lettres", "orthographe", "dictée", "dictee", "grammaire", "conjugaison", "vocabulaire"],
+      "motsClesCycle": ["cycle 2", "cp", "ce1", "ce2"],
+      "titre": "Français — Cycle 2 (CP-CE1-CE2)",
+      "extrait": "",
+      "source": "BO spécial n°40 du 31 octobre 2024",
+      "urlSource": "https://www.education.gouv.fr/bo/2024/Special40",
+      "dateIntegration": null,
+      "statut": "en-attente"
+    },
+    {
+      "id": "primaire-c2-mathematiques",
+      "niveaux": ["primaire"],
+      "motsClesDiscipline": ["mathématiques", "mathematiques", "maths", "math", "calcul", "numération", "numeration", "géométrie", "geometrie", "grandeurs", "mesures"],
+      "motsClesCycle": ["cycle 2", "cp", "ce1", "ce2"],
+      "titre": "Mathématiques — Cycle 2 (CP-CE1-CE2)",
+      "extrait": "",
+      "source": "BO spécial n°40 du 31 octobre 2024",
+      "urlSource": "https://www.education.gouv.fr/bo/2024/Special40",
+      "dateIntegration": null,
+      "statut": "en-attente"
+    },
+    {
+      "id": "primaire-c3-francais",
+      "niveaux": ["primaire"],
+      "motsClesDiscipline": ["français", "francais", "lecture", "écriture", "ecriture", "lettres", "littérature", "litterature", "orthographe", "grammaire", "conjugaison", "vocabulaire", "rédaction", "redaction"],
+      "motsClesCycle": ["cycle 3", "cm1", "cm2"],
+      "titre": "Français — Cycle 3 (CM1-CM2)",
+      "extrait": "",
+      "source": "BO spécial n°16 du 17 avril 2025",
+      "urlSource": "https://www.education.gouv.fr/bo/2025/Special16",
+      "dateIntegration": null,
+      "statut": "en-attente"
+    },
+    {
+      "id": "primaire-c3-mathematiques",
+      "niveaux": ["primaire"],
+      "motsClesDiscipline": ["mathématiques", "mathematiques", "maths", "math", "calcul", "numération", "numeration", "géométrie", "geometrie", "fractions", "décimaux", "decimaux", "grandeurs"],
+      "motsClesCycle": ["cycle 3", "cm1", "cm2"],
+      "titre": "Mathématiques — Cycle 3 (CM1-CM2)",
+      "extrait": "",
+      "source": "BO spécial n°16 du 17 avril 2025",
+      "urlSource": "https://www.education.gouv.fr/bo/2025/Special16",
+      "dateIntegration": null,
+      "statut": "en-attente"
+    },
+    {
+      "id": "primaire-c3-arts-plastiques",
+      "niveaux": ["primaire"],
+      "motsClesDiscipline": ["arts", "art", "plastiques", "arts plastiques", "dessin", "peinture", "visuel"],
+      "motsClesCycle": ["cycle 3", "cm1", "cm2"],
+      "titre": "Arts plastiques — Cycle 3",
+      "extrait": "",
+      "source": "Arrêté du 9 novembre 2015 modifié",
+      "urlSource": "https://eduscol.education.fr/218/arts-plastiques",
+      "dateIntegration": null,
+      "statut": "en-attente"
+    },
+    {
+      "id": "college-6e5e-francais",
+      "niveaux": ["college_6_5"],
+      "motsClesDiscipline": ["français", "francais", "lettres", "littérature", "litterature", "lecture", "écriture", "ecriture", "grammaire"],
+      "motsClesCycle": ["cycle 3", "cycle 4", "6e", "5e", "sixième", "sixieme", "cinquième", "cinquieme"],
+      "titre": "Français — Cycle 3 (6e) et Cycle 4 (5e)",
+      "extrait": "",
+      "source": "BO spécial n°16 du 17 avril 2025 (6e) et arrêté 9 novembre 2015 modifié (5e)",
+      "urlSource": "https://eduscol.education.fr/74/j-enseigne",
+      "dateIntegration": null,
+      "statut": "en-attente"
+    },
+    {
+      "id": "college-6e5e-mathematiques",
+      "niveaux": ["college_6_5"],
+      "motsClesDiscipline": ["mathématiques", "mathematiques", "maths", "math", "calcul", "algèbre", "algebre", "géométrie", "geometrie", "fractions"],
+      "motsClesCycle": ["cycle 3", "cycle 4", "6e", "5e"],
+      "titre": "Mathématiques — Cycle 3 (6e) et Cycle 4 (5e)",
+      "extrait": "",
+      "source": "BO spécial n°16 du 17 avril 2025 (6e) et arrêté 9 novembre 2015 modifié (5e)",
+      "urlSource": "https://eduscol.education.fr/74/j-enseigne",
+      "dateIntegration": null,
+      "statut": "en-attente"
+    },
+    {
+      "id": "college-4e3e-francais",
+      "niveaux": ["college_4_3"],
+      "motsClesDiscipline": ["français", "francais", "lettres", "littérature", "litterature", "dissertation", "lecture", "écriture", "ecriture"],
+      "motsClesCycle": ["cycle 4", "4e", "3e", "quatrième", "quatrieme", "troisième", "troisieme"],
+      "titre": "Français — Cycle 4 (4e-3e)",
+      "extrait": "",
+      "source": "Arrêté du 9 novembre 2015 modifié",
+      "urlSource": "https://eduscol.education.fr/74/j-enseigne",
+      "dateIntegration": null,
+      "statut": "en-attente"
+    },
+    {
+      "id": "college-4e3e-histoire-geo",
+      "niveaux": ["college_4_3"],
+      "motsClesDiscipline": ["histoire", "géographie", "geographie", "histoire-géo", "histoire-geo", "emc"],
+      "motsClesCycle": ["cycle 4", "4e", "3e"],
+      "titre": "Histoire-géographie — Cycle 4 (4e-3e)",
+      "extrait": "",
+      "source": "Arrêté du 9 novembre 2015 modifié",
+      "urlSource": "https://eduscol.education.fr/74/j-enseigne",
+      "dateIntegration": null,
+      "statut": "en-attente"
+    },
+    {
+      "id": "lycee-francais",
+      "niveaux": ["lycee_sup"],
+      "motsClesDiscipline": ["français", "francais", "lettres", "philosophie", "philo", "littérature", "litterature", "dissertation"],
+      "motsClesCycle": ["seconde", "première", "premiere", "terminale", "lycée", "lycee"],
+      "titre": "Français / Philosophie — Lycée",
+      "extrait": "",
+      "source": "Programmes en vigueur selon série, consultables sur Eduscol",
+      "urlSource": "https://eduscol.education.fr/74/j-enseigne",
+      "dateIntegration": null,
+      "statut": "en-attente"
+    }
+  ]
+}
