@@ -4,6 +4,7 @@ import { NIVEAUX, CONTENU_ACCUEIL } from '../data/niveaux.js';
 import { useApp } from '../contexts/AppContext.jsx';
 import { TriangleHoussayeBase, TriangleAugmenteIA } from './accueil/SVG_Triangles_Accueil.jsx';
 import AboutModale from './accueil/AboutModale.jsx';
+import ThemeToggle from './ThemeToggle.jsx';
 
 const NIVEAU_ICONS = {
   primaire: School,
@@ -27,6 +28,9 @@ export default function Accueil() {
     <>
       <main className="min-h-screen px-4 md:px-6 py-10 md:py-14 animate-fade">
         <div className="max-w-6xl mx-auto">
+          <div className="flex justify-end mb-4">
+            <ThemeToggle />
+          </div>
           <header className="text-center mb-10" style={{ animation: 'fadeIn 0.4s ease-out both' }}>
             <div className="flex flex-col items-center gap-3 mb-5">
               <img

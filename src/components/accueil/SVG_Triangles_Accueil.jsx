@@ -10,19 +10,19 @@ export const TriangleHoussayeBase = () => (
     <line x1="60" y1="220" x2="260" y2="220" stroke="#D97706" strokeWidth="2" strokeOpacity="0.75" />
     <line x1="260" y1="220" x2="160" y2="50" stroke="#7C3AED" strokeWidth="2" strokeOpacity="0.75" />
 
-    <text x="90" y="130" fill="#475569" fontSize="11" fontFamily="Inter, sans-serif" fontStyle="italic" transform="rotate(-60 90 130)" textAnchor="middle">préparer</text>
-    <text x="160" y="240" fill="#475569" fontSize="11" fontFamily="Inter, sans-serif" fontStyle="italic" textAnchor="middle">enseigner</text>
-    <text x="230" y="130" fill="#475569" fontSize="11" fontFamily="Inter, sans-serif" fontStyle="italic" transform="rotate(60 230 130)" textAnchor="middle">apprendre</text>
+    <text x="90" y="130" style={{ fill: 'var(--svg-stroke-muted)' }} fontSize="11" fontFamily="Inter, sans-serif" fontStyle="italic" transform="rotate(-60 90 130)" textAnchor="middle">préparer</text>
+    <text x="160" y="240" style={{ fill: 'var(--svg-stroke-muted)' }} fontSize="11" fontFamily="Inter, sans-serif" fontStyle="italic" textAnchor="middle">enseigner</text>
+    <text x="230" y="130" style={{ fill: 'var(--svg-stroke-muted)' }} fontSize="11" fontFamily="Inter, sans-serif" fontStyle="italic" transform="rotate(60 230 130)" textAnchor="middle">apprendre</text>
 
-    <circle cx="160" cy="50" r="24" fill="#FFFFFF" stroke="#7C3AED" strokeWidth="1.5" style={{ filter: 'drop-shadow(0 2px 4px rgba(15,23,42,0.08))' }} />
-    <text x="160" y="54" fill="#0F172A" fontSize="12" fontFamily="Inter, sans-serif" fontWeight="600" textAnchor="middle">Savoir</text>
+    <circle cx="160" cy="50" r="24" stroke="#7C3AED" strokeWidth="1.5" style={{ fill: 'var(--svg-circle-fill)', filter: 'drop-shadow(0 2px 4px rgba(15,23,42,0.08))' }} />
+    <text x="160" y="54" style={{ fill: 'rgb(var(--text-primary))' }} fontSize="12" fontFamily="Inter, sans-serif" fontWeight="600" textAnchor="middle">Savoir</text>
 
-    <circle cx="60" cy="220" r="26" fill="#FFFFFF" stroke="#0F766E" strokeWidth="1.5" style={{ filter: 'drop-shadow(0 2px 4px rgba(15,23,42,0.08))' }} />
-    <text x="60" y="218" fill="#0F172A" fontSize="10.5" fontFamily="Inter, sans-serif" fontWeight="600" textAnchor="middle">Ensei-</text>
-    <text x="60" y="230" fill="#0F172A" fontSize="10.5" fontFamily="Inter, sans-serif" fontWeight="600" textAnchor="middle">gnant</text>
+    <circle cx="60" cy="220" r="26" stroke="#0F766E" strokeWidth="1.5" style={{ fill: 'var(--svg-circle-fill)', filter: 'drop-shadow(0 2px 4px rgba(15,23,42,0.08))' }} />
+    <text x="60" y="218" style={{ fill: 'rgb(var(--text-primary))' }} fontSize="10.5" fontFamily="Inter, sans-serif" fontWeight="600" textAnchor="middle">Ensei-</text>
+    <text x="60" y="230" style={{ fill: 'rgb(var(--text-primary))' }} fontSize="10.5" fontFamily="Inter, sans-serif" fontWeight="600" textAnchor="middle">gnant</text>
 
-    <circle cx="260" cy="220" r="24" fill="#FFFFFF" stroke="#D97706" strokeWidth="1.5" style={{ filter: 'drop-shadow(0 2px 4px rgba(15,23,42,0.08))' }} />
-    <text x="260" y="224" fill="#0F172A" fontSize="12" fontFamily="Inter, sans-serif" fontWeight="600" textAnchor="middle">Élève</text>
+    <circle cx="260" cy="220" r="24" stroke="#D97706" strokeWidth="1.5" style={{ fill: 'var(--svg-circle-fill)', filter: 'drop-shadow(0 2px 4px rgba(15,23,42,0.08))' }} />
+    <text x="260" y="224" style={{ fill: 'rgb(var(--text-primary))' }} fontSize="12" fontFamily="Inter, sans-serif" fontWeight="600" textAnchor="middle">Élève</text>
   </svg>
 );
 
@@ -70,16 +70,16 @@ export const TriangleAugmenteIA = () => (
     <text x="12" y="114" fill="#7C3AED" fontSize="10" fontFamily="Inter, sans-serif" fontWeight="500" fontStyle="italic">périphérique</text>
     <line x1="55" y1="110" x2="85" y2="145" stroke="#7C3AED" strokeWidth="1" strokeOpacity="0.7" markerEnd="url(#arrowheadLight)" />
 
-    <circle cx="160" cy="50" r="24" fill="#FFFFFF" stroke="#7C3AED" strokeWidth="1.5" style={{ filter: 'drop-shadow(0 2px 4px rgba(15,23,42,0.08))' }} />
-    <text x="160" y="54" fill="#0F172A" fontSize="12" fontFamily="Inter, sans-serif" fontWeight="600" textAnchor="middle">Savoir</text>
+    <circle cx="160" cy="50" r="24" stroke="#7C3AED" strokeWidth="1.5" style={{ fill: 'var(--svg-circle-fill)', filter: 'drop-shadow(0 2px 4px rgba(15,23,42,0.08))' }} />
+    <text x="160" y="54" style={{ fill: 'rgb(var(--text-primary))' }} fontSize="12" fontFamily="Inter, sans-serif" fontWeight="600" textAnchor="middle">Savoir</text>
 
-    <circle cx="60" cy="220" r="26" fill="#FFFFFF" stroke="#0F766E" strokeWidth="1.5" style={{ filter: 'drop-shadow(0 2px 4px rgba(15,23,42,0.08))' }} />
-    <text x="60" y="218" fill="#0F172A" fontSize="10.5" fontFamily="Inter, sans-serif" fontWeight="600" textAnchor="middle">Ensei-</text>
-    <text x="60" y="230" fill="#0F172A" fontSize="10.5" fontFamily="Inter, sans-serif" fontWeight="600" textAnchor="middle">gnant</text>
+    <circle cx="60" cy="220" r="26" stroke="#0F766E" strokeWidth="1.5" style={{ fill: 'var(--svg-circle-fill)', filter: 'drop-shadow(0 2px 4px rgba(15,23,42,0.08))' }} />
+    <text x="60" y="218" style={{ fill: 'rgb(var(--text-primary))' }} fontSize="10.5" fontFamily="Inter, sans-serif" fontWeight="600" textAnchor="middle">Ensei-</text>
+    <text x="60" y="230" style={{ fill: 'rgb(var(--text-primary))' }} fontSize="10.5" fontFamily="Inter, sans-serif" fontWeight="600" textAnchor="middle">gnant</text>
 
-    <circle cx="260" cy="220" r="24" fill="#FFFFFF" stroke="#D97706" strokeWidth="1.5" style={{ filter: 'drop-shadow(0 2px 4px rgba(15,23,42,0.08))' }} />
-    <text x="260" y="224" fill="#0F172A" fontSize="12" fontFamily="Inter, sans-serif" fontWeight="600" textAnchor="middle">Élève</text>
+    <circle cx="260" cy="220" r="24" stroke="#D97706" strokeWidth="1.5" style={{ fill: 'var(--svg-circle-fill)', filter: 'drop-shadow(0 2px 4px rgba(15,23,42,0.08))' }} />
+    <text x="260" y="224" style={{ fill: 'rgb(var(--text-primary))' }} fontSize="12" fontFamily="Inter, sans-serif" fontWeight="600" textAnchor="middle">Élève</text>
 
-    <text x="160" y="268" fill="#475569" fontSize="11" fontFamily="Inter, sans-serif" fontWeight="500" fontStyle="italic" textAnchor="middle">Humain au cœur — IA en périphérie</text>
+    <text x="160" y="268" style={{ fill: 'var(--svg-stroke-muted)' }} fontSize="11" fontFamily="Inter, sans-serif" fontWeight="500" fontStyle="italic" textAnchor="middle">Humain au cœur — IA en périphérie</text>
   </svg>
 );

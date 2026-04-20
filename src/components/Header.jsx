@@ -1,10 +1,10 @@
-import { ChevronDown, ArrowLeft, Download } from 'lucide-react';
+import { ChevronDown, ArrowLeft, Download, Sun, Moon } from 'lucide-react';
 import { useState } from 'react';
 import { NIVEAUX, getNiveau } from '../data/niveaux.js';
 import { useApp } from '../contexts/AppContext.jsx';
 
 export default function Header({ onExport }) {
-  const { niveauId, setNiveauId, resetToAccueil, setAppScreen } = useApp();
+  const { niveauId, setNiveauId, resetToAccueil, setAppScreen, theme, toggleTheme } = useApp();
   const [open, setOpen] = useState(false);
   const niveau = getNiveau(niveauId);
 
@@ -53,6 +53,14 @@ export default function Header({ onExport }) {
         </div>
 
         <div className="flex items-center gap-2">
+          <button
+            onClick={toggleTheme}
+            className="inline-flex items-center justify-center w-9 h-9 rounded-lg border border-border bg-background text-text-secondary hover:text-text hover:border-brand-teal-primary transition"
+            aria-label={theme === 'dark' ? 'Passer en mode clair' : 'Passer en mode sombre'}
+            title={theme === 'dark' ? 'Mode clair' : 'Mode sombre'}
+          >
+            {theme === 'dark' ? <Sun size={16} strokeWidth={1.75} /> : <Moon size={16} strokeWidth={1.75} />}
+          </button>
           <button
             onClick={() => setAppScreen('apropos')}
             className="hidden md:inline-flex items-center gap-1 px-2 py-2 rounded-lg text-text-secondary hover:text-text transition text-sm"

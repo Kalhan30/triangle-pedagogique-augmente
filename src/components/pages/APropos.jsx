@@ -1,6 +1,7 @@
 import { ArrowLeft, ExternalLink, Mail, BookOpen } from 'lucide-react';
 import mentionCfg from '../../config/mention-recherche-action.json';
 import { useApp } from '../../contexts/AppContext.jsx';
+import ThemeToggle from '../ThemeToggle.jsx';
 
 export default function APropos() {
   const { setAppScreen, niveauId } = useApp();
@@ -21,9 +22,12 @@ export default function APropos() {
   return (
     <main className="min-h-screen bg-background animate-fade">
       <div className="max-w-[720px] mx-auto px-6 md:px-12 py-10">
-        <button onClick={goBack} className="mb-6 inline-flex items-center gap-2 text-sm text-text-secondary hover:text-text transition" aria-label="Retour">
-          <ArrowLeft size={16} /> Retour
-        </button>
+        <div className="mb-6 flex items-center justify-between">
+          <button onClick={goBack} className="inline-flex items-center gap-2 text-sm text-text-secondary hover:text-text transition" aria-label="Retour">
+            <ArrowLeft size={16} /> Retour
+          </button>
+          <ThemeToggle />
+        </div>
 
         <h1 className="text-[32px] font-bold leading-tight mb-6 text-text">Une démarche de recherche-action</h1>
 

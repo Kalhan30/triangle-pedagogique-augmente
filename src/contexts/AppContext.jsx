@@ -3,6 +3,18 @@ import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 const AppContext = createContext(null);
 
 const STORAGE_KEY = 'triangle-v2:diagnostic';
+const THEME_KEY = 'triangle-v2:theme';
+
+function readInitialTheme() {
+  try {
+    const stored = localStorage.getItem(THEME_KEY);
+    if (stored === 'dark' || stored === 'light') return stored;
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) return 'dark';
+  } catch {
+    /* noop */
+  }
+  return 'light';
+}
 
 function migrateDiagnostic(raw) {
   if (!raw) return null;
@@ -31,6 +43,18 @@ export function AppProvider({ children }) {
     }
   });
   const [ethicsValue, setEthicsValue] = useState(40);
+  const [theme, setThemeState] = useState(() => (typeof window !== 'undefined' ? readInitialTheme() : 'light'));
+
+  useEffect(() => {
+    if (typeof document === 'undefined') return;
+    const root = document.documentElement;
+    if (theme === 'dark') root.classList.add('dark');
+    else root.classList.remove('dark');
+    try { localStorage.setItem(THEME_KEY, theme); } catch { /* noop */ }
+  }, [theme]);
+
+  const setTheme = (t) => setThemeState(t === 'dark' ? 'dark' : 'light');
+  const toggleTheme = () => setThemeState((t) => (t === 'dark' ? 'light' : 'dark'));
 
   useEffect(() => {
     try {
@@ -85,8 +109,11 @@ export function AppProvider({ children }) {
       setDiagnostic,
       ethicsValue,
       setEthicsValue,
+      theme,
+      setTheme,
+      toggleTheme,
     }),
-    [appScreen, niveauId, activeTab, diagnostic, ethicsValue]
+    [appScreen, niveauId, activeTab, diagnostic, ethicsValue, theme]
   );
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

@@ -3,18 +3,108 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --bg-primary: 250 250 249;
+    --bg-card: 255 255 255;
+    --bg-elevated: 248 250 252;
+    --bg-pressed: 241 245 249;
+
+    --text-primary: 15 23 42;
+    --text-emphasized: 15 23 42;
+    --text-secondary: 71 85 105;
+    --text-muted: 148 163 184;
+
+    --teal-primary: 15 118 110;
+    --teal-medium: 20 184 166;
+    --teal-light: 230 242 240;
+    --teal-subtle: 240 253 250;
+    --teal-text: 15 75 68;
+
+    --violet-primary: 124 58 237;
+    --violet-medium: 139 92 246;
+    --violet-light: 240 234 254;
+    --violet-subtle: 245 243 255;
+    --violet-text: 76 29 149;
+
+    --amber-primary: 217 119 6;
+    --amber-medium: 245 158 11;
+    --amber-light: 254 243 230;
+    --amber-subtle: 255 251 235;
+    --amber-text: 133 79 11;
+
+    --ethics-minimal: 15 118 110;
+    --ethics-partner: 5 150 105;
+    --ethics-dominant: 217 119 6;
+    --ethics-total: 220 38 38;
+
+    --border-subtle: rgba(15, 23, 42, 0.06);
+    --border-normal: rgba(15, 23, 42, 0.12);
+    --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04);
+    --shadow-md: 0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
+    --shadow-lg: 0 4px 6px rgba(15, 23, 42, 0.07), 0 2px 4px rgba(15, 23, 42, 0.05);
+
+    --svg-circle-fill: #FFFFFF;
+    --svg-stroke-muted: #475569;
+  }
+
+  html.dark {
+    --bg-primary: 10 10 21;
+    --bg-card: 20 20 40;
+    --bg-elevated: 30 30 58;
+    --bg-pressed: 45 45 74;
+
+    --text-primary: 248 250 252;
+    --text-emphasized: 241 245 249;
+    --text-secondary: 226 232 240;
+    --text-muted: 148 163 184;
+
+    --teal-primary: 94 234 212;
+    --teal-medium: 20 184 166;
+    --teal-light: 17 64 58;
+    --teal-subtle: 17 64 58;
+    --teal-text: 94 234 212;
+
+    --violet-primary: 167 139 250;
+    --violet-medium: 139 92 246;
+    --violet-light: 44 19 89;
+    --violet-subtle: 44 19 89;
+    --violet-text: 196 181 253;
+
+    --amber-primary: 251 191 36;
+    --amber-medium: 245 158 11;
+    --amber-light: 68 44 11;
+    --amber-subtle: 68 44 11;
+    --amber-text: 252 211 77;
+
+    --ethics-minimal: 94 234 212;
+    --ethics-partner: 34 197 94;
+    --ethics-dominant: 251 191 36;
+    --ethics-total: 239 68 68;
+
+    --border-subtle: rgba(255, 255, 255, 0.08);
+    --border-normal: rgba(255, 255, 255, 0.16);
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 2px 6px rgba(0, 0, 0, 0.5), 0 1px 2px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 6px 14px rgba(0, 0, 0, 0.55), 0 2px 4px rgba(0, 0, 0, 0.4);
+
+    --svg-circle-fill: #141428;
+    --svg-stroke-muted: #CBD5E1;
+  }
+
   html {
-    background-color: #FAFAF9;
+    background-color: rgb(var(--bg-primary));
+    transition: background-color 200ms ease;
   }
   body {
-    background-color: #FAFAF9;
-    color: #0F172A;
+    background-color: rgb(var(--bg-primary));
+    color: rgb(var(--text-primary));
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    transition: background-color 200ms ease, color 200ms ease;
   }
 
   *:focus-visible {
-    outline: 2px solid #0F766E;
+    outline: 2px solid rgb(var(--teal-primary));
     outline-offset: 2px;
   }
 }
@@ -28,15 +118,15 @@
 
 @layer utilities {
   .card {
-    background-color: #FFFFFF;
-    border: 0.5px solid rgba(15, 23, 42, 0.06);
+    background-color: rgb(var(--bg-card));
+    border: 0.5px solid var(--border-subtle);
     border-radius: 12px;
-    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
+    box-shadow: var(--shadow-md);
   }
   .card-elevated {
-    background-color: #FFFFFF;
-    border: 0.5px solid rgba(15, 23, 42, 0.12);
-    box-shadow: 0 4px 6px rgba(15, 23, 42, 0.07), 0 2px 4px rgba(15, 23, 42, 0.05);
+    background-color: rgb(var(--bg-card));
+    border: 0.5px solid var(--border-normal);
+    box-shadow: var(--shadow-lg);
   }
   .font-serif-editorial {
     font-family: Georgia, 'Playfair Display', serif;
