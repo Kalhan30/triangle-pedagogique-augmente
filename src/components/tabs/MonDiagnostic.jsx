@@ -116,22 +116,28 @@ export default function MonDiagnostic() {
     }
   };
 
-  const onValidateQuestionnaire = async ({ axes, responses, mode: wizardMode }) => {
+  const onValidateQuestionnaire = async (payload) => {
     const missing = validateContext();
     if (missing) { setError('Merci de compléter tous les champs de contexte avant de lancer l\'analyse.'); return; }
-    const enrichedForm = { ...form, ...axes };
+    const enrichedForm = {
+      ...form,
+      axeEnseignantSavoir: payload.axeEnseignantSavoir,
+      axeEnseignantEleve: payload.axeEnseignantEleve,
+      axeEleveSavoirManipulation: payload.axeEleveSavoirManipulation,
+      axeEleveSavoirImpactMediatise: payload.axeEleveSavoirImpactMediatise,
+    };
     setForm(enrichedForm);
-    setWizardResponses(responses);
+    setWizardResponses(payload.responses);
     await runAnalysis(enrichedForm, {
-      modeUtilise: wizardMode,
-      responses,
-      axeEleveSavoirVisualise: axes.axeEleveSavoirVisualise,
-      valeurEthiqueGlobale: axes.valeurEthiqueGlobale,
-      libelleQ1: axes.libelleQ1,
-      libelleQ2: axes.libelleQ2,
-      libelleQ3: axes.libelleQ3,
-      libelleQ4: axes.libelleQ4,
-      libelleQ5: axes.libelleQ5,
+      modeUtilise: payload.mode,
+      responses: payload.responses,
+      axeEleveSavoirVisualise: payload.axeEleveSavoirVisualise,
+      valeurEthiqueGlobale: payload.valeurEthiqueGlobale,
+      libelleQ1: payload.libelleQ1,
+      libelleQ2: payload.libelleQ2,
+      libelleQ3: payload.libelleQ3,
+      libelleQ4: payload.libelleQ4,
+      libelleQ5: payload.libelleQ5,
     });
   };
 
