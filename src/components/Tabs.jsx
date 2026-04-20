@@ -1,4 +1,4 @@
-import { Compass, Sparkles, Shield, FileText } from 'lucide-react';
+import { Compass, Sparkles, Shield, FileText, BookOpen } from 'lucide-react';
 import { useApp } from '../contexts/AppContext.jsx';
 
 const TABS = [
@@ -6,6 +6,7 @@ const TABS = [
   { id: 'situations', label: 'Situations', Icon: Sparkles },
   { id: 'ethique', label: 'Éthique', Icon: Shield },
   { id: 'diagnostic', label: 'Mon Diagnostic', Icon: FileText },
+  { id: 'cadre-theorique', label: 'Cadre théorique', Icon: BookOpen },
 ];
 
 export default function Tabs() {

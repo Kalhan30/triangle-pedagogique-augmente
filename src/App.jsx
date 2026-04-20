@@ -8,6 +8,7 @@ import Explorer from './components/tabs/Explorer.jsx';
 import Situations from './components/tabs/Situations.jsx';
 import Ethique from './components/tabs/Ethique.jsx';
 import MonDiagnostic from './components/tabs/MonDiagnostic.jsx';
+import CadreTheorique from './components/CadreTheorique.jsx';
 import FloatingFAQ from './components/FloatingFAQ.jsx';
 import APropos from './components/pages/APropos.jsx';
 import ModaleChoixThemePDF from './components/ModaleChoixThemePDF.jsx';
@@ -57,6 +58,7 @@ export default function App() {
       {activeTab === 'situations' && <Situations />}
       {activeTab === 'ethique' && <Ethique />}
       {activeTab === 'diagnostic' && <MonDiagnostic />}
+      {activeTab === 'cadre-theorique' && <CadreTheorique />}
       <Footer />
       <FloatingFAQ />
       {pdfModalOpen && <ModaleChoixThemePDF onChoice={onPdfChoice} onClose={() => setPdfModalOpen(false)} />}
