@@ -68,6 +68,39 @@ export default function APropos() {
         </section>
 
         <section>
+          <h2 className="text-[22px] font-semibold text-brand-teal-primary mt-10 mb-4">Pour aller plus loin</h2>
+          <p className="text-base text-text leading-[1.7] mb-5">
+            Cet outil est accompagné d'un article de fond qui développe le cadre théorique, les sources scientifiques mobilisées, le cas concret d'usage en CE2, et les points de vigilance soulevés par la recherche internationale sur l'IA en éducation.
+          </p>
+          <a
+            href="https://maprofbranchee.fr/le-triangle-pedagogique-augmente-par-lia-une-nouvelle-grammaire-de-lapprentissage/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block rounded-lg p-4 md:p-5 transition-all hover:-translate-y-0.5"
+            style={{
+              background: 'rgb(var(--violet-light))',
+              borderLeft: '3px solid rgb(var(--violet-primary))',
+              boxShadow: 'var(--shadow-sm)',
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.boxShadow = 'var(--shadow-md)'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.boxShadow = 'var(--shadow-sm)'; }}
+          >
+            <div className="flex items-start gap-4">
+              <span className="text-2xl shrink-0" aria-hidden="true">📖</span>
+              <div className="flex-1 min-w-0">
+                <p className="text-[15px] font-medium mb-1" style={{ color: 'rgb(var(--violet-text))' }}>
+                  Le triangle pédagogique augmenté par l'IA
+                </p>
+                <p className="text-[13px] italic font-serif-editorial text-text-secondary">
+                  Une nouvelle grammaire de l'apprentissage
+                </p>
+              </div>
+              <ExternalLink size={14} className="shrink-0 mt-1 text-text-muted" />
+            </div>
+          </a>
+        </section>
+
+        <section>
           <h2 className="text-[22px] font-semibold text-brand-teal-primary mt-10 mb-4">Ce que cet outil ne remplace pas</h2>
           <ul className="space-y-3 text-base text-text leading-[1.7] pl-2">
             <li>— votre expertise disciplinaire et didactique</li>

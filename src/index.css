@@ -4,6 +4,12 @@
 
 @layer base {
   :root {
+    --border-radius-md: 8px;
+    --border-radius-lg: 12px;
+    --transition-theme: background-color 0.2s ease-out, color 0.15s ease-out, border-color 0.15s ease-out;
+  }
+
+  :root[data-theme="light"] {
     --bg-primary: 250 250 249;
     --bg-card: 255 255 255;
     --bg-elevated: 248 250 252;
@@ -13,6 +19,7 @@
     --text-emphasized: 15 23 42;
     --text-secondary: 71 85 105;
     --text-muted: 148 163 184;
+    --text-disabled: 203 213 225;
 
     --teal-primary: 15 118 110;
     --teal-medium: 20 184 166;
@@ -39,26 +46,29 @@
 
     --border-subtle: rgba(15, 23, 42, 0.06);
     --border-normal: rgba(15, 23, 42, 0.12);
+    --border-focus: rgba(15, 118, 110, 0.4);
     --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04);
     --shadow-md: 0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
     --shadow-lg: 0 4px 6px rgba(15, 23, 42, 0.07), 0 2px 4px rgba(15, 23, 42, 0.05);
+    --shadow-focus: 0 0 0 3px rgba(15, 118, 110, 0.15);
 
     --svg-circle-fill: #FFFFFF;
     --svg-stroke-muted: #475569;
   }
 
-  html.dark {
-    --bg-primary: 10 10 21;
-    --bg-card: 20 20 40;
-    --bg-elevated: 30 30 58;
-    --bg-pressed: 45 45 74;
+  :root[data-theme="dark"] {
+    --bg-primary: 11 18 32;
+    --bg-card: 26 35 50;
+    --bg-elevated: 36 43 61;
+    --bg-pressed: 45 53 72;
 
-    --text-primary: 248 250 252;
+    --text-primary: 241 245 249;
     --text-emphasized: 241 245 249;
-    --text-secondary: 226 232 240;
+    --text-secondary: 203 213 225;
     --text-muted: 148 163 184;
+    --text-disabled: 100 116 139;
 
-    --teal-primary: 94 234 212;
+    --teal-primary: 45 212 191;
     --teal-medium: 20 184 166;
     --teal-light: 17 64 58;
     --teal-subtle: 17 64 58;
@@ -76,31 +86,31 @@
     --amber-subtle: 68 44 11;
     --amber-text: 252 211 77;
 
-    --ethics-minimal: 94 234 212;
-    --ethics-partner: 34 197 94;
+    --ethics-minimal: 45 212 191;
+    --ethics-partner: 16 185 129;
     --ethics-dominant: 251 191 36;
-    --ethics-total: 239 68 68;
+    --ethics-total: 248 113 113;
 
-    --border-subtle: rgba(255, 255, 255, 0.08);
-    --border-normal: rgba(255, 255, 255, 0.16);
-    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-    --shadow-md: 0 2px 6px rgba(0, 0, 0, 0.5), 0 1px 2px rgba(0, 0, 0, 0.3);
-    --shadow-lg: 0 6px 14px rgba(0, 0, 0, 0.55), 0 2px 4px rgba(0, 0, 0, 0.4);
+    --border-subtle: rgba(241, 245, 249, 0.08);
+    --border-normal: rgba(241, 245, 249, 0.15);
+    --border-focus: rgba(45, 212, 191, 0.5);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.35);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.4);
+    --shadow-focus: 0 0 0 3px rgba(45, 212, 191, 0.25);
 
-    --svg-circle-fill: #141428;
+    --svg-circle-fill: #1A2332;
     --svg-stroke-muted: #CBD5E1;
   }
 
   html {
     background-color: rgb(var(--bg-primary));
-    transition: background-color 200ms ease;
   }
   body {
     background-color: rgb(var(--bg-primary));
     color: rgb(var(--text-primary));
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    transition: background-color 200ms ease, color 200ms ease;
   }
 
   *:focus-visible {
@@ -109,10 +119,21 @@
   }
 }
 
+.theme-transitioning *,
+.theme-transitioning *::before,
+.theme-transitioning *::after {
+  transition: background-color 200ms ease-out, color 150ms ease-out, border-color 150ms ease-out, box-shadow 200ms ease-out, fill 200ms ease-out, stroke 200ms ease-out !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
+  }
+  .theme-transitioning *,
+  .theme-transitioning *::before,
+  .theme-transitioning *::after {
+    transition: none !important;
   }
 }
 
@@ -120,7 +141,7 @@
   .card {
     background-color: rgb(var(--bg-card));
     border: 0.5px solid var(--border-subtle);
-    border-radius: 12px;
+    border-radius: var(--border-radius-lg);
     box-shadow: var(--shadow-md);
   }
   .card-elevated {

@@ -1,10 +1,12 @@
 import { useState } from 'react';
-import { ArrowRight, School, BookOpen, BookMarked, GraduationCap, Info } from 'lucide-react';
+import { ArrowRight, School, BookOpen, BookMarked, GraduationCap, Info, ExternalLink } from 'lucide-react';
 import { NIVEAUX, CONTENU_ACCUEIL } from '../data/niveaux.js';
 import { useApp } from '../contexts/AppContext.jsx';
 import { TriangleHoussayeBase, TriangleAugmenteIA } from './accueil/SVG_Triangles_Accueil.jsx';
 import AboutModale from './accueil/AboutModale.jsx';
 import ThemeToggle from './ThemeToggle.jsx';
+
+const ARTICLE_URL = 'https://maprofbranchee.fr/le-triangle-pedagogique-augmente-par-lia-une-nouvelle-grammaire-de-lapprentissage/';
 
 const NIVEAU_ICONS = {
   primaire: School,
@@ -70,15 +72,29 @@ export default function Accueil() {
               </article>
             </div>
 
-            <div className="text-center mt-5">
-              <button
-                onClick={() => setModaleOpen(true)}
-                className="inline-flex items-center gap-2 text-sm text-brand-teal-primary hover:text-brand-teal-text transition underline-offset-4 hover:underline"
-                aria-label="Ouvrir les détails du cadre théorique"
-              >
-                <Info size={14} strokeWidth={1.75} />
-                En savoir plus sur Houssaye et le cadre théorique
-              </button>
+            <div className="text-center mt-5 space-y-3">
+              <div>
+                <button
+                  onClick={() => setModaleOpen(true)}
+                  className="inline-flex items-center gap-2 text-sm text-brand-teal-primary hover:text-brand-teal-text transition underline-offset-4 hover:underline"
+                  aria-label="Ouvrir les détails du cadre théorique"
+                >
+                  <Info size={14} strokeWidth={1.75} />
+                  En savoir plus sur Houssaye et le cadre théorique
+                </button>
+              </div>
+              <div>
+                <a
+                  href={ARTICLE_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-sm text-brand-violet-primary hover:text-brand-violet-text transition underline-offset-4 hover:underline"
+                  aria-label="Lire l'article fondateur du modèle augmenté (nouvel onglet)"
+                >
+                  📖 Lire l'article fondateur du modèle augmenté
+                  <ExternalLink size={10} className="text-text-muted" />
+                </a>
+              </div>
             </div>
           </section>
 

@@ -6,6 +6,10 @@ const STORAGE_KEY = 'triangle-v2:diagnostic';
 const THEME_KEY = 'triangle-v2:theme';
 
 function readInitialTheme() {
+  if (typeof document !== 'undefined') {
+    const attr = document.documentElement.getAttribute('data-theme');
+    if (attr === 'dark' || attr === 'light') return attr;
+  }
   try {
     const stored = localStorage.getItem(THEME_KEY);
     if (stored === 'dark' || stored === 'light') return stored;
@@ -14,6 +18,15 @@ function readInitialTheme() {
     /* noop */
   }
   return 'light';
+}
+
+function hasStoredTheme() {
+  try {
+    const v = localStorage.getItem(THEME_KEY);
+    return v === 'dark' || v === 'light';
+  } catch {
+    return false;
+  }
 }
 
 function migrateDiagnostic(raw) {
@@ -48,13 +61,32 @@ export function AppProvider({ children }) {
   useEffect(() => {
     if (typeof document === 'undefined') return;
     const root = document.documentElement;
-    if (theme === 'dark') root.classList.add('dark');
-    else root.classList.remove('dark');
-    try { localStorage.setItem(THEME_KEY, theme); } catch { /* noop */ }
+    root.setAttribute('data-theme', theme);
   }, [theme]);
 
-  const setTheme = (t) => setThemeState(t === 'dark' ? 'dark' : 'light');
-  const toggleTheme = () => setThemeState((t) => (t === 'dark' ? 'light' : 'dark'));
+  useEffect(() => {
+    if (typeof window === 'undefined' || !window.matchMedia) return;
+    const mql = window.matchMedia('(prefers-color-scheme: dark)');
+    const handler = (e) => {
+      if (!hasStoredTheme()) setThemeState(e.matches ? 'dark' : 'light');
+    };
+    mql.addEventListener?.('change', handler);
+    return () => mql.removeEventListener?.('change', handler);
+  }, []);
+
+  const applyThemeWithTransition = (next) => {
+    try {
+      if (typeof document !== 'undefined') {
+        document.body.classList.add('theme-transitioning');
+        window.setTimeout(() => document.body.classList.remove('theme-transitioning'), 250);
+      }
+    } catch { /* noop */ }
+    setThemeState(next);
+    try { localStorage.setItem(THEME_KEY, next); } catch { /* noop */ }
+  };
+
+  const setTheme = (t) => applyThemeWithTransition(t === 'dark' ? 'dark' : 'light');
+  const toggleTheme = () => applyThemeWithTransition(theme === 'dark' ? 'light' : 'dark');
 
   useEffect(() => {
     try {
