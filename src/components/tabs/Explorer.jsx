@@ -34,7 +34,7 @@ export default function Explorer() {
           ethicsValue={ethicsValue}
         />
         <p className="text-sm text-text-emphasized mt-4 text-center">
-          Cliquez sur un <span className="text-brand-teal-light">sommet</span> ou un <span className="text-brand-violet-light">axe</span> pour en explorer le contenu.
+          Cliquez sur un <span className="text-brand-teal-primary">sommet</span> ou un <span className="text-brand-violet-primary">axe</span> pour en explorer le contenu.
         </p>
       </div>
 
@@ -52,7 +52,7 @@ export default function Explorer() {
               <h3 className="text-lg font-semibold" style={{ color: vertexInfo.color }}>{vertexInfo.label}</h3>
               <button onClick={() => setSelectedVertex(null)} aria-label="Fermer"><X size={16} className="text-text-muted hover:text-text" /></button>
             </div>
-            <p className="text-sm text-text-secondary">{vertexInfo.description}</p>
+            <p className="text-sm text-text">{vertexInfo.description}</p>
           </div>
         )}
 
@@ -66,22 +66,22 @@ export default function Explorer() {
             </div>
             {selectedAxis === 'eleveSavoir' && contrainte?.bandeauExplorer && (
               <div className="mb-4 p-3 rounded-lg flex gap-2 text-[13px]" style={{ background: 'rgba(245, 158, 11, 0.08)', borderLeft: '3px solid #F59E0B' }}>
-                <AlertTriangle size={14} className="shrink-0 mt-0.5 text-brand-amber-light" />
+                <AlertTriangle size={14} className="shrink-0 mt-0.5 text-brand-amber-primary" />
                 <span className="text-text-emphasized leading-relaxed">{contrainte.bandeauExplorer}</span>
               </div>
             )}
             <Section color={AXES_META[selectedAxis].color} title={selectedAxis === 'eleveSavoir' && (niveauId === 'primaire' || niveauId === 'college_6_5') ? "Ce que l'IA peut (via l'enseignant)" : "IA peut"}>
-              <ul className="space-y-1 text-sm text-text-secondary">
+              <ul className="space-y-1 text-sm text-text">
                 {detail.iaPeut.map((it, i) => <li key={i}>▸ {it}</li>)}
               </ul>
             </Section>
             <Section color="#22C55E" title="Humain irremplaçable">
-              <ul className="space-y-1 text-sm text-text-secondary">
+              <ul className="space-y-1 text-sm text-text">
                 {detail.humainIrremplaçable.map((it, i) => <li key={i}>▸ {it}</li>)}
               </ul>
             </Section>
             <Section color="#64748B" title="Exemple terrain">
-              <p className="text-sm italic text-text-secondary">« {detail.exempleTerrain} »</p>
+              <p className="text-sm italic text-text">« {detail.exempleTerrain} »</p>
             </Section>
           </div>
         )}
@@ -96,16 +96,16 @@ export default function Explorer() {
           aria-controls="cadre-panel"
         >
           <div className="flex items-center gap-3">
-            <Scale size={18} className="text-brand-amber-light" strokeWidth={1.75} />
+            <Scale size={18} className="text-brand-amber-primary" strokeWidth={1.75} />
             <h3 id="cadre-title" className="text-base font-semibold">Cadre réglementaire — {niveau?.label}</h3>
           </div>
           <ChevronDown size={18} className={`text-text-muted transition ${cadreOpen ? 'rotate-180' : ''}`} />
         </button>
         {cadreOpen && (
-          <div id="cadre-panel" className="px-5 pb-5 pt-1 border-t border-background-elevated space-y-4">
+          <div id="cadre-panel" className="px-5 pb-5 pt-1 border-t border-border-subtle space-y-4">
             <div className="p-4 rounded-lg" style={{ background: 'rgba(245, 158, 11, 0.08)', borderLeft: '3px solid #F59E0B' }}>
-              <p className="text-xs uppercase tracking-wider text-brand-amber-light font-semibold mb-2">Règle centrale</p>
-              <p className="text-sm text-text-secondary italic">« {niveau?.regleAutorisation} »</p>
+              <p className="text-xs uppercase tracking-wider text-brand-amber-primary font-semibold mb-2">Règle centrale</p>
+              <p className="text-sm text-text italic">« {niveau?.regleAutorisation} »</p>
             </div>
             <div className="grid md:grid-cols-2 gap-4">
               <div>
@@ -113,7 +113,7 @@ export default function Explorer() {
                   <CheckCircle2 size={15} className="text-semantic-success" />
                   <p className="text-xs uppercase tracking-wider font-semibold text-semantic-success">Autorisé</p>
                 </div>
-                <ul className="space-y-1 text-sm text-text-secondary">
+                <ul className="space-y-1 text-sm text-text">
                   {niveau?.autorises.map((a, i) => <li key={i}>▸ {a}</li>)}
                 </ul>
               </div>
@@ -122,12 +122,12 @@ export default function Explorer() {
                   <XCircle size={15} className="text-semantic-error" />
                   <p className="text-xs uppercase tracking-wider font-semibold text-semantic-error">Non autorisé</p>
                 </div>
-                <ul className="space-y-1 text-sm text-text-secondary">
+                <ul className="space-y-1 text-sm text-text">
                   {niveau?.nonAutorises.map((a, i) => <li key={i}>▸ {a}</li>)}
                 </ul>
               </div>
             </div>
-            <p className="text-xs text-text-muted pt-2 border-t border-background-elevated">
+            <p className="text-xs text-text-muted pt-2 border-t border-border-subtle">
               Source : Cadre d'usage de l'IA en éducation, Ministère de l'Éducation nationale, juin 2025.
             </p>
           </div>

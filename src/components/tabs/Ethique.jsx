@@ -21,8 +21,8 @@ export default function Ethique() {
           <div
             className="h-3 rounded-full mb-3"
             style={{
-              background: 'linear-gradient(to right, #14B8A6 0%, #22C55E 25%, #22C55E 60%, #F59E0B 60%, #F59E0B 85%, #EF4444 85%, #EF4444 100%)',
-              opacity: 0.4,
+              background: 'linear-gradient(to right, #0F766E 0%, #059669 25%, #059669 60%, #D97706 60%, #D97706 85%, #DC2626 85%, #DC2626 100%)',
+              opacity: 0.55,
             }}
             aria-hidden="true"
           />
@@ -54,7 +54,7 @@ export default function Ethique() {
           <span className="inline-block w-3 h-3 rounded-full" style={{ background: zone.color }}></span>
           <h3 className="text-lg font-semibold" style={{ color: zone.color }}>{zone.label}</h3>
           {zone.badge && (
-            <span className="ml-auto text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded text-background" style={{ background: zone.color }}>
+            <span className="ml-auto text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded text-white" style={{ background: zone.color }}>
               {zone.badge}
             </span>
           )}
@@ -63,14 +63,14 @@ export default function Ethique() {
         <p className="text-sm leading-relaxed mb-4" style={{ color: zone.color }}>{zone.message}</p>
 
         {cadreZone && (
-          <div className="p-3 rounded-lg bg-background-secondary border border-background-elevated mb-4">
+          <div className="p-3 rounded-lg bg-white border border-border-subtle mb-4">
             <p className="text-[10px] uppercase tracking-wider font-semibold text-text-muted mb-2">Citation du Cadre d'usage — Juin 2025</p>
             <p className="text-xs italic text-text-secondary leading-relaxed mb-2">« {cadreZone.citation} »</p>
             <p className="text-xs text-text-muted">{cadreZone.interpretation}</p>
           </div>
         )}
 
-        <div className="border-t border-background-elevated pt-4 mt-4">
+        <div className="border-t border-border-subtle pt-4 mt-4">
           <p className="text-xs uppercase tracking-wide text-text-muted mb-2">Toutes les zones</p>
           <ul className="space-y-1">
             {ETHICS_ZONES.map((z) => (

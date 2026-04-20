@@ -155,37 +155,37 @@ export default function MonDiagnostic() {
           <p className="text-sm text-text-emphasized">Décrivez votre séance, puis positionnez votre pratique. Claude vous proposera trois recommandations contextualisées par le Cadre juin 2025.</p>
 
           <Field label="Niveau">
-            <div className="px-3 py-2 rounded-lg bg-background-secondary border border-[#475569] text-sm text-text-emphasized">{niveau?.label}</div>
+            <div className="px-3 py-2 rounded-lg bg-background-elevated border border-border text-sm text-text-emphasized">{niveau?.label}</div>
           </Field>
           <Field label="Discipline *">
-            <input value={form.discipline} onChange={(e) => setField('discipline', e.target.value)} placeholder="Ex : Français, Mathématiques…" className="w-full bg-background-secondary text-text border border-[#475569] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brand-teal" />
+            <input value={form.discipline} onChange={(e) => setField('discipline', e.target.value)} placeholder="Ex : Français, Mathématiques…" className="w-full bg-background-elevated text-text border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brand-teal" />
           </Field>
           <Field label="Type d'activité *">
-            <input value={form.typeActivite} onChange={(e) => setField('typeActivite', e.target.value)} placeholder="Ex : Évaluation différenciée, atelier lecture…" className="w-full bg-background-secondary text-text border border-[#475569] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brand-teal" />
+            <input value={form.typeActivite} onChange={(e) => setField('typeActivite', e.target.value)} placeholder="Ex : Évaluation différenciée, atelier lecture…" className="w-full bg-background-elevated text-text border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brand-teal" />
           </Field>
           <Field label="Profil d'élève ciblé *">
-            <input value={form.profilEleve} onChange={(e) => setField('profilEleve', e.target.value)} placeholder="Ex : groupe hétérogène, un élève en difficulté…" className="w-full bg-background-secondary text-text border border-[#475569] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brand-teal" />
+            <input value={form.profilEleve} onChange={(e) => setField('profilEleve', e.target.value)} placeholder="Ex : groupe hétérogène, un élève en difficulté…" className="w-full bg-background-elevated text-text border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brand-teal" />
           </Field>
           <Field label="Objectif pédagogique *">
-            <textarea value={form.objectif} onChange={(e) => setField('objectif', e.target.value)} rows={2} placeholder="Ex : Consolider la division euclidienne" className="w-full bg-background-secondary text-text border border-[#475569] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brand-teal" />
+            <textarea value={form.objectif} onChange={(e) => setField('objectif', e.target.value)} rows={2} placeholder="Ex : Consolider la division euclidienne" className="w-full bg-background-elevated text-text border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brand-teal" />
           </Field>
         </div>
 
         <div className="card p-6">
           {!contextComplete && (
             <div className="mb-4 p-3 rounded-lg" style={{ background: 'rgba(245, 158, 11, 0.1)', borderLeft: '3px solid #F59E0B' }}>
-              <p className="text-[13px] text-brand-amber-light font-semibold mb-1">Avant de commencer</p>
+              <p className="text-[13px] text-brand-amber-primary font-semibold mb-1">Avant de commencer</p>
               <p className="text-[13px] text-text-emphasized leading-relaxed">
                 Complétez d'abord : <span className="font-semibold">{contextMissing.join(', ')}</span> (champs ci-dessus).
               </p>
             </div>
           )}
-          <div className="mb-4 flex items-center gap-1 p-1 rounded-lg bg-background-secondary border border-background-elevated w-fit" role="tablist" aria-label="Mode de saisie">
+          <div className="mb-4 flex items-center gap-1 p-1 rounded-lg bg-background-elevated border border-border-subtle w-fit" role="tablist" aria-label="Mode de saisie">
             <button
               onClick={() => setMode('questionnaire')}
               role="tab"
               aria-selected={mode === 'questionnaire'}
-              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-semibold transition ${mode === 'questionnaire' ? 'bg-brand-teal text-background' : 'text-text-secondary hover:text-text'}`}
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-semibold transition ${mode === 'questionnaire' ? 'bg-brand-teal-primary text-white' : 'text-text-secondary hover:text-text'}`}
             >
               <ListChecks size={13} /> Questionnaire
             </button>
@@ -193,7 +193,7 @@ export default function MonDiagnostic() {
               onClick={() => setMode('avance')}
               role="tab"
               aria-selected={mode === 'avance'}
-              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-semibold transition ${mode === 'avance' ? 'bg-brand-violet text-background' : 'text-text-secondary hover:text-text'}`}
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-semibold transition ${mode === 'avance' ? 'bg-brand-violet-primary text-white' : 'text-text-secondary hover:text-text'}`}
             >
               <Sliders size={13} /> Mode avancé
             </button>
@@ -223,13 +223,13 @@ export default function MonDiagnostic() {
                 <AxisSlider label="Enseignant–Élève (relation)" color="#F59E0B" value={form.axeEnseignantEleve} onChange={(v) => setField('axeEnseignantEleve', v)} onHelp={() => setHelpSlider(AIDE_SLIDERS.enseignantEleve)} />
               </div>
 
-              <div className="pt-4 border-t border-background-elevated">
+              <div className="pt-4 border-t border-border-subtle">
                 <p className="text-xs uppercase tracking-wide text-text-emphasized font-semibold mb-3">Activation IA côté élève</p>
                 <LockedOrPlafondSlider label="Élève–Savoir : manipulation directe" color="#8B5CF6" value={form.axeEleveSavoirManipulation} onChange={(v) => setField('axeEleveSavoirManipulation', v)} locked={manipulationLocked} plafond={manipulationPlafond} onHelp={() => setHelpSlider(AIDE_SLIDERS.eleveSavoirManipulation)} />
                 {manipulationLocked && (
                   <div className="mb-4 p-3 rounded" style={{ background: 'rgba(245, 158, 11, 0.08)', borderLeft: '3px solid #F59E0B' }}>
                     <div className="flex gap-2 text-[13px] text-text-emphasized leading-relaxed">
-                      <Lock size={14} className="shrink-0 mt-0.5 text-brand-amber-light" />
+                      <Lock size={14} className="shrink-0 mt-0.5 text-brand-amber-primary" />
                       <span>{contrainte.messageExplicatif}</span>
                     </div>
                   </div>
@@ -246,19 +246,19 @@ export default function MonDiagnostic() {
                   </div>
                 )}
                 <AxisSlider label="Élève–Savoir : impact médiatisé" color="#C4B5FD" value={form.axeEleveSavoirImpactMediatise} onChange={(v) => setField('axeEleveSavoirImpactMediatise', v)} onHelp={() => setHelpSlider(AIDE_SLIDERS.eleveSavoirImpactMediatise)} />
-                <div className="mt-3 p-3 rounded-lg bg-background-secondary border border-background-elevated flex items-center justify-between">
+                <div className="mt-3 p-3 rounded-lg bg-background-elevated border border-border-subtle flex items-center justify-between">
                   <span className="text-xs text-text-emphasized">Axe Élève–Savoir visualisé (0.7 × manip + 0.3 × impact)</span>
-                  <span className="font-mono font-bold text-brand-violet-light">{axeEleveVisualise}/100</span>
+                  <span className="font-mono font-bold text-brand-violet-primary">{axeEleveVisualise}/100</span>
                 </div>
               </div>
 
               {warning && (
-                <p className="mt-3 text-xs p-2 rounded bg-semantic-warning/10 text-brand-amber-light flex items-start gap-2">
+                <p className="mt-3 text-xs p-2 rounded bg-semantic-warning/10 text-brand-amber-primary flex items-start gap-2">
                   <AlertTriangle size={14} className="shrink-0 mt-0.5" /> {warning}
                 </p>
               )}
 
-              <button onClick={onAnalyseAdvanced} disabled={loading} className="mt-4 w-full py-3 rounded-lg bg-brand-teal text-background font-semibold hover:bg-brand-teal-light disabled:opacity-40 transition flex items-center justify-center gap-2">
+              <button onClick={onAnalyseAdvanced} disabled={loading} className="mt-4 w-full py-3 rounded-lg bg-brand-teal-primary text-white font-semibold hover:bg-brand-teal-text disabled:opacity-40 transition flex items-center justify-center gap-2">
                 {loading ? <><Loader2 size={16} className="animate-spin" /> Analyse…</> : <><Sparkles size={16} /> Analyser mon diagnostic</>}
               </button>
             </>
@@ -272,7 +272,7 @@ export default function MonDiagnostic() {
 
           {error && <p className="mt-3 text-xs text-semantic-error">{error}</p>}
           {warning && mode === 'questionnaire' && (
-            <p className="mt-3 text-xs p-2 rounded bg-semantic-warning/10 text-brand-amber-light flex items-start gap-2">
+            <p className="mt-3 text-xs p-2 rounded bg-semantic-warning/10 text-brand-amber-primary flex items-start gap-2">
               <AlertTriangle size={14} className="shrink-0 mt-0.5" /> {warning}
             </p>
           )}
@@ -296,10 +296,10 @@ export default function MonDiagnostic() {
           <div className="card p-6 space-y-3">
             <h3 className="text-lg font-semibold flex items-center gap-2"><CheckCircle2 size={18} className="text-semantic-success" /> Recommandations</h3>
             {recommendations.recommandations?.map((r, i) => (
-              <div key={i} className="p-3 rounded-lg bg-background-secondary border border-background-elevated">
-                <p className="font-semibold text-brand-teal-light text-sm mb-1">{i + 1}. {r.titre}</p>
+              <div key={i} className="p-3 rounded-lg bg-background-elevated border border-border-subtle">
+                <p className="font-semibold text-brand-teal-primary text-sm mb-1">{i + 1}. {r.titre}</p>
                 <p className="text-sm text-text-emphasized">{r.description}</p>
-                {r.referenceCadre && <p className="text-[11px] italic text-brand-amber-light mt-2">→ « {r.referenceCadre} »</p>}
+                {r.referenceCadre && <p className="text-[11px] italic text-brand-amber-primary mt-2">→ « {r.referenceCadre} »</p>}
               </div>
             ))}
             {recommendations.pointFort && (
@@ -309,7 +309,7 @@ export default function MonDiagnostic() {
             )}
             {recommendations.pointVigilance && (
               <p className="text-sm p-3 rounded-lg" style={{ background: 'rgba(245, 158, 11, 0.1)', borderLeft: '3px solid #F59E0B' }}>
-                <strong className="text-brand-amber-light">Vigilance : </strong>{recommendations.pointVigilance}
+                <strong className="text-brand-amber-primary">Vigilance : </strong>{recommendations.pointVigilance}
               </p>
             )}
             {recommendations.conformiteCadre?.estConforme === false && (
@@ -342,7 +342,7 @@ function AxisSlider({ label, color, value, onChange, onHelp }) {
         <div className="flex items-center gap-1.5">
           <span className="text-xs font-medium" style={{ color }}>{label}</span>
           {onHelp && (
-            <button onClick={onHelp} aria-label={`Aide sur ${label}`} className="text-text-muted hover:text-brand-teal-light transition">
+            <button onClick={onHelp} aria-label={`Aide sur ${label}`} className="text-text-muted hover:text-brand-teal-primary transition">
               <Info size={13} />
             </button>
           )}
@@ -363,7 +363,7 @@ function LockedOrPlafondSlider({ label, color, value, onChange, locked, plafond,
         <div className="flex items-center gap-1.5">
           <span className="text-xs font-medium" style={{ color: locked ? '#94A3B8' : color }}>{label}</span>
           {onHelp && (
-            <button onClick={onHelp} aria-label={`Aide sur ${label}`} className="text-text-muted hover:text-brand-teal-light transition">
+            <button onClick={onHelp} aria-label={`Aide sur ${label}`} className="text-text-muted hover:text-brand-teal-primary transition">
               <Info size={13} />
             </button>
           )}

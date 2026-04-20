@@ -73,8 +73,8 @@ export default function Triangle({
             />
             <rect
               x={mid.x - 50} y={mid.y - 14} width={100} height={24} rx={12}
-              fill="#1E293B" stroke={axisMeta.color} strokeOpacity={0.6}
-              style={{ cursor: 'pointer' }}
+              fill="#FFFFFF" stroke={axisMeta.color} strokeOpacity={0.7}
+              style={{ cursor: 'pointer', filter: 'drop-shadow(0 1px 2px rgba(15,23,42,0.06))' }}
               onClick={() => onSelectAxis?.(edge.id)}
             />
             <text x={mid.x} y={mid.y + 4} textAnchor="middle" fill={axisMeta.color} fontSize="11" fontWeight="600" style={{ pointerEvents: 'none' }}>
@@ -92,9 +92,9 @@ export default function Triangle({
           <g key={v.id} style={{ cursor: 'pointer' }} onClick={() => onSelectVertex?.(v.id)}>
             <circle
               cx={pos.x} cy={pos.y} r={isSelected ? 38 : 34}
-              fill="#1E293B" stroke={v.color}
+              fill="#FFFFFF" stroke={v.color}
               strokeWidth={isSelected ? 3 : 2}
-              style={{ transition: 'all 200ms', filter: isSelected ? 'url(#glow)' : 'none' }}
+              style={{ transition: 'all 200ms', filter: isSelected ? 'url(#glow)' : 'drop-shadow(0 2px 4px rgba(15,23,42,0.08))' }}
             />
             <foreignObject x={pos.x - 12} y={pos.y - 12} width={24} height={24} style={{ pointerEvents: 'none' }}>
               <div style={{ color: v.color, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>

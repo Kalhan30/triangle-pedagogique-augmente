@@ -54,7 +54,7 @@ export default function QuestionnaireWizard({ niveauId, initialResponses = {}, o
           <p className="text-xs uppercase tracking-wider text-text-muted font-semibold">Question {index + 1} sur {total}</p>
           <div className="flex items-center gap-2">
             {onSwitchAdvanced && (
-              <button onClick={onSwitchAdvanced} className="text-[11px] text-text-muted hover:text-brand-teal-light transition underline-offset-4 hover:underline" aria-label="Basculer en mode avancé (sliders)">
+              <button onClick={onSwitchAdvanced} className="text-[11px] text-text-muted hover:text-brand-teal-primary transition underline-offset-4 hover:underline" aria-label="Basculer en mode avancé (sliders)">
                 Mode avancé →
               </button>
             )}
@@ -82,23 +82,23 @@ export default function QuestionnaireWizard({ niveauId, initialResponses = {}, o
                 aria-pressed={isSelected}
                 className={`w-full text-left p-4 rounded-lg border-2 transition flex items-start gap-3 ${
                   isLocked
-                    ? 'opacity-50 cursor-not-allowed border-background-elevated'
+                    ? 'opacity-50 cursor-not-allowed border-border-subtle'
                     : isSelected
                     ? 'border-brand-teal bg-background-elevated'
                     : isWarning
                     ? 'border-brand-amber/60 hover:border-brand-amber'
-                    : 'border-background-elevated hover:border-brand-teal/60 hover:bg-background-elevated/50'
+                    : 'border-border-subtle hover:border-brand-teal/60 hover:bg-background-elevated/50'
                 }`}
               >
-                <span className={`shrink-0 mt-0.5 w-5 h-5 rounded-full border-2 flex items-center justify-center ${isSelected ? 'border-brand-teal bg-brand-teal' : 'border-background-elevated'}`}>
-                  {isSelected && <Check size={12} className="text-background" strokeWidth={3} />}
+                <span className={`shrink-0 mt-0.5 w-5 h-5 rounded-full border-2 flex items-center justify-center ${isSelected ? 'border-brand-teal bg-brand-teal' : 'border-border-subtle'}`}>
+                  {isSelected && <Check size={12} className="text-white" strokeWidth={3} />}
                 </span>
                 <span className="flex-1 text-sm text-text-emphasized leading-relaxed">{c.libelle}</span>
                 {isLocked && <Lock size={14} className="shrink-0 text-text-muted" />}
-                {isWarning && !isLocked && <AlertTriangle size={14} className="shrink-0 text-brand-amber-light" />}
+                {isWarning && !isLocked && <AlertTriangle size={14} className="shrink-0 text-brand-amber-primary" />}
               </button>
               {etat.alerte && (isSelected || isLocked) && (
-                <div className={`mt-2 p-3 rounded text-[12px] leading-relaxed ${isLocked ? 'text-text-emphasized' : isWarning ? 'text-brand-amber-light' : 'text-text-emphasized'}`} style={{ background: isWarning ? 'rgba(245, 158, 11, 0.08)' : 'rgba(139, 92, 246, 0.08)', borderLeft: `3px solid ${isWarning ? '#F59E0B' : '#8B5CF6'}` }}>
+                <div className={`mt-2 p-3 rounded text-[12px] leading-relaxed ${isLocked ? 'text-text-emphasized' : isWarning ? 'text-brand-amber-primary' : 'text-text-emphasized'}`} style={{ background: isWarning ? 'rgba(245, 158, 11, 0.08)' : 'rgba(139, 92, 246, 0.08)', borderLeft: `3px solid ${isWarning ? '#F59E0B' : '#8B5CF6'}` }}>
                   {etat.alerte}
                 </div>
               )}
@@ -109,13 +109,13 @@ export default function QuestionnaireWizard({ niveauId, initialResponses = {}, o
 
       {index === 3 && configInhabituelle && (
         <div className="mb-4 p-3 rounded-lg" style={{ background: 'rgba(245, 158, 11, 0.1)', borderLeft: '3px solid #F59E0B' }}>
-          <p className="text-[13px] text-brand-amber-light leading-relaxed">
+          <p className="text-[13px] text-brand-amber-primary leading-relaxed">
             <strong>Configuration inhabituelle :</strong> l'élève ne manipule pas l'IA mais reçoit du contenu quasi entièrement généré par elle. Est-ce bien votre intention ? Si oui, continuez. Sinon, vous pouvez revenir en arrière.
           </p>
         </div>
       )}
 
-      <div className="flex items-center justify-between pt-4 border-t border-background-elevated">
+      <div className="flex items-center justify-between pt-4 border-t border-border-subtle">
         <button
           onClick={prev}
           disabled={index === 0}
@@ -126,7 +126,7 @@ export default function QuestionnaireWizard({ niveauId, initialResponses = {}, o
         <button
           onClick={next}
           disabled={!selected}
-          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-brand-teal text-background font-semibold text-sm hover:bg-brand-teal-light disabled:opacity-40 disabled:cursor-not-allowed transition"
+          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-brand-teal-primary text-white font-semibold text-sm hover:bg-brand-teal-text disabled:opacity-40 disabled:cursor-not-allowed transition"
         >
           {index === total - 1 ? 'Voir la synthèse' : 'Suivante'} <ArrowRight size={14} />
         </button>
@@ -153,7 +153,7 @@ function Recap({ responses, axes, onModify, onValidate, onSwitchAdvanced, contex
 
       <ul className="space-y-3 mb-6">
         {lines.map((l, i) => (
-          <li key={i} className="p-3 rounded-lg bg-background-secondary border border-background-elevated">
+          <li key={i} className="p-3 rounded-lg bg-background-elevated border border-border-subtle">
             <p className="text-[11px] uppercase tracking-wider text-text-muted font-semibold mb-1">{l.label}</p>
             <p className="text-sm text-text-emphasized leading-relaxed">« {l.value} »</p>
           </li>
@@ -162,7 +162,7 @@ function Recap({ responses, axes, onModify, onValidate, onSwitchAdvanced, contex
 
       {!contextComplete && (
         <div className="mb-4 p-3 rounded-lg" style={{ background: 'rgba(245, 158, 11, 0.12)', borderLeft: '3px solid #F59E0B' }}>
-          <p className="text-[13px] text-brand-amber-light leading-relaxed font-semibold mb-1">Contexte incomplet</p>
+          <p className="text-[13px] text-brand-amber-primary leading-relaxed font-semibold mb-1">Contexte incomplet</p>
           <p className="text-[13px] text-text-emphasized leading-relaxed">
             Remplissez les champs ci-dessus avant de lancer l'analyse :{' '}
             <span className="font-semibold">{missingContextFields.join(', ')}</span>.
@@ -170,7 +170,7 @@ function Recap({ responses, axes, onModify, onValidate, onSwitchAdvanced, contex
         </div>
       )}
 
-      <div className="flex items-center justify-between gap-3 pt-4 border-t border-background-elevated flex-wrap">
+      <div className="flex items-center justify-between gap-3 pt-4 border-t border-border-subtle flex-wrap">
         <button onClick={onModify} className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm text-text-secondary hover:text-text transition">
           <Pencil size={14} /> Modifier mes réponses
         </button>
@@ -178,7 +178,7 @@ function Recap({ responses, axes, onModify, onValidate, onSwitchAdvanced, contex
           <button
             onClick={onValidate}
             disabled={!contextComplete || loading}
-            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-brand-teal text-background font-semibold text-sm hover:bg-brand-teal-light disabled:opacity-40 disabled:cursor-not-allowed transition"
+            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-brand-teal-primary text-white font-semibold text-sm hover:bg-brand-teal-text disabled:opacity-40 disabled:cursor-not-allowed transition"
           >
             {loading ? <>Analyse…</> : <><Sparkles size={14} /> Analyser mon diagnostic</>}
           </button>

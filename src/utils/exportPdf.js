@@ -13,13 +13,16 @@ export async function exporterFichePdf(diagnostic) {
     : Math.round(0.7 * (diagnostic.axeEleveSavoirManipulation || 0) + 0.3 * (diagnostic.axeEleveSavoirImpactMediatise || 0));
   const zone = getZoneEthique(Math.round((diagnostic.axeEnseignantSavoir + diagnostic.axeEnseignantEleve + axeEleveVisu) / 3));
 
-  pdf.setFillColor(15, 23, 42);
+  pdf.setFillColor(250, 250, 249);
   pdf.rect(0, 0, 210, 24, 'F');
-  pdf.setTextColor(20, 184, 166);
+  pdf.setDrawColor(15, 118, 110);
+  pdf.setLineWidth(0.3);
+  pdf.line(14, 23, 196, 23);
+  pdf.setTextColor(15, 118, 110);
   pdf.setFontSize(16);
   pdf.setFont('helvetica', 'bold');
   pdf.text('Triangle Pédagogique Augmenté', 14, 12);
-  pdf.setTextColor(203, 213, 225);
+  pdf.setTextColor(71, 85, 105);
   pdf.setFontSize(10);
   pdf.setFont('helvetica', 'normal');
   pdf.text('Fiche synthèse — MaProfBranchee', 14, 18);
@@ -110,7 +113,7 @@ export async function exporterFichePdf(diagnostic) {
   const triangleNode = document.getElementById('diagnostic-triangle');
   if (triangleNode) {
     try {
-      const canvas = await html2canvas(triangleNode, { backgroundColor: '#0F172A', scale: 2 });
+      const canvas = await html2canvas(triangleNode, { backgroundColor: '#FFFFFF', scale: 2 });
       const img = canvas.toDataURL('image/png');
       const w = 80;
       const h = (canvas.height / canvas.width) * w;
@@ -152,7 +155,7 @@ export async function exporterFichePdf(diagnostic) {
     if (y > 250) { pdf.addPage(); y = 20; }
     pdf.setFont('helvetica', 'bold');
     pdf.setFontSize(10);
-    pdf.setTextColor(245, 158, 11);
+    pdf.setTextColor(217, 119, 6);
     pdf.text(`Référence : ${diagnostic.recommandationsFull.referenceCadre.principe}`, 14, y);
     y += 5;
     pdf.setFont('helvetica', 'italic');
@@ -169,7 +172,7 @@ export async function exporterFichePdf(diagnostic) {
   pdf.text(mention, 14, 276);
 
   pdf.setFont('helvetica', 'normal');
-  pdf.setTextColor(139, 92, 246);
+  pdf.setTextColor(124, 58, 237);
   pdf.text(`Artefact de recherche-action — ${mentionCfg.marque} — ${mentionCfg.auteure} — ${mentionCfg.version}`, 14, 284);
 
   pdf.setTextColor(148, 163, 184);

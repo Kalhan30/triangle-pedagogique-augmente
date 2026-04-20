@@ -80,21 +80,21 @@ export const AXES_META = {
     id: 'enseignantSavoir',
     label: 'Enseignant–Savoir',
     shortLabel: 'La préparation',
-    color: '#14B8A6',
+    color: '#0F766E',
     description: "Dimension professionnelle : l'enseignant et le savoir qu'il maîtrise, la préparation et la production de supports.",
   },
   enseignantEleve: {
     id: 'enseignantEleve',
     label: 'Enseignant–Élève',
     shortLabel: 'La relation',
-    color: '#F59E0B',
+    color: '#D97706',
     description: "Dimension humaine : la chaleur relationnelle, le regard, la médiation pédagogique.",
   },
   eleveSavoir: {
     id: 'eleveSavoir',
     label: 'Élève–Savoir',
     shortLabel: "L'apprentissage",
-    color: '#8B5CF6',
+    color: '#7C3AED',
     description: "Dimension cognitive : la pensée en train de se construire, l'accès au savoir pour l'élève.",
   },
 };
@@ -103,28 +103,28 @@ export const VERTICES_META = {
   enseignant: {
     id: 'enseignant',
     label: 'Enseignant',
-    color: '#14B8A6',
+    color: '#0F766E',
     description: "Le professionnel qui conçoit, médie et évalue. L'IA l'assiste mais ne le remplace pas.",
   },
   eleve: {
     id: 'eleve',
     label: 'Élève',
-    color: '#F59E0B',
+    color: '#D97706',
     description: "Le sujet qui apprend. Son effort cognitif, sa motivation et sa relation à l'enseignant sont irréductibles à l'IA.",
   },
   savoir: {
     id: 'savoir',
     label: 'Savoir',
-    color: '#8B5CF6',
+    color: '#7C3AED',
     description: "Les contenus disciplinaires structurés. L'IA peut produire, reformuler, illustrer — l'humain valide.",
   },
 };
 
 export const ETHICS_ZONES = [
-  { id: 'minimale', min: 0, max: 25, label: 'IA Minimale', color: '#14B8A6', bgColor: 'rgba(20, 184, 166, 0.15)', message: "L'IA comme simple outil de forme. L'enseignant reste le seul maître à bord." },
-  { id: 'partenaire', min: 25, max: 60, label: 'IA Partenaire', badge: 'ÉQUILIBRE', color: '#22C55E', bgColor: 'rgba(34, 197, 94, 0.15)', message: "Zone recommandée : l'IA amplifie l'expertise humaine sans la substituer." },
-  { id: 'dominante', min: 60, max: 85, label: 'IA Dominante', badge: 'ATTENTION', color: '#F59E0B', bgColor: 'rgba(245, 158, 11, 0.15)', message: "Risque de surcompensation : l'enseignant délègue ses choix fondamentaux." },
-  { id: 'totale', min: 85, max: 100, label: 'IA Totale', badge: 'ZONE ROUGE', color: '#EF4444', bgColor: 'rgba(239, 68, 68, 0.15)', message: "Effondrement du triangle : la relation humaine disparaît au profit du mécanique." },
+  { id: 'minimale', min: 0, max: 25, label: 'IA Minimale', color: '#0F766E', bgColor: 'rgba(15, 118, 110, 0.1)', message: "L'IA comme simple outil de forme. L'enseignant reste le seul maître à bord." },
+  { id: 'partenaire', min: 25, max: 60, label: 'IA Partenaire', badge: 'ÉQUILIBRE', color: '#059669', bgColor: 'rgba(5, 150, 105, 0.1)', message: "Zone recommandée : l'IA amplifie l'expertise humaine sans la substituer." },
+  { id: 'dominante', min: 60, max: 85, label: 'IA Dominante', badge: 'ATTENTION', color: '#D97706', bgColor: 'rgba(217, 119, 6, 0.1)', message: "Risque de surcompensation : l'enseignant délègue ses choix fondamentaux." },
+  { id: 'totale', min: 85, max: 100, label: 'IA Totale', badge: 'ZONE ROUGE', color: '#DC2626', bgColor: 'rgba(220, 38, 38, 0.1)', message: "Effondrement du triangle : la relation humaine disparaît au profit du mécanique." },
 ];
 
 export const getZoneEthique = (value) => {

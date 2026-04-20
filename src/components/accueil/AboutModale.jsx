@@ -16,7 +16,7 @@ export default function AboutModale({ onClose }) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/65 backdrop-blur-sm animate-fade"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[rgba(15,23,42,0.5)] backdrop-blur-sm animate-fade"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
@@ -26,15 +26,15 @@ export default function AboutModale({ onClose }) {
         className="card-elevated max-w-2xl w-full max-h-[85vh] overflow-hidden flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-center justify-between p-5 border-b border-background-elevated">
-          <h2 id="about-title" className="text-lg font-semibold text-brand-teal-light">{CONTENU_ACCUEIL.modaleDetail.titre}</h2>
+        <div className="flex items-center justify-between p-5 border-b border-border-subtle">
+          <h2 id="about-title" className="text-lg font-semibold text-brand-teal-primary">{CONTENU_ACCUEIL.modaleDetail.titre}</h2>
           <button onClick={onClose} aria-label="Fermer la modale" className="text-text-muted hover:text-text transition"><X size={20} /></button>
         </div>
         <div className="overflow-y-auto p-6">
-          <p className="text-sm text-text-secondary leading-relaxed whitespace-pre-line">
+          <p className="text-[15px] text-text leading-relaxed whitespace-pre-line font-serif-editorial">
             {CONTENU_ACCUEIL.modaleDetail.texte}
           </p>
-          <p className="text-xs text-text-muted mt-5 pt-4 border-t border-background-elevated">
+          <p className="text-xs text-text-muted mt-5 pt-4 border-t border-border-subtle">
             Référence : Houssaye, J. (1988). <em>Le triangle pédagogique</em>. Peter Lang.
           </p>
         </div>

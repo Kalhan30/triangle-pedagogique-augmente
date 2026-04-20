@@ -9,7 +9,7 @@ export default function Header({ onExport }) {
   const niveau = getNiveau(niveauId);
 
   return (
-    <header className="sticky top-0 z-40 bg-background/85 backdrop-blur border-b border-background-elevated">
+    <header className="sticky top-0 z-40 bg-white/90 backdrop-blur border-b border-border-subtle">
       <div className="max-w-6xl mx-auto px-4 md:px-6 py-3 flex items-center justify-between gap-3">
         <button
           onClick={resetToAccueil}
@@ -17,14 +17,14 @@ export default function Header({ onExport }) {
           aria-label="Retour à l'accueil"
         >
           <ArrowLeft size={18} />
-          <img src="/avatar-mpb.png" alt="MaProfBranchee" className="w-7 h-7 rounded-full object-cover ring-1 ring-brand-teal-light/40" />
-          <span className="hidden sm:inline text-sm font-semibold">MaProfBranchee</span>
+          <img src="/avatar-mpb.png" alt="MaProfBranchee" className="w-7 h-7 rounded-full object-cover ring-1 ring-brand-teal-primary/30" />
+          <span className="hidden sm:inline text-sm font-semibold text-text">MaProfBranchee</span>
         </button>
 
         <div className="relative">
           <button
             onClick={() => setOpen((v) => !v)}
-            className="flex items-center gap-2 px-3 py-2 rounded-lg border border-background-elevated hover:border-brand-teal transition text-sm"
+            className="flex items-center gap-2 px-3 py-2 rounded-lg border border-border bg-background hover:border-brand-teal-primary transition text-sm text-text"
             aria-haspopup="listbox"
             aria-expanded={open}
           >
@@ -33,14 +33,14 @@ export default function Header({ onExport }) {
           </button>
           {open && (
             <ul
-              className="absolute right-0 mt-2 w-72 rounded-lg border border-background-elevated bg-background-secondary shadow-lg z-50 py-1 max-h-80 overflow-auto"
+              className="absolute right-0 mt-2 w-72 rounded-lg border border-border-subtle bg-white shadow-lg z-50 py-1 max-h-80 overflow-auto"
               role="listbox"
             >
               {NIVEAUX.map((n) => (
                 <li key={n.id}>
                   <button
                     onClick={() => { setNiveauId(n.id); setOpen(false); }}
-                    className={`w-full text-left px-3 py-2 text-sm hover:bg-background-elevated ${niveauId === n.id ? 'text-brand-teal-light' : 'text-text'}`}
+                    className={`w-full text-left px-3 py-2 text-sm hover:bg-background-elevated ${niveauId === n.id ? 'text-brand-teal-primary font-semibold' : 'text-text'}`}
                     role="option"
                     aria-selected={niveauId === n.id}
                   >
@@ -62,7 +62,7 @@ export default function Header({ onExport }) {
           </button>
           <button
             onClick={onExport}
-            className="flex items-center gap-2 px-3 py-2 rounded-lg bg-brand-teal text-background font-semibold hover:bg-brand-teal-light transition text-sm"
+            className="flex items-center gap-2 px-3 py-2 rounded-lg bg-brand-teal-primary text-white font-semibold hover:bg-brand-teal-text transition text-sm"
             aria-label="Exporter ma fiche PDF"
           >
             <Download size={16} />
