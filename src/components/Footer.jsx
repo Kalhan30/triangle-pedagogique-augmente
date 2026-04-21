@@ -42,25 +42,6 @@ export default function Footer() {
         </a>
       </div>
 
-      {/* Bloc 2 : Tagline */}
-      <div className="footer-tagline">« Un numérique au service de l'humain. »</div>
-
-      {/* Bloc 3 : Pastilles de garantie */}
-      <div className="footer-guarantees">
-        <div className="footer-guarantee">
-          <span className="footer-pill footer-pill-green" aria-hidden="true"></span>
-          <span>Testé en classe</span>
-        </div>
-        <div className="footer-guarantee">
-          <span className="footer-pill footer-pill-teal" aria-hidden="true"></span>
-          <span>Sélection vérifiée</span>
-        </div>
-        <div className="footer-guarantee">
-          <span className="footer-pill footer-pill-violet" aria-hidden="true"></span>
-          <span>Conforme RGPD</span>
-        </div>
-      </div>
-
       {/* Bloc CTA : Participer à la recherche-action */}
       {mentionCfg.formulaireRetourUrl && (
         <a
@@ -79,6 +60,25 @@ export default function Footer() {
           <ArrowRight size={16} strokeWidth={1.75} className="footer-feedback-arrow" aria-hidden="true" />
         </a>
       )}
+
+      {/* Bloc 2 : Tagline */}
+      <div className="footer-tagline">« Un numérique au service de l'humain. »</div>
+
+      {/* Bloc 3 : Pastilles de garantie */}
+      <div className="footer-guarantees">
+        <div className="footer-guarantee">
+          <span className="footer-pill footer-pill-green" aria-hidden="true"></span>
+          <span>Testé en classe</span>
+        </div>
+        <div className="footer-guarantee">
+          <span className="footer-pill footer-pill-teal" aria-hidden="true"></span>
+          <span>Sélection vérifiée</span>
+        </div>
+        <div className="footer-guarantee">
+          <span className="footer-pill footer-pill-violet" aria-hidden="true"></span>
+          <span>Conforme RGPD</span>
+        </div>
+      </div>
 
       {/* Bloc 4 : Badge Artefact de recherche-action */}
       <div className="footer-research-badge">
