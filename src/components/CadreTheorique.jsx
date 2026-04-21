@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { ChevronDown, ChevronRight, ExternalLink } from 'lucide-react';
+import { P2IA_SERVICES, P2IA_URL_EDUSCOL } from '../data/contraintes.js';
 
 const SECTIONS_META = [
   { id: 'section-1', numero: '01', titre: 'Le socle fondamental', sousTitre: 'Le cadre éthique et réglementaire qui précède toute réflexion pédagogique', accent: 'teal' },
@@ -167,10 +168,37 @@ function Section2Contenu() {
         L'axe Apprendre concerne la relation directe entre l'élève et le savoir, c'est-à-dire la construction cognitive du sens. C'est l'axe le plus sensible, celui où les risques de mauvaise intégration de l'IA sont les plus élevés. Le Cadre juin 2025 distingue explicitement deux régimes selon le niveau scolaire.
       </p>
 
-      <p className="text-sm font-semibold text-text mt-4 mb-1">Avant la 4ème — L'IA invisible</p>
+      <p className="text-sm font-semibold text-text mt-4 mb-1">Avant la 4ème — L'IA générative invisible</p>
       <Encadre accent="violet">
         <p>
-          À l'école primaire et dans les classes de 6e-5e, l'élève n'interagit pas directement avec des IA génératives ouvertes. Les plateformes d'apprentissage adaptatif éprouvées (P2IA, exerciseurs différenciés) peuvent bénéficier aux élèves sans qu'ils manipulent l'outil. L'IA travaille pour l'enseignant, invisible aux yeux des élèves. Cette invisibilité n'est pas une privation, c'est une protection : elle préserve l'effort cognitif nécessaire à l'acquisition des savoirs fondamentaux.
+          À l'école primaire et dans les classes de 6e-5e, l'élève n'interagit pas directement avec des IA génératives ouvertes (ChatGPT, Gemini, Claude…). L'IA générative travaille pour l'enseignant, invisible aux yeux des élèves : elle sert à produire des supports différenciés, générer des exercices, préparer des évaluations. Cette invisibilité n'est pas une privation, c'est une protection — elle préserve l'effort cognitif nécessaire à l'acquisition des savoirs fondamentaux.
+        </p>
+      </Encadre>
+
+      <p className="text-sm font-semibold text-text mt-4 mb-1">L'exception institutionnelle — les P2IA</p>
+      <Encadre accent="violet">
+        <p>
+          Le Cadre juin 2025 distingue clairement deux natures d'IA, pas deux intensités sur une même échelle. Les <strong>P2IA</strong> (Partenariat d'innovation et d'Intelligence Artificielle) sont six assistants IA institutionnels validés par le Ministère de l'Éducation nationale pour le premier degré. À la différence des IA génératives ouvertes, ils <strong>peuvent être manipulés directement par les élèves de primaire</strong>, sous supervision enseignante.
+        </p>
+        <p>
+          Ce sont des assistants cadrés : pas de génération libre, pas de dérive conversationnelle, pas de données personnelles traitées hors RGPD. Leur interface est prédictible, leur périmètre disciplinaire précis, leur usage institutionnellement validé.
+        </p>
+        <ul className="list-none space-y-1.5 mt-2 pl-0">
+          {P2IA_SERVICES.map((svc) => (
+            <li key={svc.nom} className="flex gap-2 text-sm">
+              <span className="text-brand-violet-primary flex-shrink-0 mt-0.5 font-semibold" aria-hidden="true">▸</span>
+              <span><strong>{svc.nom}</strong> — {svc.usage}</span>
+            </li>
+          ))}
+        </ul>
+        <p className="mt-3 text-[13px] italic">
+          Les P2IA ne sont donc pas mesurés par l'axe « Manipulation d'IA générative » du triangle augmenté. Ils relèvent d'une catégorie distincte qui coexiste avec l'IA invisible : l'IA institutionnelle cadrée.
+        </p>
+        <p className="mt-2 text-[12px]">
+          <a href={P2IA_URL_EDUSCOL} target="_blank" rel="noopener noreferrer" className="text-brand-violet-primary hover:underline underline-offset-2 inline-flex items-center gap-1">
+            Consulter la fiche Eduscol sur les P2IA
+            <ExternalLink size={11} strokeWidth={1.75} />
+          </a>
         </p>
       </Encadre>
 

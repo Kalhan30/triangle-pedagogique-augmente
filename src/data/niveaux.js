@@ -4,18 +4,19 @@ export const NIVEAUX = [
     label: 'Primaire (Cycles 1-3)',
     shortLabel: 'Primaire',
     citation: "À 6 ans, l'enfant a besoin d'un regard, pas d'un écran.",
-    cadreReglementaire: "IA générative réservée EXCLUSIVEMENT aux enseignants. Les élèves ne manipulent pas d'IA. L'enseignant utilise l'IA pour préparer et différencier (Cadre MEN 2025).",
-    regleAutorisation: "Les élèves du 1er degré sont sensibilisés aux connaissances de base sur les IA, mais ne manipulent pas directement des services d'IA générative.",
+    cadreReglementaire: "IA générative réservée EXCLUSIVEMENT aux enseignants. Les élèves ne manipulent pas d'IA générative ouverte. L'enseignant utilise l'IA pour préparer et différencier (Cadre MEN 2025). Les P2IA (assistants institutionnels validés) sont une exception : autorisés en manipulation élève.",
+    regleAutorisation: "Les élèves du 1er degré sont sensibilisés aux connaissances de base sur les IA, mais ne manipulent pas directement des services d'IA générative. Ils peuvent en revanche utiliser les P2IA validés par le MEN.",
     autorises: [
       "Sensibilisation aux notions de base de l'IA",
       "Développement de l'esprit critique sur l'IA",
       "Usage par l'enseignant pour préparer ses cours (sans données élèves)",
+      "Usage des P2IA (MATHIA, EXPLIQ, EDUMALIN, ORIGAMIA, CARDS, yLANG) par les élèves sous supervision",
     ],
     nonAutorises: [
-      "Manipulation directe d'IA génératives par les élèves",
+      "Manipulation directe d'IA générative ouverte (ChatGPT, Gemini, Claude…) par les élèves",
       "Saisie de données personnelles d'élèves dans des services grand public",
     ],
-    formulationAffichage: "Au primaire, l'IA est un outil professionnel de l'enseignant. Les élèves n'y accèdent pas directement.",
+    formulationAffichage: "Au primaire, l'IA générative est un outil professionnel de l'enseignant. Les élèves n'y accèdent pas directement — mais les P2IA institutionnels leur sont accessibles sous supervision.",
   },
   {
     id: 'college_6_5',

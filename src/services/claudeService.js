@@ -11,10 +11,11 @@ Règles impératives :
 
 Règles de conformité au Cadre d'usage juin 2025 — NON NÉGOCIABLES :
 - L'axe Élève-Savoir est décomposé en deux sous-dimensions :
-  * "manipulation directe" : l'élève utilise-t-il lui-même l'IA ?
+  * "manipulation directe" : l'élève utilise-t-il lui-même une IA GÉNÉRATIVE OUVERTE (ChatGPT, Gemini, Claude…) ?
   * "impact médiatisé" : l'IA impacte-t-elle l'apprentissage via la médiation enseignante ?
-- En Primaire et en Collège 6e-5e : la manipulation directe d'IA générative par les élèves est INTERDITE. Tu produis toujours "eleveSavoirManipulation" = 0 pour ces niveaux. Tu ne proposes jamais de scénario impliquant un élève de ces niveaux manipulant l'IA.
-- En Collège 4e-3e : l'usage est autorisé sous encadrement direct de l'enseignant uniquement, jamais en autonomie. Tu produis "eleveSavoirManipulation" <= 65 pour ce niveau.
+- IMPORTANT — Les P2IA (MATHIA, EXPLIQ, EDUMALIN, ORIGAMIA, CARDS, yLANG) sont des assistants IA institutionnels validés par le MEN pour le primaire. Ils NE SONT PAS mesurés par "eleveSavoirManipulation" : ils relèvent d'une catégorie distincte (IA institutionnelle cadrée). Un élève de primaire qui utilise MATHIA 15 min/semaine sous supervision reste conforme au Cadre, et "eleveSavoirManipulation" doit rester à 0.
+- En Primaire et en Collège 6e-5e : la manipulation directe d'IA GÉNÉRATIVE OUVERTE par les élèves est INTERDITE. Tu produis toujours "eleveSavoirManipulation" = 0 pour ces niveaux. Tu ne proposes jamais de scénario impliquant un élève de ces niveaux manipulant ChatGPT, Gemini ou équivalent. En revanche, tu peux suggérer l'usage des P2IA pour le primaire, de façon explicite.
+- En Collège 4e-3e : l'usage de l'IA générative est autorisé sous encadrement direct de l'enseignant uniquement, jamais en autonomie. Tu produis "eleveSavoirManipulation" <= 65 pour ce niveau.
 - En Lycée : l'usage autonome est autorisé dans un cadre défini par l'enseignant. Tu peux produire une valeur 0-100 librement.
 - Tu cites toujours le Cadre d'usage juin 2025 dans ton champ "referenceCadre" quand c'est pertinent.
 - Les 5 principes du Cadre : 1. Plus-value pédagogique, 2. Protection des données, 3. Impact environnemental, 4. Transparence, 5. Esprit critique.`;
@@ -33,8 +34,9 @@ Règles impératives :
 - Au moins une de tes 3 recommandations cite explicitement un principe du Cadre d'usage juin 2025 via le champ referenceCadre.
 
 Règles de conformité — NON NÉGOCIABLES :
-- En Primaire et en Collège 6e-5e : tu ne recommandes JAMAIS d'activité impliquant que l'élève manipule directement l'IA. Si le diagnostic saisi présente une manipulation directe > 0 à ces niveaux, tu le signales dans observation de conformité.
-- En Collège 4e-3e : tu ne recommandes JAMAIS d'usage autonome de l'IA par l'élève. L'encadrement de l'enseignant est systématique.
+- IMPORTANT — Les P2IA (MATHIA, EXPLIQ, EDUMALIN, ORIGAMIA, CARDS, yLANG) sont des assistants IA institutionnels validés par le MEN pour le primaire. Ils constituent l'exception aux règles ci-dessous : un élève de primaire peut les utiliser en autonomie sous supervision. Ne pas confondre avec l'IA générative ouverte.
+- En Primaire et en Collège 6e-5e : tu ne recommandes JAMAIS d'activité impliquant que l'élève manipule directement une IA GÉNÉRATIVE OUVERTE (ChatGPT, Gemini…). En revanche, pour le primaire uniquement, tu peux recommander l'usage des P2IA si pertinent (en nommant explicitement le service adapté à la discipline : MATHIA pour calcul mental, EXPLIQ pour résolution de problèmes, EDUMALIN pour compréhension, ORIGAMIA pour lecture/fluence, CARDS pour mémorisation, yLANG pour vocabulaire). Si le diagnostic saisi présente une manipulation directe d'IA générative > 0 à ces niveaux, tu le signales dans observation de conformité — mais un usage P2IA rapporté ne déclenche pas cette alerte.
+- En Collège 4e-3e : tu ne recommandes JAMAIS d'usage autonome de l'IA générative par l'élève. L'encadrement de l'enseignant est systématique.
 - En Lycée : tu peux recommander un usage autonome dans un cadre défini par l'enseignant.`;
 
 async function callClaudeProxy(systemPrompt, userPrompt, maxTokens = 1024, contextInfo = {}) {
@@ -123,6 +125,15 @@ Question 5 — Intention éthique :
 - Axe Élève-Savoir — manipulation directe : ${diagnostic.axeEleveSavoirManipulation}/100
 - Axe Élève-Savoir — impact médiatisé : ${diagnostic.axeEleveSavoirImpactMediatise}/100`;
 
+  const p2iaBlock = diagnostic.p2iaIntegration
+    ? `
+Intégration P2IA déclarée (question bonus primaire) :
+"${diagnostic.p2iaIntegration.libelle}" (code: ${diagnostic.p2iaIntegration.code})
+
+Rappel : les P2IA sont des assistants IA institutionnels validés pour le primaire (MATHIA = calcul mental, EXPLIQ = résolution de problèmes, EDUMALIN = compréhension, ORIGAMIA = lecture/fluence, CARDS = mémorisation, yLANG = vocabulaire). Ils ne sont pas mesurés par l'axe manipulation. Tu peux en tenir compte dans tes recommandations : valoriser un usage déjà existant, suggérer un service P2IA pertinent si "pas encore".
+`
+    : '';
+
   const userPrompt = `Diagnostic saisi par un enseignant :
 
 - Niveau : ${niveauLabel} (id: ${diagnostic.niveau || 'unknown'})
@@ -132,7 +143,7 @@ Question 5 — Intention éthique :
 - Objectif pédagogique : ${diagnostic.objectif}
 
 ${positionnement}
-
+${p2iaBlock}
 Zone éthique calculée : ${zoneEthiqueLabel}
 
 ${hasLibelles ? 'IMPORTANT : au moins une de tes 3 recommandations doit citer explicitement le libellé qualitatif d\'une des réponses (ex: "Vous avez indiqué que l\'IA génère une base que vous retravaillez...").\n\n' : ''}Produis 3 recommandations personnalisées au format JSON strict suivant :

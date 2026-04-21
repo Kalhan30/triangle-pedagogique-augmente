@@ -3,9 +3,9 @@ export const CONTRAINTES_NIVEAU = {
     niveau: 'primaire',
     manipulationDirecteVerrou: 0,
     manipulationDirectePlafond: null,
-    messageExplicatif: "Cadre juin 2025 : les élèves ne manipulent pas d'IA générative avant la 4e. Cet axe est donc verrouillé à 0 à ce niveau.",
-    referenceTexte: "Les élèves du 1er degré sont sensibilisés aux connaissances de base sur les IA, mais ne manipulent pas directement des services d'IA générative.",
-    bandeauExplorer: "⚠️ Rappel Cadre juin 2025 : à ce niveau, l'IA n'est pas manipulée directement par les élèves. Les exemples ci-dessous concernent l'impact médiatisé via l'usage professionnel de l'enseignant.",
+    messageExplicatif: "Cadre juin 2025 : les élèves ne manipulent pas d'IA générative avant la 4e. Cet axe est donc verrouillé à 0 à ce niveau. Les P2IA (assistants institutionnels validés par le MEN) sont une exception distincte — voir l'encart dédié.",
+    referenceTexte: "Les élèves du 1er degré sont sensibilisés aux connaissances de base sur les IA, mais ne manipulent pas directement des services d'IA générative. Ils peuvent en revanche utiliser les P2IA, assistants IA institutionnels validés par le MEN (MATHIA, EXPLIQ, EDUMALIN, ORIGAMIA, CARDS, yLANG).",
+    bandeauExplorer: "⚠️ Rappel Cadre juin 2025 : à ce niveau, l'IA générative n'est pas manipulée directement par les élèves. Les exemples ci-dessous concernent l'impact médiatisé via l'usage professionnel de l'enseignant. Exception : les P2IA (assistants IA institutionnels) peuvent être utilisés par les élèves sous encadrement — voir l'encart dédié.",
   },
   college_6_5: {
     niveau: 'college_6_5',
@@ -13,7 +13,7 @@ export const CONTRAINTES_NIVEAU = {
     manipulationDirectePlafond: null,
     messageExplicatif: "Cadre juin 2025 : les élèves ne manipulent pas d'IA générative avant la 4e. Cet axe est donc verrouillé à 0 à ce niveau.",
     referenceTexte: "La manipulation d'outils d'IA générative par les élèves n'est pas autorisée avant la 4e.",
-    bandeauExplorer: "⚠️ Rappel Cadre juin 2025 : à ce niveau, l'IA n'est pas manipulée directement par les élèves. Les exemples ci-dessous concernent l'impact médiatisé via l'usage professionnel de l'enseignant.",
+    bandeauExplorer: "⚠️ Rappel Cadre juin 2025 : à ce niveau, l'IA générative n'est pas manipulée directement par les élèves. Les exemples ci-dessous concernent l'impact médiatisé via l'usage professionnel de l'enseignant.",
   },
   college_4_3: {
     niveau: 'college_4_3',
@@ -34,6 +34,20 @@ export const CONTRAINTES_NIVEAU = {
 };
 
 export const getContrainte = (niveauId) => CONTRAINTES_NIVEAU[niveauId];
+
+// P2IA — Partenariat d'innovation et d'Intelligence Artificielle (MEN)
+// Assistants IA institutionnels validés pour le primaire.
+// Référence : https://eduscol.education.fr/1910/partenariat-d-innovation-et-d-intelligence-artificielle
+export const P2IA_SERVICES = [
+  { nom: 'MATHIA', usage: 'Calcul mental différencié (CP-CM2)' },
+  { nom: 'EXPLIQ', usage: 'Aide à la résolution de problèmes mathématiques' },
+  { nom: 'EDUMALIN', usage: 'Soutien à la compréhension de textes et consignes' },
+  { nom: 'ORIGAMIA', usage: 'Entraînement à la lecture et à la fluence' },
+  { nom: 'CARDS', usage: 'Mémorisation par cartes adaptatives (lexique, orthographe)' },
+  { nom: 'yLANG', usage: 'Soutien à l\'apprentissage du vocabulaire' },
+];
+
+export const P2IA_URL_EDUSCOL = 'https://eduscol.education.fr/1910/partenariat-d-innovation-et-d-intelligence-artificielle';
 
 export const AIDE_SLIDERS = {
   enseignantSavoir: {
@@ -59,16 +73,16 @@ export const AIDE_SLIDERS = {
     ],
   },
   eleveSavoirManipulation: {
-    titre: 'Axe Élève–Savoir — Manipulation directe',
-    description: "Cet axe mesure uniquement la manipulation directe de l'IA par l'élève.",
+    titre: 'Axe Élève–Savoir — Manipulation directe d\'IA générative',
+    description: "Cet axe mesure uniquement la manipulation directe d'IA générative ouverte (ChatGPT, Gemini, Claude…) par l'élève. Les P2IA (assistants institutionnels validés) constituent une catégorie distincte non mesurée ici.",
     reperes: [
-      { plage: '0', texte: "L'élève ne touche jamais l'IA" },
-      { plage: '20-40', texte: "L'élève observe une démonstration de l'IA faite par l'enseignant" },
-      { plage: '40-65', texte: "L'élève utilise l'IA ponctuellement sous supervision directe (cours encadré)" },
-      { plage: '65-85', texte: "L'élève utilise l'IA en autonomie dans un cadre défini" },
-      { plage: '85-100', texte: "L'élève utilise l'IA sans cadre défini — zone rouge en contexte scolaire" },
+      { plage: '0', texte: "L'élève ne manipule aucune IA générative" },
+      { plage: '20-40', texte: "L'élève observe une démonstration d'IA générative faite par l'enseignant" },
+      { plage: '40-65', texte: "L'élève utilise l'IA générative ponctuellement sous supervision directe" },
+      { plage: '65-85', texte: "L'élève utilise l'IA générative en autonomie dans un cadre défini" },
+      { plage: '85-100', texte: "L'élève utilise l'IA générative sans cadre défini — zone rouge en contexte scolaire" },
     ],
-    rappel: "Verrouillé à 0 en Primaire et 6e-5e, plafonné à 65 en 4e-3e.",
+    rappel: "Verrouillé à 0 en Primaire et 6e-5e, plafonné à 65 en 4e-3e. N'inclut pas les P2IA.",
   },
   eleveSavoirImpactMediatise: {
     titre: 'Axe Élève–Savoir — Impact médiatisé',

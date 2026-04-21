@@ -27,13 +27,14 @@ export const QUESTIONS = [
     id: 3,
     axe: 'eleveSavoirManipulation',
     contrainte: 'manipulation',
-    enonce: "Dans cette séance, l'élève utilise-t-il lui-même l'IA ?",
+    enonce: "Dans cette séance, l'élève utilise-t-il lui-même une IA générative ouverte (ChatGPT, Gemini, Claude…) ?",
+    aide: "Cette question ne concerne pas les P2IA (assistants institutionnels validés par le MEN comme MATHIA). Une question dédiée est prévue pour le primaire.",
     choix: [
-      { index: 1, libelle: "L'élève ne touche jamais l'IA pendant cette séance", valeur: 10 },
-      { index: 2, libelle: "L'élève observe une démonstration de l'IA que je fais devant lui", valeur: 30 },
-      { index: 3, libelle: "L'élève utilise l'IA ponctuellement sous ma supervision directe", valeur: 52 },
-      { index: 4, libelle: "L'élève utilise l'IA en autonomie dans un cadre que j'ai défini", valeur: 75 },
-      { index: 5, libelle: "L'élève utilise l'IA librement sans cadre strict", valeur: 92 },
+      { index: 1, libelle: "L'élève ne touche aucune IA générative pendant cette séance", valeur: 10 },
+      { index: 2, libelle: "L'élève observe une démonstration d'IA générative que je fais devant lui", valeur: 30 },
+      { index: 3, libelle: "L'élève utilise l'IA générative ponctuellement sous ma supervision directe", valeur: 52 },
+      { index: 4, libelle: "L'élève utilise l'IA générative en autonomie dans un cadre que j'ai défini", valeur: 75 },
+      { index: 5, libelle: "L'élève utilise l'IA générative librement sans cadre strict", valeur: 92 },
     ],
   },
   {
@@ -60,7 +61,23 @@ export const QUESTIONS = [
       { index: 5, libelle: "L'IA est quasi omniprésente, je teste les limites acceptables en conscience", valeur: 92 },
     ],
   },
+  {
+    id: 6,
+    axe: 'p2iaContextuel',
+    visibleNiveaux: ['primaire'],
+    enonce: "Intégrez-vous un P2IA (MATHIA, EXPLIQ, EDUMALIN, ORIGAMIA, CARDS, yLANG) dans vos séances ?",
+    aide: "Les P2IA sont des assistants IA institutionnels validés par le Ministère, utilisables par les élèves de primaire sous supervision enseignante. Ils sont distincts des IA génératives ouvertes.",
+    choix: [
+      { index: 1, libelle: "Oui, régulièrement", valeur: null, code: 'oui_regulier' },
+      { index: 2, libelle: "Ponctuellement", valeur: null, code: 'ponctuel' },
+      { index: 3, libelle: "Pas encore, mais j'y réfléchis", valeur: null, code: 'pas_encore' },
+    ],
+  },
 ];
+
+export function getQuestionsForNiveau(niveauId) {
+  return QUESTIONS.filter((q) => !q.visibleNiveaux || q.visibleNiveaux.includes(niveauId));
+}
 
 export function choixEtat(question, choix, niveauId) {
   if (question.contrainte !== 'manipulation') return { state: 'free', alerte: choix.declencheAlerte ? choix.texteAlerte : null };
@@ -71,7 +88,7 @@ export function choixEtat(question, choix, niveauId) {
   }
   if (niveauId === 'college_4_3') {
     if (choix.index === 5) return { state: 'locked', alerte: "Non autorisé à ce niveau selon le Cadre juin 2025." };
-    if (choix.index === 4) return { state: 'warning', alerte: "Attention : l'usage autonome de l'IA par l'élève n'est pas autorisé en 4e-3e selon le Cadre juin 2025. Cet usage doit rester encadré et accompagné." };
+    if (choix.index === 4) return { state: 'warning', alerte: "Attention : l'usage autonome de l'IA générative par l'élève n'est pas autorisé en 4e-3e selon le Cadre juin 2025. Cet usage doit rester encadré et accompagné." };
     return { state: 'free', alerte: null };
   }
   return { state: 'free', alerte: null };
@@ -96,6 +113,15 @@ export function computeAxesFromResponses(responses, niveauId) {
   };
   const q1 = find(1), q2 = find(2), q3 = find(3), q4 = find(4), q5 = find(5);
   const axeEleveSavoirVisualise = Math.round(0.7 * q3.valeur + 0.3 * q4.valeur);
+
+  let p2iaIntegration = null;
+  const q6Meta = QUESTIONS.find((x) => x.id === 6);
+  const q6Resp = responses[6];
+  if (q6Meta && q6Resp && (!q6Meta.visibleNiveaux || q6Meta.visibleNiveaux.includes(niveauId))) {
+    const choix = q6Meta.choix.find((c) => c.index === q6Resp);
+    if (choix) p2iaIntegration = { code: choix.code, libelle: choix.libelle };
+  }
+
   return {
     axeEnseignantSavoir: q1.valeur,
     axeEnseignantEleve: q2.valeur,
@@ -108,5 +134,6 @@ export function computeAxesFromResponses(responses, niveauId) {
     libelleQ3: q3.libelle,
     libelleQ4: q4.libelle,
     libelleQ5: q5.libelle,
+    p2iaIntegration,
   };
 }

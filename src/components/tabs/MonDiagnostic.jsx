@@ -125,6 +125,7 @@ export default function MonDiagnostic() {
       axeEnseignantEleve: payload.axeEnseignantEleve,
       axeEleveSavoirManipulation: payload.axeEleveSavoirManipulation,
       axeEleveSavoirImpactMediatise: payload.axeEleveSavoirImpactMediatise,
+      p2iaIntegration: payload.p2iaIntegration || null,
     };
     setForm(enrichedForm);
     setWizardResponses(payload.responses);
@@ -225,7 +226,7 @@ export default function MonDiagnostic() {
 
               <div className="pt-4 border-t border-border-subtle">
                 <p className="text-xs uppercase tracking-wide text-text-emphasized font-semibold mb-3">Activation IA côté élève</p>
-                <LockedOrPlafondSlider label="Élève–Savoir : manipulation directe" color="#8B5CF6" value={form.axeEleveSavoirManipulation} onChange={(v) => setField('axeEleveSavoirManipulation', v)} locked={manipulationLocked} plafond={manipulationPlafond} onHelp={() => setHelpSlider(AIDE_SLIDERS.eleveSavoirManipulation)} />
+                <LockedOrPlafondSlider label="Élève–Savoir : manipulation d'IA générative" color="#8B5CF6" value={form.axeEleveSavoirManipulation} onChange={(v) => setField('axeEleveSavoirManipulation', v)} locked={manipulationLocked} plafond={manipulationPlafond} onHelp={() => setHelpSlider(AIDE_SLIDERS.eleveSavoirManipulation)} />
                 {manipulationLocked && (
                   <div className="mb-4 p-3 rounded" style={{ background: 'rgba(245, 158, 11, 0.08)', borderLeft: '3px solid #F59E0B' }}>
                     <div className="flex gap-2 text-[13px] text-text-emphasized leading-relaxed">

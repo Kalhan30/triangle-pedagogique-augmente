@@ -1,14 +1,15 @@
 import { useMemo, useState } from 'react';
 import { ArrowLeft, ArrowRight, Check, Lock, AlertTriangle, Sparkles, Pencil } from 'lucide-react';
-import { QUESTIONS, choixEtat, computeAxesFromResponses } from '../../data/questionnaire.js';
+import { choixEtat, computeAxesFromResponses, getQuestionsForNiveau } from '../../data/questionnaire.js';
 
 export default function QuestionnaireWizard({ niveauId, initialResponses = {}, onValidate, onSwitchAdvanced, contextComplete = true, missingContextFields = [], loading = false }) {
   const [responses, setResponses] = useState(initialResponses);
   const [index, setIndex] = useState(0);
   const [showRecap, setShowRecap] = useState(false);
 
-  const q = QUESTIONS[index];
-  const total = QUESTIONS.length;
+  const activeQuestions = useMemo(() => getQuestionsForNiveau(niveauId), [niveauId]);
+  const q = activeQuestions[index];
+  const total = activeQuestions.length;
   const progress = Math.round(((index + 1) / total) * 100);
   const selected = responses[q.id];
 
@@ -29,7 +30,7 @@ export default function QuestionnaireWizard({ niveauId, initialResponses = {}, o
     setResponses((r) => ({ ...r, [q.id]: choix.index }));
   };
 
-  const allAnswered = QUESTIONS.every((qq) => responses[qq.id]);
+  const allAnswered = activeQuestions.every((qq) => responses[qq.id]);
   const axes = useMemo(() => allAnswered ? computeAxesFromResponses(responses, niveauId) : null, [responses, niveauId, allAnswered]);
 
   if (showRecap) {
@@ -65,7 +66,10 @@ export default function QuestionnaireWizard({ niveauId, initialResponses = {}, o
         </div>
       </div>
 
-      <h3 className="text-lg font-semibold text-text mb-4">{q.enonce}</h3>
+      <h3 className="text-lg font-semibold text-text mb-2">{q.enonce}</h3>
+      {q.aide && (
+        <p className="text-xs text-text-secondary italic mb-4 leading-relaxed">{q.aide}</p>
+      )}
 
       <ul className="space-y-2 mb-4">
         {q.choix.map((c) => {
@@ -139,10 +143,13 @@ function Recap({ responses, axes, onModify, onValidate, onSwitchAdvanced, contex
   const lines = [
     { label: 'Enseignant–Savoir (préparation)', value: axes.libelleQ1 },
     { label: 'Enseignant–Élève (relation)', value: axes.libelleQ2 },
-    { label: 'Élève–Savoir — Manipulation directe', value: axes.libelleQ3 },
+    { label: 'Élève–Savoir — Manipulation d\'IA générative', value: axes.libelleQ3 },
     { label: 'Élève–Savoir — Impact médiatisé', value: axes.libelleQ4 },
     { label: 'Validation éthique globale', value: axes.libelleQ5 },
   ];
+  if (axes.p2iaIntegration) {
+    lines.push({ label: 'Intégration P2IA (assistants institutionnels)', value: axes.p2iaIntegration.libelle });
+  }
   return (
     <div>
       <div className="mb-5">
