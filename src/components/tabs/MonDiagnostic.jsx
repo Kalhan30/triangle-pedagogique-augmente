@@ -83,7 +83,11 @@ export default function MonDiagnostic() {
     const allText = [enrichedForm.discipline, enrichedForm.typeActivite, enrichedForm.profilEleve, enrichedForm.objectif].join(' ');
     const prenoms = detectPrenoms(allText);
     if (prenoms.length > 0 && !warning) {
-      setWarning(`Saisie contient ${prenoms.length > 1 ? 'des prénoms' : 'un prénom'} (${prenoms.slice(0, 3).join(', ')}). Privilégiez "un élève" ou "l'élève". Cliquez à nouveau pour envoyer tel quel.`);
+      const mots = prenoms.slice(0, 3).map((p) => `« ${p} »`).join(', ');
+      const pluriel = prenoms.length > 1;
+      setWarning(
+        `${mots} ${pluriel ? 'peuvent ressembler à des prénoms' : 'peut ressembler à un prénom'}. Si c'est le cas, préférez « un élève » ou « l'élève ». Sinon, cliquez à nouveau pour envoyer tel quel.`
+      );
       return;
     }
     setError(''); setWarning(''); setLoading(true);

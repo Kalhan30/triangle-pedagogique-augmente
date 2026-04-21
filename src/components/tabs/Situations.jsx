@@ -22,7 +22,11 @@ export default function Situations() {
     if (!situationText.trim()) return;
     const prenoms = detectPrenoms(situationText);
     if (prenoms.length > 0 && !warning) {
-      setWarning(`Votre saisie semble contenir ${prenoms.length > 1 ? 'des prénoms' : 'un prénom'} (${prenoms.slice(0, 3).join(', ')}). Pour protéger les données de vos élèves, remplacez par "un élève" ou cliquez à nouveau pour envoyer tel quel.`);
+      const mots = prenoms.slice(0, 3).map((p) => `« ${p} »`).join(', ');
+      const pluriel = prenoms.length > 1;
+      setWarning(
+        `${mots} ${pluriel ? 'peuvent ressembler à des prénoms' : 'peut ressembler à un prénom'}. Si c'est le cas, préférez « un élève » pour protéger les données. Sinon, cliquez à nouveau pour envoyer tel quel.`
+      );
       return;
     }
     setWarning('');
