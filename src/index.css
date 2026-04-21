@@ -299,6 +299,7 @@
 .footer-research-badge {
   display: flex; align-items: center; gap: 10px;
   margin-bottom: 10px; flex-wrap: wrap;
+  justify-content: center;
 }
 .footer-research-pill {
   display: inline-block; padding: 3px 10px;
@@ -311,6 +312,7 @@
 .footer-cadre-mention {
   font-size: 11px; color: rgb(var(--text-secondary));
   line-height: 1.5; margin-bottom: 10px;
+  text-align: center;
 }
 .footer-cadre-mention a {
   color: rgb(var(--teal-primary)); font-weight: 500;
@@ -322,6 +324,7 @@
 .footer-links {
   display: flex; gap: 14px; margin-bottom: 18px;
   font-size: 11px; flex-wrap: wrap; align-items: center;
+  justify-content: center;
 }
 .footer-links a {
   color: rgb(var(--teal-primary)); text-decoration: none;
