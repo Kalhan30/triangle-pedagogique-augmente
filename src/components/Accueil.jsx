@@ -35,11 +35,9 @@ export default function Accueil() {
           </div>
           <header className="text-center mb-10" style={{ animation: 'fadeIn 0.4s ease-out both' }}>
             <div className="flex flex-col items-center gap-3 mb-5">
-              <img
-                src="/avatar-mpb.png"
-                alt="Avatar MaProfBranchee"
-                className="w-20 h-20 rounded-full object-cover ring-2 ring-brand-teal-primary/20 shadow-md"
-              />
+              <div className="hero-avatar" aria-hidden="false">
+                <img src="/avatar-mpb.png" alt="Avatar MaProfBranchee" />
+              </div>
               <p className="text-xs uppercase tracking-[0.2em] font-medium text-text-muted">MaProfBranchee</p>
             </div>
             <h1 className="text-4xl md:text-5xl font-semibold mb-4 text-text tracking-tight">
