@@ -64,19 +64,42 @@ export const QUESTIONS = [
   {
     id: 6,
     axe: 'p2iaContextuel',
-    visibleNiveaux: ['primaire'],
-    enonce: "Intégrez-vous un P2IA (MATHIA, EXPLIQ, EDUMALIN, ORIGAMIA, CARDS, yLANG) dans vos séances ?",
-    aide: "Les P2IA sont des assistants IA institutionnels validés par le Ministère, utilisables par les élèves de primaire sous supervision enseignante. Ils sont distincts des IA génératives ouvertes.",
-    choix: [
-      { index: 1, libelle: "Oui, régulièrement", valeur: null, code: 'oui_regulier' },
-      { index: 2, libelle: "Ponctuellement", valeur: null, code: 'ponctuel' },
-      { index: 3, libelle: "Pas encore, mais j'y réfléchis", valeur: null, code: 'pas_encore' },
-    ],
+    visibleNiveaux: ['primaire', 'college_6_5'],
+    byNiveau: {
+      primaire: {
+        enonce: "Intégrez-vous un P2IA cycle 2 (Lalilo, Navi, Adaptiv'Math, Mathia, Smart Enseigno) dans vos séances ?",
+        aide: "Les P2IA cycle 2 sont cinq services numériques d'assistance déployés depuis 2020 pour le cycle 2 (CP, CE1, CE2). À la différence des IA génératives ouvertes, ils sont utilisables par les élèves sous supervision enseignante.",
+        choix: [
+          { index: 1, libelle: "Oui, régulièrement", valeur: null, code: 'oui_regulier' },
+          { index: 2, libelle: "Ponctuellement", valeur: null, code: 'ponctuel' },
+          { index: 3, libelle: "Pas encore, mais j'y réfléchis", valeur: null, code: 'pas_encore' },
+          { index: 4, libelle: "Je ne connais pas ces outils", valeur: null, code: 'inconnu' },
+        ],
+      },
+      college_6_5: {
+        enonce: "Avez-vous l'opportunité d'expérimenter un P2IA cycle 3 (Expliq, Edumalin, Mathia-C3, Origamia, Cards, yLANG) ?",
+        aide: "Les P2IA cycle 3 sont six services en phase de recherche et développement depuis janvier 2026 pour CM1-CM2-6ᵉ. Expérimentés par des enseignants volontaires dans certaines académies avant déploiement plus large.",
+        choix: [
+          { index: 1, libelle: "Oui, dans le cadre de l'expérimentation", valeur: null, code: 'experimentation' },
+          { index: 2, libelle: "Non, pas dans les académies retenues", valeur: null, code: 'hors_academie' },
+          { index: 3, libelle: "Je ne connais pas ces outils", valeur: null, code: 'inconnu' },
+        ],
+      },
+    },
   },
 ];
 
+function resoudreVariantes(q, niveauId) {
+  if (!q.byNiveau) return q;
+  const variante = q.byNiveau[niveauId];
+  if (!variante) return q;
+  return { ...q, ...variante };
+}
+
 export function getQuestionsForNiveau(niveauId) {
-  return QUESTIONS.filter((q) => !q.visibleNiveaux || q.visibleNiveaux.includes(niveauId));
+  return QUESTIONS
+    .filter((q) => !q.visibleNiveaux || q.visibleNiveaux.includes(niveauId))
+    .map((q) => resoudreVariantes(q, niveauId));
 }
 
 export function choixEtat(question, choix, niveauId) {
@@ -115,11 +138,12 @@ export function computeAxesFromResponses(responses, niveauId) {
   const axeEleveSavoirVisualise = Math.round(0.7 * q3.valeur + 0.3 * q4.valeur);
 
   let p2iaIntegration = null;
-  const q6Meta = QUESTIONS.find((x) => x.id === 6);
+  const q6MetaRaw = QUESTIONS.find((x) => x.id === 6);
   const q6Resp = responses[6];
-  if (q6Meta && q6Resp && (!q6Meta.visibleNiveaux || q6Meta.visibleNiveaux.includes(niveauId))) {
-    const choix = q6Meta.choix.find((c) => c.index === q6Resp);
-    if (choix) p2iaIntegration = { code: choix.code, libelle: choix.libelle };
+  if (q6MetaRaw && q6Resp && (!q6MetaRaw.visibleNiveaux || q6MetaRaw.visibleNiveaux.includes(niveauId))) {
+    const q6Meta = resoudreVariantes(q6MetaRaw, niveauId);
+    const choix = q6Meta.choix?.find((c) => c.index === q6Resp);
+    if (choix) p2iaIntegration = { code: choix.code, libelle: choix.libelle, niveauId };
   }
 
   return {

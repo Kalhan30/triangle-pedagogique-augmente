@@ -4,14 +4,14 @@ export const FAQ_ENTRIES = [
     ordre: 1,
     categorie: 'reglementaire',
     question: "Peut-on utiliser l'IA avec les élèves ?",
-    reponse: "Cela dépend du niveau et du type d'IA. En primaire et en 6e-5e, les élèves ne manipulent pas directement d'IA générative ouverte (ChatGPT, Gemini…) ; l'enseignant peut en utiliser pour préparer ses cours. En revanche, les élèves de primaire peuvent utiliser les P2IA (assistants IA institutionnels validés par le MEN — voir question dédiée). À partir de la 4e, les élèves peuvent utiliser l'IA générative en classe sous encadrement. Au lycée, ils peuvent l'utiliser en autonomie dans un cadre défini par l'enseignant. Source : Cadre d'usage de l'IA, juin 2025.",
+    reponse: "Cela dépend du niveau et du type d'IA. En primaire et en 6e-5e, les élèves ne manipulent pas directement d'IA générative ouverte (ChatGPT, Gemini…) ; l'enseignant peut en utiliser pour préparer ses cours. En revanche, les élèves peuvent utiliser les P2IA, des services numériques d'assistance développés dans le cadre du Partenariat d'innovation en intelligence artificielle (voir question dédiée). À partir de la 4e, les élèves peuvent utiliser l'IA générative en classe sous encadrement. Au lycée, ils peuvent l'utiliser en autonomie dans un cadre défini par l'enseignant. Source : Cadre d'usage de l'IA, juin 2025.",
   },
   {
     id: 'faq-p2ia',
     ordre: 1.5,
     categorie: 'reglementaire',
     question: "Et les P2IA ? Les élèves de primaire peuvent-ils les utiliser ?",
-    reponse: "Oui, à la différence des IA génératives ouvertes. Les P2IA (Partenariat d'innovation et d'Intelligence Artificielle) sont six assistants IA validés par le Ministère de l'Éducation nationale pour le premier degré : MATHIA (calcul mental différencié), EXPLIQ (résolution de problèmes), EDUMALIN (compréhension de textes), ORIGAMIA (lecture et fluence), CARDS (mémorisation adaptative) et yLANG (apprentissage du vocabulaire). Ce sont des assistants cadrés, à usage scolaire strict, utilisables par les élèves sous supervision enseignante. Ils ne sont pas mesurés par l'axe « Manipulation d'IA générative » du triangle car ils relèvent d'une catégorie distincte : l'IA invisible / institutionnelle. Source : eduscol.education.fr.",
+    reponse: "Oui, sous supervision enseignante. Les P2IA (Partenariat d'innovation en intelligence artificielle) sont des services numériques développés par le Ministère de l'Éducation nationale qui permettent aux élèves d'accéder à une assistance personnalisée dans leurs apprentissages. Cinq services sont déployés pour le cycle 2 depuis 2020 : Lalilo et Navi en français, Adaptiv'Math, Mathia et Smart Enseigno en mathématiques. À la différence des IA génératives ouvertes, ces outils fonctionnent dans un cadre juridique et éthique strict, sans saisie de données personnelles d'élèves dans des services grand public. Pour le cycle 3 (CM1, CM2, 6ᵉ), six nouveaux services sont en phase d'expérimentation depuis janvier 2026 : Expliq, Edumalin, Mathia-C3, Origamia, Cards, yLANG. Sources : Eduscol, Primàbord, DRANE Occitanie.",
   },
   {
     id: 'faq-2',

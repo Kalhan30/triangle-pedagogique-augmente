@@ -1,6 +1,26 @@
 import { useState, useRef, useEffect } from 'react';
 import { ChevronDown, ChevronRight, ExternalLink } from 'lucide-react';
-import { P2IA_SERVICES, P2IA_URL_EDUSCOL } from '../data/contraintes.js';
+import { P2IA_CYCLE_2, P2IA_CYCLE_3, P2IA_URL_EDUSCOL_CYCLE_2, P2IA_URL_EDUSCOL_CYCLE_3 } from '../data/contraintes.js';
+
+// Libellés courts pour la présentation compacte dans le Cadre théorique
+// (textes exacts du patch correctif). Les descriptions Eduscol complètes
+// restent dans contraintes.js pour l'onglet Explorer.
+const P2IA_SHORT = {
+  Lalilo: 'parcours personnalisés en lecture',
+  Navi: 'remédiation et mémorisation en lecture-écriture',
+  "Adaptiv'Math": 'personnalisation des parcours',
+  Mathia: 'dialogue naturel avec un robot-compagnon',
+  'Smart Enseigno': 'assistance à la personnalisation',
+  Expliq: 'compréhension de texte par apprentissage interactif',
+  Edumalin: "stratégies d'apprentissage avec pas-à-pas méthodologique",
+  'Mathia-C3': 'exploration par manipulation et visualisation 3D',
+  Origamia: 'hybride papier/numérique, résolution de problèmes',
+  Cards: 'jeu de cartes de compétences à collectionner',
+  yLANG: "reconnaissance vocale pour l'expression orale",
+};
+function shortDescription(svc) {
+  return P2IA_SHORT[svc.nom] || svc.description;
+}
 
 const SECTIONS_META = [
   { id: 'section-1', numero: '01', titre: 'Le socle fondamental', sousTitre: 'Le cadre éthique et réglementaire qui précède toute réflexion pédagogique', accent: 'teal' },
@@ -178,25 +198,43 @@ function Section2Contenu() {
       <p className="text-sm font-semibold text-text mt-4 mb-1">L'exception institutionnelle — les P2IA</p>
       <Encadre accent="violet">
         <p>
-          Le Cadre juin 2025 distingue clairement deux natures d'IA, pas deux intensités sur une même échelle. Les <strong>P2IA</strong> (Partenariat d'innovation et d'Intelligence Artificielle) sont six assistants IA institutionnels validés par le Ministère de l'Éducation nationale pour le premier degré. À la différence des IA génératives ouvertes, ils <strong>peuvent être manipulés directement par les élèves de primaire</strong>, sous supervision enseignante.
+          Le Cadre juin 2025 distingue clairement deux natures d'IA, pas deux intensités sur une même échelle. Les <strong>P2IA</strong> (Partenariat d'innovation en intelligence artificielle) sont des services numériques d'assistance développés par le Ministère de l'Éducation nationale pour accompagner les apprentissages fondamentaux. À la différence des IA génératives ouvertes, ils <strong>peuvent être utilisés par les élèves</strong> dans un cadre pédagogique strict, sous supervision enseignante.
         </p>
         <p>
-          Ce sont des assistants cadrés : pas de génération libre, pas de dérive conversationnelle, pas de données personnelles traitées hors RGPD. Leur interface est prédictible, leur périmètre disciplinaire précis, leur usage institutionnellement validé.
+          Ce sont des assistants cadrés : pas de génération libre, pas de dérive conversationnelle, pas de données personnelles traitées hors RGPD. Leur interface est prédictible, leur périmètre disciplinaire précis, leur cadre juridique et éthique garanti par le ministère.
         </p>
-        <ul className="list-none space-y-1.5 mt-2 pl-0">
-          {P2IA_SERVICES.map((svc) => (
+        <p className="mt-3"><strong>Deux vagues de P2IA coexistent aujourd'hui :</strong></p>
+
+        <p className="mt-2 text-[13px] font-semibold">P2IA Cycle 2 (déployés depuis 2020, pour CP-CE1-CE2) :</p>
+        <ul className="list-none space-y-1 mt-1 pl-0">
+          {P2IA_CYCLE_2.map((svc) => (
             <li key={svc.nom} className="flex gap-2 text-sm">
               <span className="text-brand-violet-primary flex-shrink-0 mt-0.5 font-semibold" aria-hidden="true">▸</span>
-              <span><strong>{svc.nom}</strong> — {svc.usage}</span>
+              <span><strong>{svc.nom}</strong> — {svc.discipline} : {shortDescription(svc)}</span>
             </li>
           ))}
         </ul>
+
+        <p className="mt-3 text-[13px] font-semibold">P2IA Cycle 3 (en expérimentation depuis janvier 2026, pour CM1-CM2-6ᵉ) :</p>
+        <ul className="list-none space-y-1 mt-1 pl-0">
+          {P2IA_CYCLE_3.map((svc) => (
+            <li key={svc.nom} className="flex gap-2 text-sm">
+              <span className="text-brand-violet-primary flex-shrink-0 mt-0.5 font-semibold" aria-hidden="true">▸</span>
+              <span><strong>{svc.nom}</strong> — {svc.discipline} : {shortDescription(svc)}</span>
+            </li>
+          ))}
+        </ul>
+
         <p className="mt-3 text-[13px] italic">
           Les P2IA ne sont donc pas mesurés par l'axe « Manipulation d'IA générative » du triangle augmenté. Ils relèvent d'une catégorie distincte qui coexiste avec l'IA invisible : l'IA institutionnelle cadrée.
         </p>
-        <p className="mt-2 text-[12px]">
-          <a href={P2IA_URL_EDUSCOL} target="_blank" rel="noopener noreferrer" className="text-brand-violet-primary hover:underline underline-offset-2 inline-flex items-center gap-1">
-            Consulter la fiche Eduscol sur les P2IA
+        <p className="mt-2 text-[12px] flex flex-col gap-1">
+          <a href={P2IA_URL_EDUSCOL_CYCLE_2} target="_blank" rel="noopener noreferrer" className="text-brand-violet-primary hover:underline underline-offset-2 inline-flex items-center gap-1">
+            Consulter la fiche Eduscol sur les P2IA Cycle 2
+            <ExternalLink size={11} strokeWidth={1.75} />
+          </a>
+          <a href={P2IA_URL_EDUSCOL_CYCLE_3} target="_blank" rel="noopener noreferrer" className="text-brand-violet-primary hover:underline underline-offset-2 inline-flex items-center gap-1">
+            Consulter la fiche Eduscol sur les P2IA Cycle 3
             <ExternalLink size={11} strokeWidth={1.75} />
           </a>
         </p>

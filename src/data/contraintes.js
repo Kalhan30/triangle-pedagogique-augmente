@@ -3,17 +3,17 @@ export const CONTRAINTES_NIVEAU = {
     niveau: 'primaire',
     manipulationDirecteVerrou: 0,
     manipulationDirectePlafond: null,
-    messageExplicatif: "Cadre juin 2025 : les élèves ne manipulent pas d'IA générative avant la 4e. Cet axe est donc verrouillé à 0 à ce niveau. Les P2IA (assistants institutionnels validés par le MEN) sont une exception distincte — voir l'encart dédié.",
-    referenceTexte: "Les élèves du 1er degré sont sensibilisés aux connaissances de base sur les IA, mais ne manipulent pas directement des services d'IA générative. Ils peuvent en revanche utiliser les P2IA, assistants IA institutionnels validés par le MEN (MATHIA, EXPLIQ, EDUMALIN, ORIGAMIA, CARDS, yLANG).",
-    bandeauExplorer: "⚠️ Rappel Cadre juin 2025 : à ce niveau, l'IA générative n'est pas manipulée directement par les élèves. Les exemples ci-dessous concernent l'impact médiatisé via l'usage professionnel de l'enseignant. Exception : les P2IA (assistants IA institutionnels) peuvent être utilisés par les élèves sous encadrement — voir l'encart dédié.",
+    messageExplicatif: "Cadre juin 2025 : les élèves ne manipulent pas d'IA générative ouverte avant la 4e. Cet axe est donc verrouillé à 0 à ce niveau. Les P2IA (services développés dans le cadre du Partenariat d'innovation en intelligence artificielle) sont une exception distincte — voir l'encart dédié.",
+    referenceTexte: "Les élèves du 1er degré sont sensibilisés aux connaissances de base sur les IA, mais ne manipulent pas directement des services d'IA générative ouverts (ChatGPT, Gemini, Claude…). Ils peuvent en revanche utiliser les P2IA développés dans le cadre du partenariat ministériel, sous supervision enseignante.",
+    bandeauExplorer: "⚠️ Rappel Cadre juin 2025 : à ce niveau, l'IA générative ouverte n'est pas manipulée directement par les élèves. Les exemples ci-dessous concernent l'impact médiatisé via l'usage professionnel de l'enseignant. Exception : les P2IA cycle 2 (Lalilo, Navi, Adaptiv'Math, Mathia, Smart Enseigno) peuvent être utilisés par les élèves sous supervision — voir l'encart dédié.",
   },
   college_6_5: {
     niveau: 'college_6_5',
     manipulationDirecteVerrou: 0,
     manipulationDirectePlafond: null,
-    messageExplicatif: "Cadre juin 2025 : les élèves ne manipulent pas d'IA générative avant la 4e. Cet axe est donc verrouillé à 0 à ce niveau.",
-    referenceTexte: "La manipulation d'outils d'IA générative par les élèves n'est pas autorisée avant la 4e.",
-    bandeauExplorer: "⚠️ Rappel Cadre juin 2025 : à ce niveau, l'IA générative n'est pas manipulée directement par les élèves. Les exemples ci-dessous concernent l'impact médiatisé via l'usage professionnel de l'enseignant.",
+    messageExplicatif: "Cadre juin 2025 : les élèves ne manipulent pas d'IA générative ouverte avant la 4e. Cet axe est donc verrouillé à 0 à ce niveau. Les P2IA cycle 3 (en expérimentation depuis janvier 2026) sont une exception pour les classes de 6ᵉ retenues.",
+    referenceTexte: "La manipulation d'outils d'IA générative ouverte par les élèves n'est pas autorisée avant la 4e. Les classes de 6ᵉ retenues pour l'expérimentation P2IA cycle 3 peuvent utiliser Expliq, Edumalin, Mathia-C3, Origamia, Cards et yLANG.",
+    bandeauExplorer: "⚠️ Rappel Cadre juin 2025 : à ce niveau, l'IA générative ouverte n'est pas manipulée directement par les élèves. Les exemples ci-dessous concernent l'impact médiatisé via l'usage professionnel de l'enseignant. Exception : les P2IA cycle 3 (en expérimentation dans certaines classes de 6ᵉ) — voir l'encart dédié.",
   },
   college_4_3: {
     niveau: 'college_4_3',
@@ -35,19 +35,84 @@ export const CONTRAINTES_NIVEAU = {
 
 export const getContrainte = (niveauId) => CONTRAINTES_NIVEAU[niveauId];
 
-// P2IA — Partenariat d'innovation et d'Intelligence Artificielle (MEN)
-// Assistants IA institutionnels validés pour le primaire.
-// Référence : https://eduscol.education.fr/1910/partenariat-d-innovation-et-d-intelligence-artificielle
-export const P2IA_SERVICES = [
-  { nom: 'MATHIA', usage: 'Calcul mental différencié (CP-CM2)' },
-  { nom: 'EXPLIQ', usage: 'Aide à la résolution de problèmes mathématiques' },
-  { nom: 'EDUMALIN', usage: 'Soutien à la compréhension de textes et consignes' },
-  { nom: 'ORIGAMIA', usage: 'Entraînement à la lecture et à la fluence' },
-  { nom: 'CARDS', usage: 'Mémorisation par cartes adaptatives (lexique, orthographe)' },
-  { nom: 'yLANG', usage: 'Soutien à l\'apprentissage du vocabulaire' },
+// P2IA — Partenariat d'innovation en intelligence artificielle (MEN)
+// Deux vagues distinctes : Cycle 2 (déployés depuis 2020) et Cycle 3 (en expérimentation
+// depuis janvier 2026). Sources : Eduscol, Primàbord, DRANE Occitanie, MaProfBranchee.
+
+// P2IA Cycle 2 — CP, CE1, CE2 — déployés depuis 2020
+export const P2IA_CYCLE_2 = [
+  {
+    nom: 'Lalilo',
+    discipline: 'Français',
+    description: "Parcours d'apprentissage personnalisés en lecture, différenciation par l'IA pour les élèves de cycle 2.",
+    precision: "Payant depuis septembre 2025 (19 à 49 €/an selon la classe). Version basique gratuite limitée. Accès gratuit maintenu dans les Territoires Numériques Éducatifs.",
+  },
+  {
+    nom: 'Navi',
+    discipline: 'Français',
+    description: "Assistant pour la remédiation et la mémorisation de compétences de lecture et d'écriture au cycle 2. Parcours d'apprentissage personnalisés et adaptatifs.",
+  },
+  {
+    nom: "Adaptiv'Math",
+    discipline: 'Mathématiques',
+    description: "Personnalisation des parcours d'apprentissage mathématiques par l'IA adaptative.",
+    precision: "Gratuit pour 2025-2026 via EvidenceB, passage au payant prévu en septembre 2026.",
+  },
+  {
+    nom: 'Mathia',
+    discipline: 'Mathématiques',
+    description: "Dispositif d'accompagnement par dialogue naturel et représentation holographique. L'élève apprend en parlant, en essayant et en s'amusant avec un robot sympathique.",
+    precision: "Mathia reste actif pour le cycle 2 et a été sélectionné pour le cycle 3 sous le nom Mathia-C3.",
+  },
+  {
+    nom: 'Smart Enseigno',
+    discipline: 'Mathématiques',
+    description: "Assistance numérique basée sur l'IA pour la personnalisation des apprentissages et des acquisitions notionnelles.",
+  },
 ];
 
-export const P2IA_URL_EDUSCOL = 'https://eduscol.education.fr/1910/partenariat-d-innovation-et-d-intelligence-artificielle';
+// P2IA Cycle 3 — CM1, CM2, 6ᵉ — en expérimentation depuis janvier 2026
+export const P2IA_CYCLE_3 = [
+  {
+    nom: 'Expliq',
+    discipline: 'Français',
+    description: "Compréhension de texte via apprentissage interactif et personnalisé. L'élève collabore, exerce son esprit critique, ose s'exprimer, tout en s'exerçant de manière interactive.",
+    realisePar: 'Edinnov, Mathena, Scopeo, IRIT – équipe SAMoVa (Université de Toulouse)',
+  },
+  {
+    nom: 'Edumalin',
+    discipline: 'Français',
+    description: "Stratégies d'apprentissage avec un pas-à-pas méthodologique paramétrable par l'enseignant, enrichi de feedbacks en temps réel pour adapter le parcours.",
+    realisePar: 'MFB',
+  },
+  {
+    nom: 'Mathia-C3',
+    discipline: 'Mathématiques',
+    description: "Exploration des concepts mathématiques par la manipulation et la visualisation 3D, interaction avec un compagnon numérique. Construction du raisonnement par tâtonnement et essais-erreurs.",
+    realisePar: 'Prof en Poche, Tralalere',
+  },
+  {
+    nom: 'Origamia',
+    discipline: 'Mathématiques',
+    description: "Solution hybride combinant activités sur papier et plateforme numérique interactive. Extension de la feuille pour une expérimentation ludique. Parcours adaptés sur mesure.",
+    realisePar: 'Cabrilog, Université de Grenoble Alpes, Cantoo, Le Livre scolaire, Vittascience',
+  },
+  {
+    nom: 'Cards',
+    discipline: 'Langues vivantes',
+    description: "Jeu de cartes de compétences à collectionner pour progresser en langues. L'élève s'entraîne, relève des défis linguistiques et affronte des bots à l'aide des cartes obtenues.",
+    realisePar: 'Beneylu',
+  },
+  {
+    nom: 'yLANG',
+    discipline: 'Langues vivantes',
+    description: "Différenciation des apprentissages grâce à la reconnaissance vocale, améliorant l'expression orale et la prononciation. Bot conversationnel pour accompagner l'enseignant.",
+    realisePar: 'Neuronys Nolej',
+  },
+];
+
+export const P2IA_URL_EDUSCOL_CYCLE_2 = 'https://eduscol.education.fr/1911/partenariat-d-innovation-et-intelligence-artificielle-p2ia';
+export const P2IA_URL_EDUSCOL_CYCLE_3 = 'https://eduscol.education.fr/4289/l-intelligence-artificielle-au-service-des-apprentissages-au-cycle-3';
 
 export const AIDE_SLIDERS = {
   enseignantSavoir: {

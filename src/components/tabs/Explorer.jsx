@@ -3,7 +3,7 @@ import { X, ChevronDown, Scale, CheckCircle2, XCircle, AlertTriangle, Sparkles, 
 import Triangle from '../Triangle.jsx';
 import { AXES_META, VERTICES_META, getNiveau } from '../../data/niveaux.js';
 import { AXES_DETAILS } from '../../data/axesDetails.js';
-import { getContrainte, P2IA_SERVICES, P2IA_URL_EDUSCOL } from '../../data/contraintes.js';
+import { getContrainte, P2IA_CYCLE_2, P2IA_CYCLE_3, P2IA_URL_EDUSCOL_CYCLE_2, P2IA_URL_EDUSCOL_CYCLE_3 } from '../../data/contraintes.js';
 import { useApp } from '../../contexts/AppContext.jsx';
 
 export default function Explorer() {
@@ -88,48 +88,8 @@ export default function Explorer() {
       </aside>
       </div>
 
-      {niveauId === 'primaire' && (
-        <section className="card mt-6 p-6" aria-labelledby="p2ia-title">
-          <div className="flex items-start gap-3 mb-4">
-            <div className="w-9 h-9 rounded-full bg-brand-violet-light flex items-center justify-center flex-shrink-0">
-              <Sparkles size={16} className="text-brand-violet-primary" strokeWidth={1.75} />
-            </div>
-            <div className="flex-1 min-w-0">
-              <h3 id="p2ia-title" className="text-base font-semibold text-text mb-1">
-                L'exception institutionnelle — les P2IA
-              </h3>
-              <p className="text-[13px] text-text-secondary leading-relaxed">
-                Six assistants IA <strong>validés par le Ministère</strong> pour le premier degré. À la différence des IA génératives ouvertes, ils peuvent être <strong>manipulés directement par les élèves de primaire</strong>, sous supervision enseignante.
-              </p>
-            </div>
-          </div>
-          <ul className="grid md:grid-cols-2 gap-2 mb-4">
-            {P2IA_SERVICES.map((svc) => (
-              <li
-                key={svc.nom}
-                className="flex items-start gap-2 p-3 rounded-lg bg-brand-violet-light/40 border border-border-subtle"
-              >
-                <span className="text-brand-violet-primary font-semibold text-sm flex-shrink-0 mt-0.5" aria-hidden="true">▸</span>
-                <div className="min-w-0">
-                  <p className="text-sm font-semibold text-text">{svc.nom}</p>
-                  <p className="text-[12px] text-text-secondary leading-snug">{svc.usage}</p>
-                </div>
-              </li>
-            ))}
-          </ul>
-          <p className="text-[12px] text-text-muted italic mb-3 leading-relaxed">
-            Ces assistants ne sont pas mesurés par l'axe « Manipulation d'IA générative » du triangle — ils relèvent d'une catégorie distincte : l'IA institutionnelle cadrée.
-          </p>
-          <a
-            href={P2IA_URL_EDUSCOL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-[12px] text-brand-violet-primary hover:underline underline-offset-2"
-          >
-            Consulter la fiche Eduscol sur les P2IA
-            <ExternalLink size={11} strokeWidth={1.75} />
-          </a>
-        </section>
+      {(niveauId === 'primaire' || niveauId === 'college_6_5') && (
+        <P2IASection niveauId={niveauId} />
       )}
 
       <section className="card mt-6 overflow-hidden" aria-labelledby="cadre-title">
@@ -187,5 +147,76 @@ function Section({ color, title, children }) {
       <h4 className="text-xs font-bold uppercase tracking-wider mb-2" style={{ color }}>{title}</h4>
       {children}
     </div>
+  );
+}
+
+function P2IASection({ niveauId }) {
+  const isPrimaire = niveauId === 'primaire';
+  const services = isPrimaire ? P2IA_CYCLE_2 : P2IA_CYCLE_3;
+  const url = isPrimaire ? P2IA_URL_EDUSCOL_CYCLE_2 : P2IA_URL_EDUSCOL_CYCLE_3;
+  const titre = isPrimaire
+    ? "L'exception institutionnelle — les P2IA cycle 2"
+    : "Les P2IA cycle 3 — en expérimentation";
+  const intro = isPrimaire
+    ? (
+      <>
+        Les P2IA (Partenariat d'innovation en intelligence artificielle) sont des <strong>services numériques d'assistance et de recommandation</strong> développés par le Ministère de l'Éducation nationale. À la différence des IA génératives ouvertes, ils peuvent être utilisés par les élèves dans un cadre pédagogique strict, sous supervision enseignante. <strong>Cinq services sont déployés depuis 2020</strong> pour le cycle 2 (CP, CE1, CE2).
+      </>
+    )
+    : (
+      <>
+        <strong>Six nouveaux services P2IA sont en phase de recherche et développement depuis janvier 2026</strong> pour les classes de CM1, CM2 et 6ᵉ. Lauréats du marché public P2IA Cycle 3, ils sont expérimentés par des enseignants volontaires de plusieurs académies avant un éventuel déploiement plus large.
+      </>
+    );
+  const lienLibelle = isPrimaire
+    ? "Consulter la fiche Eduscol sur les P2IA cycle 2"
+    : "Consulter la fiche Eduscol sur les P2IA cycle 3";
+
+  return (
+    <section className="card mt-6 p-6" aria-labelledby="p2ia-title">
+      <div className="flex items-start gap-3 mb-4">
+        <div className="w-9 h-9 rounded-full bg-brand-violet-light flex items-center justify-center flex-shrink-0">
+          <Sparkles size={16} className="text-brand-violet-primary" strokeWidth={1.75} />
+        </div>
+        <div className="flex-1 min-w-0">
+          <h3 id="p2ia-title" className="text-base font-semibold text-text mb-1">{titre}</h3>
+          <p className="text-[13px] text-text-secondary leading-relaxed">{intro}</p>
+        </div>
+      </div>
+      <ul className="grid md:grid-cols-2 gap-2 mb-4">
+        {services.map((svc) => (
+          <li
+            key={svc.nom}
+            className="flex items-start gap-2 p-3 rounded-lg bg-brand-violet-light/40 border border-border-subtle"
+          >
+            <span className="text-brand-violet-primary font-semibold text-sm flex-shrink-0 mt-0.5" aria-hidden="true">▸</span>
+            <div className="min-w-0">
+              <p className="text-sm font-semibold text-text">
+                {svc.nom} <span className="text-[11px] font-normal text-text-muted">· {svc.discipline}</span>
+              </p>
+              <p className="text-[12px] text-text-secondary leading-snug mt-0.5">{svc.description}</p>
+              {svc.precision && (
+                <p className="text-[11px] text-text-muted italic mt-1 leading-snug">{svc.precision}</p>
+              )}
+              {svc.realisePar && (
+                <p className="text-[11px] text-text-muted mt-1">Réalisé par : {svc.realisePar}</p>
+              )}
+            </div>
+          </li>
+        ))}
+      </ul>
+      <p className="text-[12px] text-text-muted italic mb-3 leading-relaxed">
+        Ces services ne sont pas mesurés par l'axe « Manipulation d'IA générative » du triangle — ils relèvent d'une catégorie distincte : l'IA institutionnelle cadrée.
+      </p>
+      <a
+        href={url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex items-center gap-1.5 text-[12px] text-brand-violet-primary hover:underline underline-offset-2"
+      >
+        {lienLibelle}
+        <ExternalLink size={11} strokeWidth={1.75} />
+      </a>
+    </section>
   );
 }

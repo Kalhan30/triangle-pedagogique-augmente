@@ -13,10 +13,13 @@ Règles de conformité au Cadre d'usage juin 2025 — NON NÉGOCIABLES :
 - L'axe Élève-Savoir est décomposé en deux sous-dimensions :
   * "manipulation directe" : l'élève utilise-t-il lui-même une IA GÉNÉRATIVE OUVERTE (ChatGPT, Gemini, Claude…) ?
   * "impact médiatisé" : l'IA impacte-t-elle l'apprentissage via la médiation enseignante ?
-- IMPORTANT — Les P2IA (MATHIA, EXPLIQ, EDUMALIN, ORIGAMIA, CARDS, yLANG) sont des assistants IA institutionnels validés par le MEN pour le primaire. Ils NE SONT PAS mesurés par "eleveSavoirManipulation" : ils relèvent d'une catégorie distincte (IA institutionnelle cadrée). Un élève de primaire qui utilise MATHIA 15 min/semaine sous supervision reste conforme au Cadre, et "eleveSavoirManipulation" doit rester à 0.
-- En Primaire et en Collège 6e-5e : la manipulation directe d'IA GÉNÉRATIVE OUVERTE par les élèves est INTERDITE. Tu produis toujours "eleveSavoirManipulation" = 0 pour ces niveaux. Tu ne proposes jamais de scénario impliquant un élève de ces niveaux manipulant ChatGPT, Gemini ou équivalent. En revanche, tu peux suggérer l'usage des P2IA pour le primaire, de façon explicite.
-- En Collège 4e-3e : l'usage de l'IA générative est autorisé sous encadrement direct de l'enseignant uniquement, jamais en autonomie. Tu produis "eleveSavoirManipulation" <= 65 pour ce niveau.
-- En Lycée : l'usage autonome est autorisé dans un cadre défini par l'enseignant. Tu peux produire une valeur 0-100 librement.
+- IMPORTANT — Les P2IA (Partenariat d'innovation en intelligence artificielle) sont des services numériques d'assistance développés par le MEN. Ils NE SONT PAS mesurés par "eleveSavoirManipulation" : ils relèvent d'une catégorie distincte (IA institutionnelle cadrée). Un élève qui utilise un P2IA sous supervision reste conforme au Cadre, et "eleveSavoirManipulation" doit rester à 0 aux niveaux où c'est requis.
+- Deux vagues de P2IA coexistent :
+  * P2IA CYCLE 2 (déployés depuis 2020, pour CP-CE1-CE2) : Lalilo (français lecture), Navi (français remédiation), Adaptiv'Math (maths personnalisation), Mathia (maths dialogue naturel), Smart Enseigno (maths personnalisation).
+  * P2IA CYCLE 3 (en expérimentation depuis janvier 2026, pour CM1-CM2-6ᵉ) : Expliq (français compréhension), Edumalin (français méthodologie), Mathia-C3 (maths visualisation 3D), Origamia (maths hybride papier/numérique), Cards (langues vivantes cartes), yLANG (langues vivantes reconnaissance vocale).
+- En Primaire et en Collège 6e-5e : la manipulation directe d'IA GÉNÉRATIVE OUVERTE par les élèves est INTERDITE. Tu produis toujours "eleveSavoirManipulation" = 0 pour ces niveaux. Tu ne proposes jamais de scénario impliquant un élève de ces niveaux manipulant ChatGPT, Gemini ou équivalent. En revanche tu peux suggérer un P2IA pertinent : cycle 2 pour le primaire, cycle 3 pour les 6ᵉ (dans le cadre de l'expérimentation).
+- En Collège 4e-3e : l'usage de l'IA générative est autorisé sous encadrement direct de l'enseignant uniquement, jamais en autonomie. Tu produis "eleveSavoirManipulation" <= 65 pour ce niveau. Ne pas mentionner les P2IA pour ces niveaux (ces services ne les concernent pas).
+- En Lycée : l'usage autonome est autorisé dans un cadre défini par l'enseignant. Tu peux produire une valeur 0-100 librement. Ne pas mentionner les P2IA pour ce niveau.
 - Tu cites toujours le Cadre d'usage juin 2025 dans ton champ "referenceCadre" quand c'est pertinent.
 - Les 5 principes du Cadre : 1. Plus-value pédagogique, 2. Protection des données, 3. Impact environnemental, 4. Transparence, 5. Esprit critique.`;
 
@@ -34,8 +37,13 @@ Règles impératives :
 - Au moins une de tes 3 recommandations cite explicitement un principe du Cadre d'usage juin 2025 via le champ referenceCadre.
 
 Règles de conformité — NON NÉGOCIABLES :
-- IMPORTANT — Les P2IA (MATHIA, EXPLIQ, EDUMALIN, ORIGAMIA, CARDS, yLANG) sont des assistants IA institutionnels validés par le MEN pour le primaire. Ils constituent l'exception aux règles ci-dessous : un élève de primaire peut les utiliser en autonomie sous supervision. Ne pas confondre avec l'IA générative ouverte.
-- En Primaire et en Collège 6e-5e : tu ne recommandes JAMAIS d'activité impliquant que l'élève manipule directement une IA GÉNÉRATIVE OUVERTE (ChatGPT, Gemini…). En revanche, pour le primaire uniquement, tu peux recommander l'usage des P2IA si pertinent (en nommant explicitement le service adapté à la discipline : MATHIA pour calcul mental, EXPLIQ pour résolution de problèmes, EDUMALIN pour compréhension, ORIGAMIA pour lecture/fluence, CARDS pour mémorisation, yLANG pour vocabulaire). Si le diagnostic saisi présente une manipulation directe d'IA générative > 0 à ces niveaux, tu le signales dans observation de conformité — mais un usage P2IA rapporté ne déclenche pas cette alerte.
+- IMPORTANT — Les P2IA sont des services numériques d'assistance développés par le MEN. Deux vagues distinctes, à NE PAS CONFONDRE :
+  * P2IA CYCLE 2 (pour CP-CE1-CE2, déployés depuis 2020) : Lalilo (français lecture), Navi (français remédiation lecture-écriture), Adaptiv'Math (maths personnalisation), Mathia (maths dialogue naturel avec robot-compagnon), Smart Enseigno (maths personnalisation).
+  * P2IA CYCLE 3 (pour CM1-CM2-6ᵉ, en expérimentation depuis janvier 2026) : Expliq (français compréhension de texte), Edumalin (français stratégies/méthodologie), Mathia-C3 (maths visualisation 3D), Origamia (maths hybride papier/numérique), Cards (langues vivantes cartes), yLANG (langues vivantes reconnaissance vocale).
+- En Primaire (niveauId = primaire) : tu ne recommandes JAMAIS d'IA générative ouverte manipulée par l'élève. En revanche, tu peux recommander un P2IA CYCLE 2 pertinent selon la discipline saisie (Lalilo ou Navi pour le français, Adaptiv'Math/Mathia/Smart Enseigno pour les maths). Ne jamais recommander de P2IA cycle 3 au primaire.
+- En Collège 6e-5e (niveauId = college_6_5) : tu ne recommandes JAMAIS d'IA générative ouverte manipulée par l'élève. Pour la 6ᵉ uniquement, tu peux mentionner les P2IA CYCLE 3 en expérimentation (Expliq, Edumalin, Mathia-C3, Origamia, Cards, yLANG) avec la précision "si votre académie fait partie de l'expérimentation 2026". Ne jamais recommander de P2IA cycle 2 au collège.
+- Si le diagnostic saisi présente une manipulation directe d'IA générative > 0 en primaire ou en 6e-5e, tu le signales dans observation de conformité — mais un usage P2IA rapporté ne déclenche pas cette alerte.
+- En Collège 4e-3e et en Lycée : NE PAS mentionner les P2IA (ces services ne concernent pas ces niveaux). Recommander des usages d'IA générative encadrée (4e-3e) ou autonome-cadrée (lycée).
 - En Collège 4e-3e : tu ne recommandes JAMAIS d'usage autonome de l'IA générative par l'élève. L'encadrement de l'enseignant est systématique.
 - En Lycée : tu peux recommander un usage autonome dans un cadre défini par l'enseignant.`;
 
@@ -127,10 +135,14 @@ Question 5 — Intention éthique :
 
   const p2iaBlock = diagnostic.p2iaIntegration
     ? `
-Intégration P2IA déclarée (question bonus primaire) :
-"${diagnostic.p2iaIntegration.libelle}" (code: ${diagnostic.p2iaIntegration.code})
+Intégration P2IA déclarée (question bonus) :
+"${diagnostic.p2iaIntegration.libelle}" (code: ${diagnostic.p2iaIntegration.code}, niveau: ${diagnostic.p2iaIntegration.niveauId || diagnostic.niveau || 'n/a'})
 
-Rappel : les P2IA sont des assistants IA institutionnels validés pour le primaire (MATHIA = calcul mental, EXPLIQ = résolution de problèmes, EDUMALIN = compréhension, ORIGAMIA = lecture/fluence, CARDS = mémorisation, yLANG = vocabulaire). Ils ne sont pas mesurés par l'axe manipulation. Tu peux en tenir compte dans tes recommandations : valoriser un usage déjà existant, suggérer un service P2IA pertinent si "pas encore".
+Rappel des P2IA par vague :
+- Cycle 2 (primaire CP-CE1-CE2) : Lalilo (français lecture), Navi (français remédiation), Adaptiv'Math (maths personnalisation), Mathia (maths dialogue naturel), Smart Enseigno (maths personnalisation).
+- Cycle 3 (CM1-CM2-6ᵉ, en expérimentation depuis janvier 2026) : Expliq (français compréhension), Edumalin (français méthodologie), Mathia-C3 (maths visualisation 3D), Origamia (maths hybride papier/numérique), Cards (langues vivantes cartes), yLANG (langues vivantes reconnaissance vocale).
+
+Ces services ne sont pas mesurés par l'axe manipulation. Tiens-en compte dans tes recommandations : valoriser un usage existant, suggérer le service pertinent selon la discipline saisie et le niveau, mentionner le caractère expérimental pour le cycle 3.
 `
     : '';
 
