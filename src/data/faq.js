@@ -60,7 +60,7 @@ export const FAQ_ENTRIES = [
     ordre: 8,
     categorie: 'usage',
     question: "Qui a conçu cet outil ?",
-    reponse: "Vanessa Le Scolan-Nguyen, auteure du blog MaProfBranchee, coach scolaire et formatrice. L'outil s'inscrit dans sa feuille de route SINPA 2026 autour de la formation des enseignants au numérique pédagogique responsable.",
+    reponse: "Vanessa Le Scolan Nguyen, enseignante CE2 et ERUN dans l'Académie de Montpellier, auteure du blog MaProfBranchee. Cet outil est un artefact de recherche-action développé dans le cadre de sa démarche sur l'usage réflexif de l'IA en pédagogie, présenté au SINPA 2026.",
   },
 ];
 
