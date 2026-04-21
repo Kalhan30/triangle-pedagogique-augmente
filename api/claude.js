@@ -50,7 +50,9 @@ export default async function handler(req, res) {
         model: 'claude-sonnet-4-5',
         max_tokens: maxTokens,
         temperature: 0.4,
-        system: systemPrompt,
+        system: [
+          { type: 'text', text: systemPrompt, cache_control: { type: 'ephemeral' } },
+        ],
         messages: [{ role: 'user', content: userPrompt }],
       }),
     });
@@ -63,6 +65,9 @@ export default async function handler(req, res) {
 
     const data = await response.json();
     const content = data.content?.[0]?.text ?? '';
+
+    const u = data.usage || {};
+    console.log(`[cache] write=${u.cache_creation_input_tokens || 0} read=${u.cache_read_input_tokens || 0} uncached=${u.input_tokens || 0} out=${u.output_tokens || 0}`);
 
     let parsed;
     try {
