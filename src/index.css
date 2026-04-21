@@ -153,3 +153,138 @@
     font-family: Georgia, 'Playfair Display', serif;
   }
 }
+
+/* ===== APP FOOTER — Version enrichie ===== */
+.app-footer {
+  background: rgb(var(--bg-card));
+  border-top: 0.5px solid var(--border-subtle);
+  padding: 28px 32px 20px;
+  max-width: 100%;
+  font-family: 'Inter', system-ui, sans-serif;
+  margin-top: 48px;
+}
+
+/* Bloc 1 : Identité + Badge AIA */
+.footer-identity {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.footer-profile { display: flex; align-items: center; gap: 12px; }
+.footer-avatar {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: linear-gradient(135deg, #0F766E 0%, #7C3AED 100%);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 500; font-size: 15px; color: #FFFFFF; flex-shrink: 0;
+}
+.footer-profile-text { display: flex; flex-direction: column; line-height: 1.2; }
+.footer-name { font-weight: 500; font-size: 14px; color: rgb(var(--text-primary)); }
+.footer-subtitle {
+  font-size: 12px; color: rgb(var(--text-secondary)); font-style: italic;
+  font-family: Georgia, serif; margin-top: 3px;
+}
+.footer-aia-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 11px; background: rgb(var(--violet-light));
+  color: rgb(var(--violet-text)); border-radius: 20px;
+  font-size: 10px; font-weight: 500; letter-spacing: 0.05em;
+  text-decoration: none; transition: background 0.2s, color 0.2s;
+}
+.footer-aia-badge:hover { background: rgb(var(--violet-primary)); color: #FFFFFF; }
+.footer-aia-dot {
+  width: 6px; height: 6px; background: rgb(var(--violet-primary));
+  border-radius: 50%; flex-shrink: 0;
+}
+.footer-aia-badge:hover .footer-aia-dot { background: #FFFFFF; }
+
+/* Bloc 2 : Tagline */
+.footer-tagline {
+  padding: 14px 20px; background: rgb(var(--bg-primary));
+  border-radius: var(--border-radius-md); margin-bottom: 18px;
+  font-family: Georgia, serif; font-style: italic; font-size: 13px;
+  color: rgb(var(--text-primary)); text-align: center;
+}
+
+/* Bloc 3 : Pastilles de garantie */
+.footer-guarantees {
+  display: flex; justify-content: center; gap: 24px;
+  margin-bottom: 20px; flex-wrap: wrap;
+}
+.footer-guarantee {
+  display: flex; align-items: center; gap: 7px;
+  font-size: 11px; color: rgb(var(--text-secondary));
+}
+.footer-pill { width: 8px; height: 8px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+.footer-pill-green { background: #10B981; }
+.footer-pill-teal { background: rgb(var(--teal-primary)); }
+.footer-pill-violet { background: rgb(var(--violet-primary)); }
+
+/* Bloc 4 : Badge Artefact de recherche-action */
+.footer-research-badge {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 10px; flex-wrap: wrap;
+}
+.footer-research-pill {
+  display: inline-block; padding: 3px 10px;
+  background: rgb(var(--violet-light)); color: rgb(var(--violet-text));
+  border-radius: 20px; font-size: 11px; font-weight: 500; letter-spacing: 0.02em;
+}
+.footer-research-author { font-size: 11px; color: rgb(var(--text-secondary)); }
+
+/* Bloc 5 : Mention Cadre juin 2025 */
+.footer-cadre-mention {
+  font-size: 11px; color: rgb(var(--text-secondary));
+  line-height: 1.5; margin-bottom: 10px;
+}
+.footer-cadre-mention a {
+  color: rgb(var(--teal-primary)); font-weight: 500;
+  text-decoration: none; transition: text-decoration 0.15s;
+}
+.footer-cadre-mention a:hover { text-decoration: underline; }
+
+/* Bloc 6 : Liens secondaires */
+.footer-links {
+  display: flex; gap: 14px; margin-bottom: 18px;
+  font-size: 11px; flex-wrap: wrap; align-items: center;
+}
+.footer-links a {
+  color: rgb(var(--teal-primary)); text-decoration: none;
+  transition: color 0.15s;
+}
+.footer-links a:hover { color: rgb(var(--teal-medium)); text-decoration: underline; }
+.footer-separator { color: rgb(var(--text-disabled)); }
+.footer-external { font-size: 9px; opacity: 0.7; }
+
+/* Bloc 7 : Licence + Toggle thème */
+.footer-bottom {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-top: 14px; border-top: 0.5px solid var(--border-subtle);
+  flex-wrap: wrap; gap: 12px;
+}
+.footer-license {
+  font-size: 10px; color: rgb(var(--text-muted)); letter-spacing: 0.02em;
+}
+.footer-license a {
+  color: rgb(var(--text-muted)); text-decoration: underline;
+  text-decoration-color: var(--border-normal); transition: color 0.15s;
+}
+.footer-license a:hover { color: rgb(var(--text-secondary)); }
+
+/* Responsive mobile */
+@media (max-width: 640px) {
+  .footer-identity { flex-direction: column; align-items: flex-start; }
+  .footer-guarantees { gap: 14px; }
+  .footer-links { gap: 10px; font-size: 10px; }
+  .footer-bottom { flex-direction: column; align-items: flex-start; }
+}
+
+/* prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .footer-aia-badge,
+  .footer-links a,
+  .footer-cadre-mention a,
+  .footer-license a { transition: none; }
+}

@@ -1,9 +1,10 @@
-import { ExternalLink } from 'lucide-react';
 import mentionCfg from '../config/mention-recherche-action.json';
 import { useApp } from '../contexts/AppContext.jsx';
 import ThemeToggle from './ThemeToggle.jsx';
 
 const ARTICLE_URL = 'https://maprofbranchee.fr/le-triangle-pedagogique-augmente-par-lia-une-nouvelle-grammaire-de-lapprentissage/';
+const AIA_URL = 'https://maprofbranchee.fr/ia-en-education/';
+const CC_URL = 'https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr';
 
 export default function Footer() {
   const { appScreen, setAppScreen } = useApp();
@@ -16,59 +17,87 @@ export default function Footer() {
   };
 
   return (
-    <footer
-      role="contentinfo"
-      aria-label="Informations sur la démarche"
-      className="mt-12 border-t"
-      style={{ borderColor: 'var(--border-subtle)', background: 'rgb(var(--bg-card))' }}
-    >
-      <div className="max-w-6xl mx-auto px-4 md:px-6 py-6 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
-        <div className="space-y-2 min-w-0">
-          <p className="text-sm text-text-secondary flex items-center gap-2 flex-wrap">
-            <span
-              className="inline-block rounded-full border text-[11px] font-medium tracking-[0.025em]"
-              style={{
-                padding: '2px 10px',
-                background: 'rgb(var(--violet-light))',
-                color: 'rgb(var(--violet-text))',
-                borderColor: 'rgba(124, 58, 237, 0.3)',
-              }}
-            >
-              Artefact de recherche-action
-            </span>
-            <span>{mentionCfg.marque} — {mentionCfg.auteure}</span>
-          </p>
-          <p className="text-sm text-text-secondary">
-            Application alignée sur le{' '}
-            <a href={mentionCfg.cadreUrl} target="_blank" rel="noopener noreferrer" className="text-brand-teal-primary hover:underline underline-offset-4">
-              Cadre d'usage de l'IA en éducation
-            </a>
-            {' '}— Ministère de l'Éducation nationale, juin 2025
-          </p>
-          <p className="text-sm text-text-secondary flex flex-wrap gap-x-2 gap-y-1 items-center">
-            {!onAbout && (
-              <>
-                <a href="#a-propos" onClick={goAbout} className="text-brand-teal-primary hover:underline underline-offset-4">
-                  En savoir plus sur la démarche
-                </a>
-                <span aria-hidden="true" className="text-text-muted">·</span>
-              </>
-            )}
-            <a href={mentionCfg.blogUrl} target="_blank" rel="noopener noreferrer" className="text-brand-teal-primary hover:underline underline-offset-4 inline-flex items-center gap-1">
-              Blog {mentionCfg.marque}
-              <ExternalLink size={10} />
-            </a>
-            <span aria-hidden="true" className="text-text-muted">·</span>
-            <a href={ARTICLE_URL} target="_blank" rel="noopener noreferrer" className="text-brand-teal-primary hover:underline underline-offset-4 inline-flex items-center gap-1">
-              Article de référence sur le modèle
-              <ExternalLink size={10} />
-            </a>
-          </p>
+    <footer className="app-footer" role="contentinfo" aria-label="Informations sur la démarche">
+      {/* Bloc 1 : Identité + Badge AIA */}
+      <div className="footer-identity">
+        <div className="footer-profile">
+          <div className="footer-avatar" aria-hidden="true"><span>V</span></div>
+          <div className="footer-profile-text">
+            <div className="footer-name">{mentionCfg.marque}</div>
+            <div className="footer-subtitle">{mentionCfg.auteure} · Enseignante CE2 &amp; ERUN</div>
+          </div>
         </div>
+        <a
+          href={AIA_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="footer-aia-badge"
+          title="Contenu assisté par IA — Vérifié et validé par l'auteure"
+        >
+          <span className="footer-aia-dot" aria-hidden="true"></span>
+          <span>AIA — Transparence IA</span>
+        </a>
+      </div>
 
-        <div className="shrink-0">
-          <ThemeToggle variant="labeled" />
+      {/* Bloc 2 : Tagline */}
+      <div className="footer-tagline">« Un numérique au service de l'humain. »</div>
+
+      {/* Bloc 3 : Pastilles de garantie */}
+      <div className="footer-guarantees">
+        <div className="footer-guarantee">
+          <span className="footer-pill footer-pill-green" aria-hidden="true"></span>
+          <span>Testé en classe</span>
         </div>
+        <div className="footer-guarantee">
+          <span className="footer-pill footer-pill-teal" aria-hidden="true"></span>
+          <span>Sélection vérifiée</span>
+        </div>
+        <div className="footer-guarantee">
+          <span className="footer-pill footer-pill-violet" aria-hidden="true"></span>
+          <span>Conforme RGPD</span>
+        </div>
+      </div>
+
+      {/* Bloc 4 : Badge Artefact de recherche-action */}
+      <div className="footer-research-badge">
+        <span className="footer-research-pill">Artefact de recherche-action</span>
+        <span className="footer-research-author">{mentionCfg.marque} — {mentionCfg.auteure}</span>
+      </div>
+
+      {/* Bloc 5 : Mention Cadre juin 2025 */}
+      <div className="footer-cadre-mention">
+        Application alignée sur le{' '}
+        <a href={mentionCfg.cadreUrl} target="_blank" rel="noopener noreferrer">
+          Cadre d'usage de l'IA en éducation
+        </a>
+        {' '}— Ministère de l'Éducation nationale, juin 2025
+      </div>
+
+      {/* Bloc 6 : Liens secondaires */}
+      <div className="footer-links">
+        {!onAbout && (
+          <>
+            <a href="#a-propos" onClick={goAbout}>En savoir plus sur la démarche</a>
+            <span className="footer-separator" aria-hidden="true">·</span>
+          </>
+        )}
+        <a href={mentionCfg.blogUrl} target="_blank" rel="noopener noreferrer">
+          Blog {mentionCfg.marque} <span className="footer-external" aria-hidden="true">↗</span>
+        </a>
+        <span className="footer-separator" aria-hidden="true">·</span>
+        <a href={ARTICLE_URL} target="_blank" rel="noopener noreferrer">
+          Article de référence sur le modèle <span className="footer-external" aria-hidden="true">↗</span>
+        </a>
+      </div>
+
+      {/* Bloc 7 : Licence + Toggle de thème */}
+      <div className="footer-bottom">
+        <div className="footer-license">
+          Contenu sous licence{' '}
+          <a href={CC_URL} target="_blank" rel="noopener noreferrer">CC BY-NC-SA 4.0</a>
+          {' '}· © 2026 {mentionCfg.marque}
+        </div>
+        <ThemeToggle variant="labeled" />
       </div>
     </footer>
   );
