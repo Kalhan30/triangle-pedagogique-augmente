@@ -1,3 +1,4 @@
+import { Mail, ArrowRight } from 'lucide-react';
 import mentionCfg from '../config/mention-recherche-action.json';
 import { useApp } from '../contexts/AppContext.jsx';
 import ThemeToggle from './ThemeToggle.jsx';
@@ -21,7 +22,9 @@ export default function Footer() {
       {/* Bloc 1 : Identité + Badge AIA */}
       <div className="footer-identity">
         <div className="footer-profile">
-          <div className="footer-avatar" aria-hidden="true"><span>V</span></div>
+          <div className="footer-avatar">
+            <img src="/avatar-mpb.png" alt={`Portrait de ${mentionCfg.auteure}`} />
+          </div>
           <div className="footer-profile-text">
             <div className="footer-name">{mentionCfg.marque}</div>
             <div className="footer-subtitle">{mentionCfg.auteure} · Enseignante CE2 &amp; ERUN</div>
@@ -57,6 +60,25 @@ export default function Footer() {
           <span>Conforme RGPD</span>
         </div>
       </div>
+
+      {/* Bloc CTA : Participer à la recherche-action */}
+      {mentionCfg.formulaireRetourUrl && (
+        <a
+          href={mentionCfg.formulaireRetourUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="footer-feedback-cta"
+        >
+          <span className="footer-feedback-icon" aria-hidden="true">
+            <Mail size={18} strokeWidth={1.75} />
+          </span>
+          <span className="footer-feedback-text">
+            <strong>Votre regard fait avancer la recherche</strong>
+            <span>Enseignant·e, formateur·trice, cadre pédagogique ? Partagez votre retour d'usage — 2 minutes, en toute confiance.</span>
+          </span>
+          <ArrowRight size={16} strokeWidth={1.75} className="footer-feedback-arrow" aria-hidden="true" />
+        </a>
+      )}
 
       {/* Bloc 4 : Badge Artefact de recherche-action */}
       <div className="footer-research-badge">
