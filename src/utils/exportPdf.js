@@ -4,6 +4,28 @@ import { CADRE_JUIN_2025, CADRE_URL, CADRE_SOURCE_LABEL, REFERENCES_BO_PAR_NIVEA
 import { trouverExtraitProgramme } from './trouverExtraitProgramme.js';
 import mentionCfg from '../config/mention-recherche-action.json';
 
+/**
+ * Remplace les caractères Unicode non supportés par l'encodage WinAnsi
+ * de jsPDF/Helvetica par des équivalents sûrs. Sans cette étape,
+ * splitTextToSize mesure mal la largeur et le texte déborde de la zone
+ * imprimable (ou s'affiche comme "!" / carré).
+ */
+function sanitizeForPdf(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/→/g, '»')                 // flèche droite → chevron (WinAnsi 187)
+    .replace(/←/g, '«')                 // flèche gauche → chevron (WinAnsi 171)
+    .replace(/↔/g, '<->')               // flèche bidirectionnelle → ASCII
+    .replace(/[•]/g, '•')          // bullet (WinAnsi 149, OK)
+    .replace(/[–]/g, '–')          // en-dash (WinAnsi 150, OK)
+    .replace(/[—]/g, '—')          // em-dash (WinAnsi 151, OK)
+    .replace(/[‘’]/g, "'")    // apostrophes typographiques → droite
+    .replace(/[“”]/g, '"')    // guillemets anglais → droits
+    .replace(/[…]/g, '...')         // ellipsis
+    .replace(/[ ]/g, ' ')           // espace insécable → espace normal
+    .replace(/[  ]/g, ' ');    // fines → espace normal
+}
+
 const PAGE_W = 210;
 const PAGE_H = 297;
 const MARGIN_L = 15;
@@ -225,27 +247,55 @@ function drawRecommandations(ctx, diagnostic) {
   drawSectionHeading(ctx, 'Recommandations', p.accentTeal);
 
   (reco.recommandations || []).forEach((r, i) => {
+    // --- Préparation des textes (sanitization systématique) ---
+    const titreTxt = sanitizeForPdf(`${i + 1}. ${r.titre}`);
+    const descTxt = sanitizeForPdf(r.description || '');
+    const refTxt = r.referenceCadre
+      ? sanitizeForPdf(`» « ${r.referenceCadre} »`)
+      : null;
+
+    // --- Mesure en mode COHÉRENT avec le rendu ---
     ctx.pdf.setFont('helvetica', 'bold');
     ctx.pdf.setFontSize(11);
-    const titleLines = ctx.pdf.splitTextToSize(`${i + 1}. ${r.titre}`, CONTENT_W);
+    const titleLines = ctx.pdf.splitTextToSize(titreTxt, CONTENT_W);
+
     ctx.pdf.setFont('helvetica', 'normal');
     ctx.pdf.setFontSize(10);
-    const bodyLines = ctx.pdf.splitTextToSize(r.description || '', CONTENT_W);
-    const refLines = r.referenceCadre ? ctx.pdf.splitTextToSize(`→ « ${r.referenceCadre} »`, CONTENT_W - 4) : [];
-    const block = titleLines.length * 5 + 2 + bodyLines.length * 4.5 + (refLines.length ? refLines.length * 4 + 3 : 0) + 6;
-    ensureSpace(ctx, block);
+    const bodyLines = ctx.pdf.splitTextToSize(descTxt, CONTENT_W);
 
+    let refLines = [];
+    if (refTxt) {
+      ctx.pdf.setFont('helvetica', 'italic');
+      ctx.pdf.setFontSize(9);
+      refLines = ctx.pdf.splitTextToSize(refTxt, CONTENT_W - 6);
+    }
+
+    // --- Bloc minimal (titre + 2 lignes corps) : évite le grand vide en bas ---
+    // Le reste du corps et la référence peuvent basculer sur la page suivante.
+    const minBlock = titleLines.length * 5 + 2 + Math.min(bodyLines.length, 2) * 4.5;
+    ensureSpace(ctx, minBlock);
+
+    // --- Rendu du titre ---
     setText(ctx.pdf, p.accentTeal);
     ctx.pdf.setFont('helvetica', 'bold');
     ctx.pdf.setFontSize(11);
     ctx.pdf.text(titleLines, MARGIN_L, ctx.y);
     ctx.y += titleLines.length * 5 + 1;
+
+    // --- Rendu du corps ligne par ligne (permet saut de page inline) ---
     setText(ctx.pdf, p.textPrimary);
     ctx.pdf.setFont('helvetica', 'normal');
     ctx.pdf.setFontSize(10);
-    ctx.pdf.text(bodyLines, MARGIN_L, ctx.y);
-    ctx.y += bodyLines.length * 4.5 + 1;
+    bodyLines.forEach((line) => {
+      ensureSpace(ctx, 5);
+      ctx.pdf.text(line, MARGIN_L, ctx.y);
+      ctx.y += 4.5;
+    });
+    ctx.y += 1;
+
+    // --- Rendu de la référence cadre (bloc atomique) ---
     if (refLines.length) {
+      ensureSpace(ctx, refLines.length * 4 + 2);
       setText(ctx.pdf, p.accentAmber);
       ctx.pdf.setFont('helvetica', 'italic');
       ctx.pdf.setFontSize(9);
@@ -255,8 +305,12 @@ function drawRecommandations(ctx, diagnostic) {
     ctx.y += 4;
   });
 
+  // --- Encadré Point fort ---
   if (reco.pointFort) {
-    const lines = ctx.pdf.splitTextToSize(`Point fort : ${reco.pointFort}`, CONTENT_W - 8);
+    const pfTxt = sanitizeForPdf(`Point fort : ${reco.pointFort}`);
+    ctx.pdf.setFont('helvetica', 'normal');
+    ctx.pdf.setFontSize(9.5);
+    const lines = ctx.pdf.splitTextToSize(pfTxt, CONTENT_W - 8);
     const h = lines.length * 4.5 + 8;
     ensureSpace(ctx, h + 3);
     setFill(ctx.pdf, p.accentTealLight);
@@ -270,8 +324,13 @@ function drawRecommandations(ctx, diagnostic) {
     ctx.pdf.text(lines, MARGIN_L + 4, ctx.y + 5);
     ctx.y += h + 3;
   }
+
+  // --- Encadré Vigilance ---
   if (reco.pointVigilance) {
-    const lines = ctx.pdf.splitTextToSize(`Vigilance : ${reco.pointVigilance}`, CONTENT_W - 8);
+    const pvTxt = sanitizeForPdf(`Vigilance : ${reco.pointVigilance}`);
+    ctx.pdf.setFont('helvetica', 'normal');
+    ctx.pdf.setFontSize(9.5);
+    const lines = ctx.pdf.splitTextToSize(pvTxt, CONTENT_W - 8);
     const h = lines.length * 4.5 + 8;
     ensureSpace(ctx, h + 3);
     setFill(ctx.pdf, p.accentAmberLight);
@@ -294,11 +353,11 @@ function drawReferenceCadre(ctx, diagnostic) {
   if (!cadre) return;
   drawSectionHeading(ctx, 'Références institutionnelles', p.accentTeal);
 
-  const titleLines = ctx.pdf.splitTextToSize(cadre.titre, CONTENT_W - 8);
-  const corpsLines = ctx.pdf.splitTextToSize(cadre.corps, CONTENT_W - 8);
-  const principeLines = ctx.pdf.splitTextToSize(`« ${cadre.principe} »`, CONTENT_W - 8);
-  const sourceLines = ctx.pdf.splitTextToSize(`Source : ${CADRE_SOURCE_LABEL}`, CONTENT_W - 8);
-  const linkLines = ctx.pdf.splitTextToSize(CADRE_URL, CONTENT_W - 8);
+  const titleLines = ctx.pdf.splitTextToSize(sanitizeForPdf(cadre.titre), CONTENT_W - 8);
+  const corpsLines = ctx.pdf.splitTextToSize(sanitizeForPdf(cadre.corps), CONTENT_W - 8);
+  const principeLines = ctx.pdf.splitTextToSize(sanitizeForPdf(`« ${cadre.principe} »`), CONTENT_W - 8);
+  const sourceLines = ctx.pdf.splitTextToSize(sanitizeForPdf(`Source : ${CADRE_SOURCE_LABEL}`), CONTENT_W - 8);
+  const linkLines = ctx.pdf.splitTextToSize(sanitizeForPdf(CADRE_URL), CONTENT_W - 8);
   const h = titleLines.length * 5 + corpsLines.length * 4 + principeLines.length * 4 + sourceLines.length * 3.5 + linkLines.length * 3.5 + 22;
   ensureSpace(ctx, h + 4);
 
@@ -339,10 +398,10 @@ function drawReferenceProgrammes(ctx, diagnostic) {
   const extrait = trouverExtraitProgramme(niveauId, diagnostic.discipline);
 
   if (extrait) {
-    const titleLines = ctx.pdf.splitTextToSize(extrait.titre, CONTENT_W - 8);
-    const extraitLines = ctx.pdf.splitTextToSize(`« ${extrait.extrait} »`, CONTENT_W - 8);
-    const sourceLines = ctx.pdf.splitTextToSize(`Source : ${extrait.source}`, CONTENT_W - 8);
-    const linkLines = ctx.pdf.splitTextToSize(extrait.urlSource, CONTENT_W - 8);
+    const titleLines = ctx.pdf.splitTextToSize(sanitizeForPdf(extrait.titre), CONTENT_W - 8);
+    const extraitLines = ctx.pdf.splitTextToSize(sanitizeForPdf(`« ${extrait.extrait} »`), CONTENT_W - 8);
+    const sourceLines = ctx.pdf.splitTextToSize(sanitizeForPdf(`Source : ${extrait.source}`), CONTENT_W - 8);
+    const linkLines = ctx.pdf.splitTextToSize(sanitizeForPdf(extrait.urlSource), CONTENT_W - 8);
     const h = titleLines.length * 5 + extraitLines.length * 4 + sourceLines.length * 3.5 + linkLines.length * 3.5 + 18;
     ensureSpace(ctx, h + 4);
     setFill(ctx.pdf, p.accentTealLight);
@@ -380,14 +439,14 @@ function drawReferenceProgrammes(ctx, diagnostic) {
   const titre = 'Programmes officiels de référence';
   ctx.pdf.setFont('helvetica', 'bold');
   ctx.pdf.setFontSize(11);
-  const titleLines = ctx.pdf.splitTextToSize(titre, CONTENT_W - 8);
+  const titleLines = ctx.pdf.splitTextToSize(sanitizeForPdf(titre), CONTENT_W - 8);
   ctx.pdf.setFont('helvetica', 'normal');
   ctx.pdf.setFontSize(9.5);
-  const introLines = ctx.pdf.splitTextToSize(intro, CONTENT_W - 8);
-  const bosLines = bos.map((b) => ctx.pdf.splitTextToSize(`— ${b}`, CONTENT_W - 12));
-  const linkLabel = '→ Consulter les programmes officiels sur Eduscol';
-  const linkLines = ctx.pdf.splitTextToSize(linkLabel, CONTENT_W - 8);
-  const noteLines = ctx.pdf.splitTextToSize(note, CONTENT_W - 8);
+  const introLines = ctx.pdf.splitTextToSize(sanitizeForPdf(intro), CONTENT_W - 8);
+  const bosLines = bos.map((b) => ctx.pdf.splitTextToSize(sanitizeForPdf(`— ${b}`), CONTENT_W - 12));
+  const linkLabel = '» Consulter les programmes officiels sur Eduscol';
+  const linkLines = ctx.pdf.splitTextToSize(sanitizeForPdf(linkLabel), CONTENT_W - 8);
+  const noteLines = ctx.pdf.splitTextToSize(sanitizeForPdf(note), CONTENT_W - 8);
 
   const flat = bosLines.reduce((acc, arr) => acc + arr.length, 0);
   const h = titleLines.length * 5 + introLines.length * 4 + flat * 4 + linkLines.length * 4.5 + noteLines.length * 3.5 + 22;
