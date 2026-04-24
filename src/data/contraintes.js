@@ -36,38 +36,52 @@ export const CONTRAINTES_NIVEAU = {
 export const getContrainte = (niveauId) => CONTRAINTES_NIVEAU[niveauId];
 
 // P2IA — Partenariat d'innovation en intelligence artificielle (MEN)
-// Deux vagues distinctes : Cycle 2 (déployés depuis 2020) et Cycle 3 (en expérimentation
-// depuis janvier 2026). Sources : Eduscol, Primàbord, DRANE Occitanie, MaProfBranchee.
+// Deux vagues distinctes : Cycle 2 (déployés depuis 2020, partenariat terminé le 31/08/2025)
+// et Cycle 3 (en expérimentation depuis janvier 2026).
+// Sources :
+//  - Eduscol Cycle 2 : https://eduscol.education.fr/1911/partenariat-d-innovation-et-intelligence-artificielle-p2ia
+//  - Eduscol Cycle 3 : https://eduscol.education.fr/4289/l-intelligence-artificielle-au-service-des-apprentissages-au-cycle-3
+//  - FAQ Lalilo officielle (fin P2IA 31/08/2025)
+//  - DRANE Nice (prolongation Smart Enseigno jusqu'en 2027)
+//  - Article MaProfBranchee /p2ia/ (mars 2026) — source interne
 
-// P2IA Cycle 2 — CP, CE1, CE2 — déployés depuis 2020
+// P2IA Cycle 2 — CP, CE1, CE2 — lancé en 2019-2020, déployé à partir de septembre 2021,
+// partenariat officiellement terminé le 31 août 2025. Les cinq services continuent d'exister
+// selon des modèles économiques différents (statut : 'payant' ou 'gratuit' post-partenariat).
 export const P2IA_CYCLE_2 = [
   {
     nom: 'Lalilo',
     discipline: 'Français',
+    statut: 'payant',
     description: "Parcours d'apprentissage personnalisés en lecture, différenciation par l'IA pour les élèves de cycle 2.",
-    precision: "Payant depuis septembre 2025 (19 à 49 €/an selon la classe). Version basique gratuite limitée. Accès gratuit maintenu dans les Territoires Numériques Éducatifs.",
+    precision: "Devenu payant depuis septembre 2025 (19 à 49 €/an selon la taille de classe). Gratuité maintenue dans les départements TNE via Canopé.",
   },
   {
     nom: 'Navi',
     discipline: 'Français',
+    statut: 'gratuit',
     description: "Assistant pour la remédiation et la mémorisation de compétences de lecture et d'écriture au cycle 2. Parcours d'apprentissage personnalisés et adaptatifs.",
   },
   {
     nom: "Adaptiv'Math",
     discipline: 'Mathématiques',
+    statut: 'gratuit',
     description: "Personnalisation des parcours d'apprentissage mathématiques par l'IA adaptative.",
-    precision: "Gratuit pour 2025-2026 via EvidenceB, passage au payant prévu en septembre 2026.",
+    precision: "Accès gratuit prolongé pour 2025-2026 (EvidenceB).",
   },
   {
     nom: 'Mathia',
     discipline: 'Mathématiques',
+    statut: 'gratuit',
     description: "Dispositif d'accompagnement par dialogue naturel et représentation holographique. L'élève apprend en parlant, en essayant et en s'amusant avec un robot sympathique.",
-    precision: "Mathia reste actif pour le cycle 2 et a été sélectionné pour le cycle 3 sous le nom Mathia-C3.",
+    precision: "Toujours actif en Cycle 2, et sélectionné pour le P2IA Cycle 3 sous le nom Mathia-C3.",
   },
   {
     nom: 'Smart Enseigno',
     discipline: 'Mathématiques',
+    statut: 'gratuit',
     description: "Assistance numérique basée sur l'IA pour la personnalisation des apprentissages et des acquisitions notionnelles.",
+    precision: "Accès gratuit prolongé jusqu'en 2027.",
   },
 ];
 

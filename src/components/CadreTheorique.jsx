@@ -6,11 +6,11 @@ import { P2IA_CYCLE_2, P2IA_CYCLE_3, P2IA_URL_EDUSCOL_CYCLE_2, P2IA_URL_EDUSCOL_
 // (textes exacts du patch correctif). Les descriptions Eduscol complètes
 // restent dans contraintes.js pour l'onglet Explorer.
 const P2IA_SHORT = {
-  Lalilo: 'parcours personnalisés en lecture',
-  Navi: 'remédiation et mémorisation en lecture-écriture',
-  "Adaptiv'Math": 'personnalisation des parcours',
-  Mathia: 'dialogue naturel avec un robot-compagnon',
-  'Smart Enseigno': 'assistance à la personnalisation',
+  Lalilo: 'Parcours personnalisés en lecture.',
+  Navi: 'Remédiation et mémorisation en lecture-écriture.',
+  "Adaptiv'Math": 'Personnalisation des parcours.',
+  Mathia: 'Dialogue naturel avec un robot-compagnon.',
+  'Smart Enseigno': 'Assistance à la personnalisation.',
   Expliq: "apprentissage par l'explicitation (l'élève tutore des avatars pour renforcer sa propre maîtrise)",
   Edumalin: "stratégies d'apprentissage avec pas-à-pas méthodologique",
   'Mathia-C3': 'exploration par manipulation et visualisation 3D',
@@ -205,12 +205,51 @@ function Section2Contenu() {
         </p>
         <p className="mt-3"><strong>Deux vagues de P2IA coexistent aujourd'hui :</strong></p>
 
-        <p className="mt-2 text-[13px] font-semibold">P2IA Cycle 2 (déployés depuis 2020, pour CP-CE1-CE2) :</p>
-        <ul className="list-none space-y-1 mt-1 pl-0">
-          {P2IA_CYCLE_2.map((svc) => (
+        <p className="mt-3 text-[13px] font-semibold">P2IA Cycle 2 — Première vague (CP-CE1-CE2)</p>
+        <p className="mt-1 text-[12px] italic leading-snug">
+          Le P2IA Cycle 2, lancé en 2019-2020 et déployé nationalement à partir de septembre 2021, s'est officiellement terminé le 31 août 2025. Les cinq services continuent d'exister mais selon des modèles économiques différents :
+        </p>
+
+        <p className="mt-2 text-[12px] font-semibold">Français :</p>
+        <ul className="list-none space-y-1.5 mt-1 pl-0">
+          {P2IA_CYCLE_2.filter((s) => s.discipline === 'Français').map((svc) => (
             <li key={svc.nom} className="flex gap-2 text-sm">
-              <span className="text-brand-violet-primary flex-shrink-0 mt-0.5 font-semibold" aria-hidden="true">▸</span>
-              <span><strong>{svc.nom}</strong> — {svc.discipline} : {shortDescription(svc)}</span>
+              <span
+                aria-label={svc.statut === 'payant' ? 'Service payant' : 'Service gratuit'}
+                className="flex-shrink-0 mt-0.5 leading-none"
+              >
+                {svc.statut === 'payant' ? '🔴' : '🟢'}
+              </span>
+              <span>
+                <strong>{svc.nom}</strong> — {shortDescription(svc)}
+                {svc.precision && (
+                  <span className="block text-[11px] italic mt-0.5 text-text-secondary leading-snug">
+                    {svc.statut === 'payant' ? '⚠ ' : ''}{svc.precision}
+                  </span>
+                )}
+              </span>
+            </li>
+          ))}
+        </ul>
+
+        <p className="mt-2 text-[12px] font-semibold">Mathématiques :</p>
+        <ul className="list-none space-y-1.5 mt-1 pl-0">
+          {P2IA_CYCLE_2.filter((s) => s.discipline === 'Mathématiques').map((svc) => (
+            <li key={svc.nom} className="flex gap-2 text-sm">
+              <span
+                aria-label={svc.statut === 'payant' ? 'Service payant' : 'Service gratuit'}
+                className="flex-shrink-0 mt-0.5 leading-none"
+              >
+                {svc.statut === 'payant' ? '🔴' : '🟢'}
+              </span>
+              <span>
+                <strong>{svc.nom}</strong> — {shortDescription(svc)}
+                {svc.precision && (
+                  <span className="block text-[11px] italic mt-0.5 text-text-secondary leading-snug">
+                    {svc.statut === 'payant' ? '⚠ ' : ''}{svc.precision}
+                  </span>
+                )}
+              </span>
             </li>
           ))}
         </ul>
