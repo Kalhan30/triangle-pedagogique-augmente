@@ -106,7 +106,7 @@ function Section1Contenu() {
           L'IA est strictement positionnée comme une aide à la décision et un médiateur. L'enseignant demeure le concepteur, le maître d'œuvre et le validateur final de l'acte pédagogique. L'IA n'a vocation ni à remplacer la relation humaine, ni à générer une pédagogie automatique, ni à se substituer au jugement éthique et didactique du praticien.
         </p>
         <p>
-          Cette position s'appuie sur le cadre d'usage officiel publié par le Ministère de l'Éducation nationale en juin 2025, qui définit quatre niveaux d'intégration progressive selon le degré de scolarité, tout en rappelant que la responsabilité pédagogique demeure en toutes circonstances celle de l'enseignant.
+          Cette position s'appuie sur le cadre d'usage officiel publié par le Ministère de l'Éducation nationale en juin 2025, qui pose des règles distinctes selon le degré de scolarité — notamment l'interdiction de manipulation directe d'IA générative par les élèves avant la 4e — tout en rappelant que la responsabilité pédagogique demeure en toutes circonstances celle de l'enseignant.
         </p>
       </Encadre>
 
@@ -313,7 +313,7 @@ function Section3Contenu() {
   return (
     <div className="space-y-4">
       <p className="text-sm leading-[1.6] text-text">
-        Le triangle de Houssaye a été enrichi par plusieurs didacticiens. L'une des propositions les plus fécondes est celle de François-Marie Gérard et Richard Faerber, qui ajoute un quatrième pôle au modèle : le Groupe. Le triangle devient tétraèdre, et la relation pédagogique bidimensionnelle devient une structure tridimensionnelle qui prend en compte la dimension collective de la classe.
+        Le triangle de Houssaye a été enrichi par plusieurs didacticiens. L'une des propositions les plus fécondes est celle de Richard Faerber (2002, 2004), qui ajoute un quatrième pôle au modèle : le Groupe. Développé initialement dans le cadre de la plateforme d'apprentissage collaboratif à distance ACOLAD, ce tétraèdre étend le triangle pédagogique en prenant en compte la dimension collective de la classe.
       </p>
 
       <h3 className="text-base font-semibold text-text mt-6 mb-2">L'ajout du pôle Groupe</h3>
