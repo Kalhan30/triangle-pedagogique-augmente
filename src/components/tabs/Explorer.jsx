@@ -160,7 +160,7 @@ function P2IASection({ niveauId }) {
   const intro = isPrimaire
     ? (
       <>
-        Les P2IA (Partenariat d'innovation en intelligence artificielle) sont des <strong>services numériques d'assistance et de recommandation</strong> développés par le Ministère de l'Éducation nationale. À la différence des IA génératives ouvertes, ils peuvent être utilisés par les élèves dans un cadre pédagogique strict, sous supervision enseignante. <strong>Cinq services sont déployés depuis 2020</strong> pour le cycle 2 (CP, CE1, CE2).
+        Les P2IA (Partenariat d'innovation en intelligence artificielle) sont des <strong>services numériques d'assistance et de recommandation</strong> issus d'un <strong>marché public innovant</strong> porté par le Ministère de l'Éducation nationale, le Secrétariat général pour l'investissement (France 2030) et la Banque des Territoires, développés par des entreprises EdTech en collaboration avec des laboratoires de recherche. À la différence des IA génératives ouvertes, ils peuvent être utilisés par les élèves dans un cadre pédagogique strict, sous supervision enseignante. <strong>Cinq services sont déployés depuis 2020</strong> pour le cycle 2 (CP, CE1, CE2).
       </>
     )
     : (

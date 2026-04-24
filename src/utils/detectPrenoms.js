@@ -63,8 +63,9 @@ const LISTE_NOIRE = new Set([
 
   // Outils, concepts IA, acronymes
   'Assistant', 'ChatGPT', 'Claude', 'Copilot', 'Eduscol', 'Gemini', 'IA',
-  'Intelligence', 'MEN', 'Numérique', 'Numerique', 'P2IA', 'MATHIA', 'EXPLIQ',
-  'EDUMALIN', 'ORIGAMIA', 'CARDS', 'yLANG', 'TPACK', 'SAMR', 'AIA', 'RGPD',
+  'Intelligence', 'MEN', 'Numérique', 'Numerique', 'P2IA', 'Lalilo', 'LALILO',
+  'Navi', 'NAVI', 'MATHIA', 'Mathia', 'EXPLIQ', 'Expliq', 'EDUMALIN', 'Edumalin',
+  'ORIGAMIA', 'Origamia', 'CARDS', 'yLANG', 'TPACK', 'SAMR', 'AIA', 'RGPD',
   'CNIL', 'DRANE', 'ERUN', 'DNB', 'Bac', 'MaProfBranchee',
 
   // Lieux et noms propres pédagogiques fréquents (éviter d'alerter sur Houssaye, Vygotsky…)

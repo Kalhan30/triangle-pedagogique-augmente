@@ -28,7 +28,7 @@ export const QUESTIONS = [
     axe: 'eleveSavoirManipulation',
     contrainte: 'manipulation',
     enonce: "Dans cette séance, l'élève utilise-t-il lui-même une IA générative ouverte (ChatGPT, Gemini, Claude…) ?",
-    aide: "Cette question ne concerne pas les P2IA (assistants institutionnels validés par le MEN comme MATHIA). Une question dédiée est prévue pour le primaire.",
+    aide: "Cette question ne concerne pas les P2IA (assistants institutionnels cadrés par le MEN : Lalilo, Navi, Adaptiv'Math, Mathia, Smart Enseigno pour le cycle 2 ; Expliq, Edumalin, Mathia-C3, Origamia, Cards, yLANG pour le cycle 3 en expérimentation). Une question dédiée est prévue pour le primaire et la 6ᵉ.",
     choix: [
       { index: 1, libelle: "L'élève ne touche aucune IA générative pendant cette séance", valeur: 10 },
       { index: 2, libelle: "L'élève observe une démonstration d'IA générative que je fais devant lui", valeur: 30 },

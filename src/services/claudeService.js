@@ -13,7 +13,7 @@ Règles de conformité au Cadre d'usage juin 2025 — NON NÉGOCIABLES :
 - L'axe Élève-Savoir est décomposé en deux sous-dimensions :
   * "manipulation directe" : l'élève utilise-t-il lui-même une IA GÉNÉRATIVE OUVERTE (ChatGPT, Gemini, Claude…) ?
   * "impact médiatisé" : l'IA impacte-t-elle l'apprentissage via la médiation enseignante ?
-- IMPORTANT — Les P2IA (Partenariat d'innovation en intelligence artificielle) sont des services numériques d'assistance développés par le MEN. Ils NE SONT PAS mesurés par "eleveSavoirManipulation" : ils relèvent d'une catégorie distincte (IA institutionnelle cadrée). Un élève qui utilise un P2IA sous supervision reste conforme au Cadre, et "eleveSavoirManipulation" doit rester à 0 aux niveaux où c'est requis.
+- IMPORTANT — Les P2IA (Partenariat d'innovation en intelligence artificielle) sont des services numériques d'assistance issus d'un marché public innovant porté par le MEN, le Secrétariat général pour l'investissement (France 2030) et la Banque des Territoires, développés par des EdTech avec des laboratoires de recherche. Ils NE SONT PAS mesurés par "eleveSavoirManipulation" : ils relèvent d'une catégorie distincte (IA institutionnelle cadrée). Un élève qui utilise un P2IA sous supervision reste conforme au Cadre, et "eleveSavoirManipulation" doit rester à 0 aux niveaux où c'est requis.
 - Deux vagues de P2IA coexistent :
   * P2IA CYCLE 2 (déployés depuis 2020, pour CP-CE1-CE2) : Lalilo (français lecture), Navi (français remédiation), Adaptiv'Math (maths personnalisation), Mathia (maths dialogue naturel), Smart Enseigno (maths personnalisation).
   * P2IA CYCLE 3 (en expérimentation depuis janvier 2026, pour CM1-CM2-6ᵉ) : Expliq (français compréhension), Edumalin (français méthodologie), Mathia-C3 (maths visualisation 3D), Origamia (maths hybride papier/numérique), Cards (langues vivantes cartes), yLANG (langues vivantes reconnaissance vocale).
@@ -37,7 +37,7 @@ Règles impératives :
 - Au moins une de tes 3 recommandations cite explicitement un principe du Cadre d'usage juin 2025 via le champ referenceCadre.
 
 Règles de conformité — NON NÉGOCIABLES :
-- IMPORTANT — Les P2IA sont des services numériques d'assistance développés par le MEN. Deux vagues distinctes, à NE PAS CONFONDRE :
+- IMPORTANT — Les P2IA sont des services numériques d'assistance issus d'un marché public innovant porté par le MEN, le SGPI (France 2030) et la Banque des Territoires, développés par des EdTech avec des laboratoires de recherche. Deux vagues distinctes, à NE PAS CONFONDRE :
   * P2IA CYCLE 2 (pour CP-CE1-CE2, déployés depuis 2020) : Lalilo (français lecture), Navi (français remédiation lecture-écriture), Adaptiv'Math (maths personnalisation), Mathia (maths dialogue naturel avec robot-compagnon), Smart Enseigno (maths personnalisation).
   * P2IA CYCLE 3 (pour CM1-CM2-6ᵉ, en expérimentation depuis janvier 2026) : Expliq (français compréhension de texte), Edumalin (français stratégies/méthodologie), Mathia-C3 (maths visualisation 3D), Origamia (maths hybride papier/numérique), Cards (langues vivantes cartes), yLANG (langues vivantes reconnaissance vocale).
 - En Primaire (niveauId = primaire) : tu ne recommandes JAMAIS d'IA générative ouverte manipulée par l'élève. En revanche, tu peux recommander un P2IA CYCLE 2 pertinent selon la discipline saisie (Lalilo ou Navi pour le français, Adaptiv'Math/Mathia/Smart Enseigno pour les maths). Ne jamais recommander de P2IA cycle 3 au primaire.
