@@ -156,7 +156,7 @@ function ScenarioDetail({ scenario, ethicsValue }) {
         <blockquote className="mt-4 italic text-sm text-text-muted border-l-2 border-border-subtle pl-3">« {scenario.citation} »</blockquote>
       )}
       {scenario.referenceCadre && (
-        <div className="mt-4 p-3 rounded-lg bg-background-secondary border border-border-subtle">
+        <div className="mt-4 p-3 rounded-lg bg-background-secondary border border-border-subtle text-center">
           <p className="text-[10px] uppercase tracking-wider font-semibold text-text-muted mb-1">Référence cadre</p>
           <p className="text-sm font-semibold text-brand-amber-primary mb-1">{scenario.referenceCadre.principe}</p>
           <p className="text-xs italic text-text-secondary">« {scenario.referenceCadre.citation} »</p>
