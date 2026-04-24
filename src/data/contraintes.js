@@ -99,13 +99,13 @@ export const P2IA_CYCLE_3 = [
   },
   {
     nom: 'Cards',
-    discipline: 'Langues vivantes',
+    discipline: 'Langues vivantes (anglais, allemand, espagnol, italien)',
     description: "Jeu de cartes de compétences à collectionner pour progresser en langues. L'élève s'entraîne, relève des défis linguistiques et affronte des bots à l'aide des cartes obtenues.",
     realisePar: 'Beneylu',
   },
   {
     nom: 'yLANG',
-    discipline: 'Langues vivantes',
+    discipline: 'Langues vivantes (anglais, allemand, espagnol, italien)',
     description: "Différenciation des apprentissages grâce à la reconnaissance vocale, améliorant l'expression orale et la prononciation. Bot conversationnel pour accompagner l'enseignant.",
     realisePar: 'Neuronys Nolej',
   },

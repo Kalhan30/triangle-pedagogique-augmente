@@ -11,7 +11,7 @@ const P2IA_SHORT = {
   "Adaptiv'Math": 'personnalisation des parcours',
   Mathia: 'dialogue naturel avec un robot-compagnon',
   'Smart Enseigno': 'assistance à la personnalisation',
-  Expliq: 'compréhension de texte par apprentissage interactif',
+  Expliq: "apprentissage par l'explicitation (l'élève tutore des avatars pour renforcer sa propre maîtrise)",
   Edumalin: "stratégies d'apprentissage avec pas-à-pas méthodologique",
   'Mathia-C3': 'exploration par manipulation et visualisation 3D',
   Origamia: 'hybride papier/numérique, résolution de problèmes',
@@ -198,7 +198,7 @@ function Section2Contenu() {
       <p className="text-sm font-semibold text-text mt-4 mb-1">L'exception institutionnelle — les P2IA</p>
       <Encadre accent="violet">
         <p>
-          Le Cadre juin 2025 distingue clairement deux natures d'IA, pas deux intensités sur une même échelle. Les <strong>P2IA</strong> (Partenariat d'innovation en intelligence artificielle) sont des services numériques d'assistance développés par le Ministère de l'Éducation nationale pour accompagner les apprentissages fondamentaux. À la différence des IA génératives ouvertes, ils <strong>peuvent être utilisés par les élèves</strong> dans un cadre pédagogique strict, sous supervision enseignante.
+          Le Cadre juin 2025 distingue clairement deux natures d'IA, pas deux intensités sur une même échelle. Les <strong>P2IA</strong> (Partenariat d'innovation en intelligence artificielle) sont des services numériques d'assistance issus d'un <strong>marché public innovant</strong> porté par le Ministère de l'Éducation nationale, le Secrétariat général pour l'investissement (France 2030) et la Banque des Territoires, développés par des entreprises EdTech en collaboration avec des laboratoires de recherche. À la différence des IA génératives ouvertes, ils <strong>peuvent être utilisés par les élèves</strong> dans un cadre pédagogique strict, sous supervision enseignante.
         </p>
         <p>
           Ce sont des assistants cadrés : pas de génération libre, pas de dérive conversationnelle, pas de données personnelles traitées hors RGPD. Leur interface est prédictible, leur périmètre disciplinaire précis, leur cadre juridique et éthique garanti par le ministère.
@@ -215,7 +215,7 @@ function Section2Contenu() {
           ))}
         </ul>
 
-        <p className="mt-3 text-[13px] font-semibold">P2IA Cycle 3 (en expérimentation depuis janvier 2026, pour CM1-CM2-6ᵉ) :</p>
+        <p className="mt-3 text-[13px] font-semibold">P2IA Cycle 3 (en expérimentation depuis janvier 2026, pour CM1-CM2-6ᵉ, dans des classes volontaires sélectionnées) :</p>
         <ul className="list-none space-y-1 mt-1 pl-0">
           {P2IA_CYCLE_3.map((svc) => (
             <li key={svc.nom} className="flex gap-2 text-sm">
