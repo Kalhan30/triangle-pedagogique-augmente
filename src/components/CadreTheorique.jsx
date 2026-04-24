@@ -302,7 +302,7 @@ function Section2Contenu() {
           <strong>Performance immédiate ≠ apprentissage durable</strong> : Robert Bjork a montré dès les années 1990 que certaines difficultés d'apprentissage (<em>desirable difficulties</em>) sont nécessaires à la consolidation mnésique. Un outil qui réduit l'effort peut améliorer la performance visible tout en détériorant la rétention à long terme.
         </p>
         <p>
-          <strong>Déchargement cognitif</strong> : des études récentes établissent une corrélation négative entre l'usage fréquent de l'IA générative et les capacités de pensée critique, le déchargement cognitif étant identifié comme variable médiatrice.
+          <strong>Déchargement cognitif</strong> : des études récentes établissent une corrélation négative entre l'usage fréquent de l'IA générative et les capacités de pensée critique, le déchargement cognitif étant identifié comme variable médiatrice (Gerlich, 2025).
         </p>
       </Encadre>
     </div>
@@ -322,7 +322,7 @@ function Section3Contenu() {
           Le groupe n'est pas simplement la somme des élèves individuels. C'est une entité propre, avec ses dynamiques, ses effets de pair à pair, ses régulations sociales implicites. Négliger le groupe revient à penser l'enseignement comme une série de relations duelles alors qu'il est aussi un fait collectif.
         </p>
         <p>
-          En intégrant le pôle Groupe, le tétraèdre de Faerber fait apparaître six relations au lieu de trois : Enseignant-Savoir, Enseignant-Élève, Élève-Savoir, Enseignant-Groupe, Élève-Groupe, Groupe-Savoir. Chacune de ces relations peut être éclairée par la question de l'intégration de l'IA.
+          En intégrant le pôle Groupe, le tétraèdre de Faerber fait apparaître six relations au lieu de trois : Enseignant-Savoir, Enseignant-Élève, Élève-Savoir, Enseignant-Groupe, Élève-Groupe, Groupe-Savoir. Il identifie également trois nouveaux processus spécifiques à la dimension collective — faciliter, partager, participer — qui s'ajoutent aux processus houssaysiens d'enseigner, d'apprendre et de former. Chacune de ces relations peut être éclairée par la question de l'intégration de l'IA.
         </p>
       </Encadre>
 
@@ -375,7 +375,7 @@ function Section4Contenu() {
           Développé par Mishra et Koehler en 2006, TPACK analyse l'intégration du numérique à l'intersection de trois types de connaissances que tout enseignant mobilise : les savoirs disciplinaires (ce qui est enseigné), les savoirs pédagogiques (comment enseigner), et les savoirs technologiques (quels outils utiliser). La compétence professionnelle émerge à l'intersection de ces trois cercles.
         </p>
         <p>
-          Une variante récente, <strong>I-TPACK</strong> (<em>Intelligent-TPACK</em>, Celik 2023), étend le modèle en y intégrant explicitement la dimension éthique de l'IA et les compétences de validation, d'ingénierie de prompts, de collaboration humain-IA.
+          Une extension du modèle, <strong>I-TPACK</strong> (<em>Intelligent-TPACK</em>, Celik 2023), y intègre explicitement la dimension éthique de l'IA (fondée sur quatre critères : responsabilité, transparence, équité, inclusivité) et les compétences de validation des décisions automatisées.
         </p>
         <p>
           Lu au prisme du triangle augmenté : l'axe Enseigner mobilise principalement la TPK (Technological Pedagogical Knowledge) et la TCK (Technological Content Knowledge). L'axe Apprendre, quand l'IA devient partenaire, mobilise aussi une forme de TPACK chez l'élève lui-même, qui doit apprendre à situer l'outil dans sa discipline et dans sa stratégie d'apprentissage.
