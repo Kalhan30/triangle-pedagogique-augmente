@@ -5,7 +5,8 @@ import ThemeToggle from './ThemeToggle.jsx';
 
 const ARTICLE_URL = 'https://maprofbranchee.fr/le-triangle-pedagogique-augmente-par-lia-une-nouvelle-grammaire-de-lapprentissage/';
 const AIA_URL = 'https://maprofbranchee.fr/ia-en-education/';
-const CC_URL = 'https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr';
+const CC_URL = 'https://creativecommons.org/licenses/by-sa/4.0/deed.fr';
+const MIT_URL = 'https://opensource.org/licenses/MIT';
 
 export default function Footer() {
   const { appScreen, setAppScreen } = useApp();
@@ -115,9 +116,18 @@ export default function Footer() {
       {/* Bloc 7 : Licence + Toggle de thème */}
       <div className="footer-bottom">
         <div className="footer-license">
-          Contenu sous licence{' '}
-          <a href={CC_URL} target="_blank" rel="noopener noreferrer">CC BY-NC-SA 4.0</a>
-          {' '}· © 2026 {mentionCfg.marque}
+          Contenus sous licence{' '}
+          <a href={CC_URL} target="_blank" rel="noopener noreferrer">CC BY-SA 4.0</a>
+          {' · '}
+          code sous{' '}
+          <a href={MIT_URL} target="_blank" rel="noopener noreferrer">MIT</a>
+          {' · '}
+          {onAbout ? (
+            <span>Marque réservée</span>
+          ) : (
+            <a href="#a-propos" onClick={goAbout}>Marque réservée</a>
+          )}
+          {' · © 2026 '}{mentionCfg.marque}
         </div>
         <ThemeToggle variant="labeled" />
       </div>

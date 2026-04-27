@@ -149,6 +149,81 @@ export default function APropos() {
         </section>
 
         <section>
+          <h2 className="text-[22px] font-semibold text-brand-teal-primary mt-10 mb-4">Licences et conditions de réutilisation</h2>
+          <p className="text-sm text-text leading-[1.7] mb-4">
+            Cette application est un <strong>artefact de recherche-action</strong> dont
+            la finalité est la diffusion vertueuse auprès de la communauté
+            enseignante. Une <strong>triple licence</strong> distingue trois
+            périmètres :
+          </p>
+
+          <div className="grid md:grid-cols-3 gap-4 my-6">
+            <div className="p-4 rounded-lg border border-border-subtle bg-background-elevated">
+              <div className="text-xs uppercase tracking-wide text-text-muted mb-1">Contenus pédagogiques</div>
+              <div className="font-semibold text-brand-teal-primary mb-2">CC BY-SA 4.0</div>
+              <p className="text-xs text-text-emphasized leading-relaxed">
+                Théorisation, schémas, textes des onglets, scénarios, questionnaires, fiche PDF.
+                Réutilisation libre y compris commerciale, avec attribution et partage dans les mêmes conditions.
+              </p>
+              <a
+                href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 text-xs text-brand-teal-primary hover:underline mt-2"
+              >
+                Voir la licence <ExternalLink size={11} />
+              </a>
+            </div>
+
+            <div className="p-4 rounded-lg border border-border-subtle bg-background-elevated">
+              <div className="text-xs uppercase tracking-wide text-text-muted mb-1">Code source</div>
+              <div className="font-semibold text-brand-violet-primary mb-2">MIT</div>
+              <p className="text-xs text-text-emphasized leading-relaxed">
+                Application React / Vite / Tailwind. Réutilisation libre,
+                y compris pour intégration dans des plateformes éducatives ou
+                des forks adaptés à d'autres contextes académiques.
+              </p>
+              <a
+                href="https://opensource.org/licenses/MIT"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 text-xs text-brand-violet-primary hover:underline mt-2"
+              >
+                Voir la licence <ExternalLink size={11} />
+              </a>
+            </div>
+
+            <div className="p-4 rounded-lg border border-border-subtle bg-background-elevated">
+              <div className="text-xs uppercase tracking-wide text-text-muted mb-1">Marque & identité</div>
+              <div className="font-semibold text-brand-amber-primary mb-2">Tous droits réservés</div>
+              <p className="text-xs text-text-emphasized leading-relaxed">
+                Le nom <em>{mentionCfg.marque}</em>, le logo, l'avatar de
+                l'auteure et l'identité visuelle ne sont pas couverts par
+                les licences ouvertes ci-contre.
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-6 p-4 rounded-lg bg-brand-teal-light/30 border-l-4 border-brand-teal-primary">
+            <p className="text-sm text-text leading-[1.7]">
+              <strong>Pourquoi pas de clause "NC" (Non Commercial) ?</strong>{' '}
+              La notion de "commercial" est juridiquement floue et bloque en
+              pratique des usages institutionnels vertueux (formation
+              continue, manuels scolaires, déploiement académique avec
+              frais). La clause <em>SA</em> (Partage dans les Mêmes
+              Conditions) suffit à garantir que tout dérivé reste libre.
+            </p>
+          </div>
+
+          <h3 className="text-base font-semibold text-text mt-8 mb-3">Modèle d'attribution</h3>
+          <div className="p-4 rounded-lg bg-background-elevated border border-border-subtle font-mono text-xs text-text-emphasized leading-relaxed">
+            Le Scolan Nguyen, V. (2026). Triangle Pédagogique Augmenté
+            [Application web]. MaProfBranchee.<br />
+            https://triangle.maprofbranchee.fr — CC BY-SA 4.0.
+          </div>
+        </section>
+
+        <section>
           <h2 className="text-[22px] font-semibold text-brand-teal-primary mt-10 mb-4">Version et crédits</h2>
           <div className="text-sm text-text leading-[1.8] space-y-1">
             <p>Version actuelle : {mentionCfg.version}</p>

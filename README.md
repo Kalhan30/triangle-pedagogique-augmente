@@ -110,4 +110,41 @@ Liste des critères d'acceptation et leur statut :
 - [x] Dark mode intégral
 - [x] Aucune donnée élève identifiante stockée (détection prénom + anonymisation par Claude)
 - [x] Responsive 375px → 1920px (mobile-first Tailwind)
+
+## Licences et réutilisation
+
+Ce projet utilise une **triple licence** différenciée par périmètre :
+
+| Périmètre | Licence | Fichier |
+|---|---|---|
+| Code source (JS/JSX/CSS/HTML/config) | **MIT** | [LICENSE](./LICENSE) |
+| Contenus pédagogiques, schémas, textes | **CC BY-SA 4.0** | [LICENSE-CONTENT.md](./LICENSE-CONTENT.md) |
+| Marque, avatar, identité visuelle | **Tous droits réservés** | [NOTICE.md](./NOTICE.md) |
+
+### Pourquoi pas la clause NC ?
+
+Cette application est un **artefact de recherche-action** dont la
+finalité est la diffusion vertueuse auprès de la communauté
+enseignante. La clause "Non Commercial" (NC) bloquerait en pratique
+des usages institutionnels légitimes (formation continue rémunérée,
+intégration dans des manuels scolaires certifiés, déploiement
+académique avec frais), tout en n'apportant qu'une protection
+théorique faible. La clause **SA** (Partage dans les Mêmes
+Conditions) suffit à garantir que tout dérivé reste libre.
+
+Voir l'argumentaire complet d'Arnaud Champollion sur les licences
+ouvertes en éducation pour les références théoriques de ce choix.
+
+### Citer ce travail
+
+```bibtex
+@misc{lescolannguyen2026triangle,
+  author = {Le Scolan Nguyen, Vanessa},
+  title = {Triangle Pédagogique Augmenté},
+  year = {2026},
+  publisher = {MaProfBranchee},
+  url = {https://triangle.maprofbranchee.fr},
+  note = {Application web sous licence CC BY-SA 4.0 (contenus) et MIT (code)}
+}
 ```
+
