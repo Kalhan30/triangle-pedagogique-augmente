@@ -15,10 +15,10 @@ const VERTEX_ICONS = {
 };
 
 function strokeConfig(activation) {
-  if (activation < 20) return { width: 1, opacity: 0.25 };
-  if (activation < 50) return { width: 2, opacity: 0.5 };
-  if (activation < 80) return { width: 3, opacity: 0.75 };
-  return { width: 4, opacity: 1 };
+  if (activation < 20) return { width: 2, opacity: 0.40, glow: false };
+  if (activation < 50) return { width: 4, opacity: 0.65, glow: false };
+  if (activation < 80) return { width: 6, opacity: 0.85, glow: true };
+  return { width: 8, opacity: 1.00, glow: true };
 }
 
 export default function Triangle({
@@ -28,6 +28,7 @@ export default function Triangle({
   onSelectVertex,
   onSelectAxis,
   ethicsValue = 0,
+  showPositioning = false,
 }) {
   const haloColor = useMemo(() => getZoneEthique(ethicsValue).color, [ethicsValue]);
   const haloOpacity = 0.1 + (ethicsValue / 100) * 0.8;
@@ -39,6 +40,42 @@ export default function Triangle({
   ];
 
   const trianglePath = `M ${POSITIONS.enseignant.x} ${POSITIONS.enseignant.y} L ${POSITIONS.eleve.x} ${POSITIONS.eleve.y} L ${POSITIONS.savoir.x} ${POSITIONS.savoir.y} Z`;
+
+  const positionMarker = useMemo(() => {
+    if (!showPositioning) return null;
+
+    const w_ES = Math.max(0, axes.enseignantSavoir || 0);
+    const w_EE = Math.max(0, axes.enseignantEleve || 0);
+    const w_LS = Math.max(0, axes.eleveSavoir || 0);
+    const W = w_ES + w_EE + w_LS;
+
+    const M_ES = {
+      x: (POSITIONS.enseignant.x + POSITIONS.savoir.x) / 2,
+      y: (POSITIONS.enseignant.y + POSITIONS.savoir.y) / 2,
+    };
+    const M_EE = {
+      x: (POSITIONS.enseignant.x + POSITIONS.eleve.x) / 2,
+      y: (POSITIONS.enseignant.y + POSITIONS.eleve.y) / 2,
+    };
+    const M_LS = {
+      x: (POSITIONS.eleve.x + POSITIONS.savoir.x) / 2,
+      y: (POSITIONS.eleve.y + POSITIONS.savoir.y) / 2,
+    };
+
+    if (W === 0) {
+      return {
+        x: (POSITIONS.enseignant.x + POSITIONS.eleve.x + POSITIONS.savoir.x) / 3,
+        y: (POSITIONS.enseignant.y + POSITIONS.eleve.y + POSITIONS.savoir.y) / 3,
+      };
+    }
+
+    return {
+      x: (w_ES * M_ES.x + w_EE * M_EE.x + w_LS * M_LS.x) / W,
+      y: (w_ES * M_ES.y + w_EE * M_EE.y + w_LS * M_LS.y) / W,
+    };
+  }, [showPositioning, axes.enseignantSavoir, axes.enseignantEleve, axes.eleveSavoir]);
+
+  const zoneEthique = useMemo(() => getZoneEthique(ethicsValue), [ethicsValue]);
 
   return (
     <svg viewBox="0 0 700 510" className="w-full h-auto select-none" style={{ maxWidth: 680 }} role="img" aria-label="Triangle pédagogique interactif">
@@ -54,7 +91,7 @@ export default function Triangle({
 
       {axisEdges.map((edge) => {
         const axisMeta = AXES_META[edge.id];
-        const { width, opacity } = strokeConfig(edge.activation);
+        const { width, opacity, glow } = strokeConfig(edge.activation);
         const isSelected = selectedAxis === edge.id;
         const p1 = POSITIONS[edge.from];
         const p2 = POSITIONS[edge.to];
@@ -66,7 +103,11 @@ export default function Triangle({
               stroke={axisMeta.color}
               strokeWidth={isSelected ? width + 2 : width}
               strokeOpacity={isSelected ? 1 : opacity}
-              style={{ cursor: 'pointer', transition: 'all 200ms', filter: isSelected ? 'url(#glow)' : 'none' }}
+              style={{
+                cursor: 'pointer',
+                transition: 'all 200ms',
+                filter: isSelected ? 'url(#glow)' : (glow ? 'url(#glow)' : 'none'),
+              }}
               onClick={() => onSelectAxis?.(edge.id)}
               role="button"
               aria-label={`Axe ${axisMeta.label}, activation ${edge.activation}`}
@@ -107,6 +148,103 @@ export default function Triangle({
           </g>
         );
       })}
+
+      {showPositioning && (
+        <g aria-hidden="true">
+          <rect
+            x={20}
+            y={465}
+            width={150}
+            height={32}
+            rx={16}
+            fill="var(--svg-circle-fill)"
+            stroke={zoneEthique.color}
+            strokeWidth={1.5}
+            style={{ filter: 'drop-shadow(0 1px 3px rgba(15,23,42,0.10))', transition: 'stroke 300ms' }}
+          />
+          <circle
+            cx={36}
+            cy={481}
+            r={6}
+            fill={zoneEthique.color}
+            style={{ transition: 'fill 300ms' }}
+          />
+          <text
+            x={50}
+            y={479}
+            fontSize="10"
+            fontWeight="500"
+            fill="var(--svg-stroke-muted)"
+            style={{ pointerEvents: 'none' }}
+          >
+            Zone éthique
+          </text>
+          <text
+            x={50}
+            y={491}
+            fontSize="11"
+            fontWeight="700"
+            fill={zoneEthique.color}
+            style={{ pointerEvents: 'none', transition: 'fill 300ms' }}
+          >
+            {zoneEthique.label}
+          </text>
+        </g>
+      )}
+
+      {positionMarker && (
+        <g style={{ pointerEvents: 'none' }} aria-hidden="true">
+          <circle
+            cx={positionMarker.x}
+            cy={positionMarker.y}
+            r={36}
+            fill={zoneEthique.color}
+            fillOpacity={0.10}
+            style={{ transition: 'cx 500ms ease, cy 500ms ease, fill 300ms' }}
+          />
+          <circle
+            cx={positionMarker.x}
+            cy={positionMarker.y}
+            r={22}
+            fill={zoneEthique.color}
+            fillOpacity={0.25}
+            style={{ transition: 'cx 500ms ease, cy 500ms ease, fill 300ms' }}
+          />
+          <circle
+            cx={positionMarker.x}
+            cy={positionMarker.y}
+            r={13}
+            fill="var(--svg-circle-fill)"
+            stroke={zoneEthique.color}
+            strokeWidth={2.5}
+            style={{ transition: 'cx 500ms ease, cy 500ms ease, stroke 300ms' }}
+          />
+          <circle
+            cx={positionMarker.x}
+            cy={positionMarker.y}
+            r={8}
+            fill={zoneEthique.color}
+            style={{
+              filter: 'drop-shadow(0 2px 6px rgba(15,23,42,0.45))',
+              transition: 'cx 500ms ease, cy 500ms ease, fill 300ms',
+            }}
+          />
+          <text
+            x={positionMarker.x}
+            y={positionMarker.y - 46}
+            textAnchor="middle"
+            fontSize="12"
+            fontWeight="600"
+            fill={zoneEthique.color}
+            style={{
+              textShadow: '0 1px 3px rgba(255,255,255,0.95), 0 1px 3px rgba(255,255,255,0.95)',
+              transition: 'fill 300ms',
+            }}
+          >
+            Votre pratique
+          </text>
+        </g>
+      )}
     </svg>
   );
 }

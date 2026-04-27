@@ -289,12 +289,18 @@ export default function MonDiagnostic() {
           <Triangle
             axes={{ enseignantSavoir: form.axeEnseignantSavoir, enseignantEleve: form.axeEnseignantEleve, eleveSavoir: axeEleveVisualise }}
             ethicsValue={meanAxes}
+            showPositioning={true}
           />
           <div className="mt-4 flex items-center justify-center gap-2 text-sm">
             <span className="inline-block w-2 h-2 rounded-full" style={{ background: zone.color }}></span>
             <span className="text-text-emphasized">Zone éthique estimée :</span>
             <span className="font-semibold" style={{ color: zone.color }}>{zone.label}</span>
           </div>
+          <p className="mt-2 text-xs text-text-muted text-center max-w-md mx-auto leading-relaxed">
+            Le <strong>point coloré</strong> indique le positionnement de votre pratique
+            selon la pondération des trois axes. Sa <strong>couleur</strong> reprend
+            celle de la zone éthique.
+          </p>
         </div>
 
         {recommendations && (
