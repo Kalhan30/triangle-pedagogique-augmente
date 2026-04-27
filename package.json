@@ -8,6 +8,10 @@
     "name": "Vanessa Le Scolan Nguyen",
     "url": "https://maprofbranchee.fr"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Kalhan30/triangle-pedagogique-augmente.git"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
