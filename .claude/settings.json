@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s \"https://triangle.maprofbranchee.fr/?cb=$\\(date +%s\\)\")",
+      "Bash(curl -s \"https://triangle.maprofbranchee.fr/assets/index-DretWYYx.js\")",
+      "Bash(grep -oE \"linear-gradient\\\\\\([^\\)]{1,200}\\\\\\)\")",
+      "Bash(git commit -m ' *)"
+    ]
+  }
+}

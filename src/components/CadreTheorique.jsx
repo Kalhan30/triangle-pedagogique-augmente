@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { ChevronDown, ChevronRight, ExternalLink } from 'lucide-react';
 import { P2IA_CYCLE_2, P2IA_CYCLE_3, P2IA_URL_EDUSCOL_CYCLE_2, P2IA_URL_EDUSCOL_CYCLE_3 } from '../data/contraintes.js';
+import { TriangleHoussayeBase, TriangleAugmenteIA } from './accueil/SVG_Triangles_Accueil.jsx';
 
 // Libellés courts pour la présentation compacte dans le Cadre théorique
 // (textes exacts du patch correctif). Les descriptions Eduscol complètes
@@ -142,6 +143,25 @@ function Section2Contenu() {
       <p className="text-sm leading-[1.6] text-text">
         Le triangle pédagogique de Jean Houssaye (1988) structure la réflexion didactique francophone depuis plus de trente ans. Il identifie trois pôles — Enseignant, Élève, Savoir — et trois relations fondamentales : enseigner, apprendre, former. L'arrivée de l'IA dans les classes ne remplace aucun de ces pôles ; elle réorganise les relations qui les relient.
       </p>
+
+      <div className="grid md:grid-cols-2 gap-6 my-8 items-center bg-background-elevated p-6 rounded-xl border border-border-subtle">
+        <div className="flex flex-col items-center">
+          <p className="text-xs uppercase tracking-widest font-semibold text-text-muted mb-4 text-center">Le cadre de base (1988)</p>
+          <div className="w-full max-w-[280px]">
+            <TriangleHoussayeBase />
+          </div>
+        </div>
+        <div className="flex flex-col items-center relative">
+          <div className="hidden md:block absolute left-[-1.5rem] top-1/2 -translate-y-1/2 text-text-muted opacity-50">
+            →
+          </div>
+          <p className="text-xs uppercase tracking-widest font-semibold text-brand-violet-primary mb-4 text-center">Le modèle augmenté</p>
+          <div className="w-full max-w-[280px]">
+            <TriangleAugmenteIA />
+          </div>
+        </div>
+      </div>
+
       <p className="text-sm leading-[1.6] text-text">
         Dans le modèle augmenté proposé ici, l'IA n'est pas un quatrième sommet. Elle agit comme un catalyseur au centre du triangle, qui influence chacune des trois relations sans les constituer. Les trois axes ci-dessous détaillent ce que l'IA transforme dans chaque relation.
       </p>
