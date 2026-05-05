@@ -36,6 +36,9 @@ export default function Explorer() {
         <p className="text-sm text-text-emphasized mt-4 text-center">
           Cliquez sur un <span className="text-brand-teal-primary">sommet</span> ou un <span className="text-brand-violet-primary">axe</span> pour en explorer le contenu.
         </p>
+        <div className="mt-4 bg-brand-violet-primary/10 border-l-[3px] border-brand-violet-primary p-3 rounded-r text-xs text-text">
+          <strong>💡 Info terminologie :</strong> dans l'outil de diagnostic, l'axe <em>Enseigner</em> correspond à la <strong>Préparation</strong>, <em>Former</em> à la <strong>Relation</strong>, et <em>Apprendre</em> à la <strong>Manipulation</strong> (ou l'Impact sur l'apprentissage).
+        </div>
       </div>
 
       <aside className="card p-6 min-h-[200px]">
