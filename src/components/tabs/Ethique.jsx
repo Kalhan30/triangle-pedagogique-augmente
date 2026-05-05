@@ -39,12 +39,12 @@ export default function Ethique() {
             aria-valuemin={0}
             aria-valuemax={100}
           />
-          <div className="flex justify-between text-xs text-text-muted mt-2">
-            <span>0 %</span>
-            <span>25 %</span>
-            <span>60 %</span>
-            <span>85 %</span>
-            <span>100 %</span>
+          <div className="relative h-4 mt-2 text-xs text-text-muted">
+            <span className="absolute" style={{ left: '0%' }}>0 %</span>
+            <span className="absolute" style={{ left: '25%', transform: 'translateX(-50%)' }}>25 %</span>
+            <span className="absolute" style={{ left: '60%', transform: 'translateX(-50%)' }}>60 %</span>
+            <span className="absolute" style={{ left: '85%', transform: 'translateX(-50%)' }}>85 %</span>
+            <span className="absolute" style={{ right: '0%' }}>100 %</span>
           </div>
         </div>
       </div>
