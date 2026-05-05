@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { ChevronDown, ChevronRight, ExternalLink } from 'lucide-react';
 import { P2IA_CYCLE_2, P2IA_CYCLE_3, P2IA_URL_EDUSCOL_CYCLE_2, P2IA_URL_EDUSCOL_CYCLE_3 } from '../data/contraintes.js';
 import { TriangleHoussayeBase, TriangleAugmenteIA } from './accueil/SVG_Triangles_Accueil.jsx';
+import { TetraedreFaerber, SAMRScale, TPACKVenn } from './SVG_Modeles_Theoriques.jsx';
 
 // Libellés courts pour la présentation compacte dans le Cadre théorique
 // (textes exacts du patch correctif). Les descriptions Eduscol complètes
@@ -337,6 +338,14 @@ function Section3Contenu() {
       </p>
 
       <h3 className="text-base font-semibold text-text mt-6 mb-2">L'ajout du pôle Groupe</h3>
+
+      <div className="my-6 bg-background-elevated p-6 rounded-xl border border-border-subtle flex flex-col items-center">
+        <p className="text-xs uppercase tracking-widest font-semibold text-brand-amber-primary mb-4 text-center">Le Tétraèdre de Faerber augmenté</p>
+        <div className="w-full max-w-[320px]">
+          <TetraedreFaerber />
+        </div>
+      </div>
+
       <Encadre accent="amber">
         <p>
           Le groupe n'est pas simplement la somme des élèves individuels. C'est une entité propre, avec ses dynamiques, ses effets de pair à pair, ses régulations sociales implicites. Négliger le groupe revient à penser l'enseignement comme une série de relations duelles alors qu'il est aussi un fait collectif.
@@ -390,6 +399,11 @@ function Section4Contenu() {
       </p>
 
       <h3 className="text-base font-semibold text-text mt-6 mb-2">4.1 Le modèle TPACK</h3>
+      <div className="my-6 bg-background-elevated p-6 rounded-xl border border-border-subtle flex flex-col items-center">
+        <div className="w-full max-w-[280px]">
+          <TPACKVenn />
+        </div>
+      </div>
       <Encadre accent="gris" titre="TPACK — Technological Pedagogical Content Knowledge">
         <p>
           Développé par Mishra et Koehler en 2006, TPACK analyse l'intégration du numérique à l'intersection de trois types de connaissances que tout enseignant mobilise : les savoirs disciplinaires (ce qui est enseigné), les savoirs pédagogiques (comment enseigner), et les savoirs technologiques (quels outils utiliser). La compétence professionnelle émerge à l'intersection de ces trois cercles.
@@ -403,6 +417,11 @@ function Section4Contenu() {
       </Encadre>
 
       <h3 className="text-base font-semibold text-text mt-6 mb-2">4.2 Le modèle SAMR</h3>
+      <div className="my-6 bg-background-elevated p-6 rounded-xl border border-border-subtle flex flex-col items-center">
+        <div className="w-full max-w-[320px]">
+          <SAMRScale />
+        </div>
+      </div>
       <Encadre accent="gris" titre="SAMR — Substitution, Augmentation, Modification, Redéfinition">
         <p>
           Proposé par Ruben Puentedura, SAMR évalue la profondeur de l'intégration du numérique dans une tâche d'apprentissage, selon quatre niveaux progressifs.
