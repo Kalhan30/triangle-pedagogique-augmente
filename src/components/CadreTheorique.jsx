@@ -166,8 +166,12 @@ function Section2Contenu() {
       <p className="text-sm leading-[1.6] text-text">
         Dans le modèle augmenté proposé ici, l'IA n'est pas un quatrième sommet. Elle agit comme un catalyseur au centre du triangle, qui influence chacune des trois relations sans les constituer. Les trois axes ci-dessous détaillent ce que l'IA transforme dans chaque relation.
       </p>
+      
+      <div className="bg-brand-violet-primary/10 border-l-4 border-brand-violet-primary p-3 rounded-r text-sm text-text my-4">
+        <strong>💡 Correspondance avec l'outil de diagnostic :</strong> pour rendre l'interface de l'application plus intuitive, les axes canoniques de Houssaye ont été renommés. Ainsi, <em>Enseigner</em> correspond à la <strong>Préparation</strong>, <em>Former</em> correspond à la <strong>Relation</strong>, et <em>Apprendre</em> correspond à la <strong>Manipulation</strong> (ou Impact sur l'apprentissage).
+      </div>
 
-      <h3 className="text-base font-semibold text-text mt-6 mb-1">2.A L'axe <em>Enseigner</em> (Enseignant ↔ Savoir)</h3>
+      <h3 className="text-base font-semibold text-text mt-6 mb-1">2.A L'axe <em>Enseigner</em> (Enseignant ↔ Savoir) <span className="text-sm font-normal text-text-muted italic">— axe de la Préparation</span></h3>
       <p className="text-sm italic text-text-secondary mb-2 font-serif-editorial">L'IA comme assistant didactique et scientifique</p>
       <p className="text-sm leading-[1.6] text-text">
         L'axe Enseigner concerne la relation de l'enseignant au savoir qu'il doit transposer. C'est l'axe de la préparation, de la veille, de la scénarisation, de la conception des supports. C'est historiquement le plus coûteux en temps. C'est aussi celui où l'IA générative déploie le plus visiblement sa valeur ajoutée.
@@ -185,7 +189,7 @@ function Section2Contenu() {
         </p>
       </div>
 
-      <h3 className="text-base font-semibold text-text mt-8 mb-1">2.B L'axe <em>Former</em> (Enseignant ↔ Élève)</h3>
+      <h3 className="text-base font-semibold text-text mt-8 mb-1">2.B L'axe <em>Former</em> (Enseignant ↔ Élève) <span className="text-sm font-normal text-text-muted italic">— axe de la Relation</span></h3>
       <p className="text-sm italic text-text-secondary mb-2 font-serif-editorial">L'IA comme levier de réinvestissement humain</p>
       <p className="text-sm leading-[1.6] text-text">
         L'axe Former concerne la relation directe entre l'enseignant et l'élève — la dimension incarnée, affective, relationnelle de l'acte pédagogique. C'est l'axe sur lequel l'IA ne peut ni doit intervenir directement. Sa valeur sur cet axe est paradoxale : elle le renforce par retrait.
@@ -203,7 +207,7 @@ function Section2Contenu() {
         </p>
       </div>
 
-      <h3 className="text-base font-semibold text-text mt-8 mb-1">2.C L'axe <em>Apprendre</em> (Élève ↔ Savoir)</h3>
+      <h3 className="text-base font-semibold text-text mt-8 mb-1">2.C L'axe <em>Apprendre</em> (Élève ↔ Savoir) <span className="text-sm font-normal text-text-muted italic">— axe de la Manipulation</span></h3>
       <p className="text-sm italic text-text-secondary mb-2 font-serif-editorial">L'IA comme partenaire d'apprentissage — avec une distinction selon l'âge</p>
       <p className="text-sm leading-[1.6] text-text">
         L'axe Apprendre concerne la relation directe entre l'élève et le savoir, c'est-à-dire la construction cognitive du sens. C'est l'axe le plus sensible, celui où les risques de mauvaise intégration de l'IA sont les plus élevés. Le Cadre juin 2025 distingue explicitement deux régimes selon le niveau scolaire.
