@@ -3,15 +3,15 @@ export const TriangleHoussayeBase = () => (
     viewBox="0 0 320 280"
     xmlns="http://www.w3.org/2000/svg"
     role="img"
-    aria-label="Triangle pédagogique de Houssaye : trois sommets (Enseignant, Élève, Savoir) reliés par trois axes nommés Préparer, Enseigner et Apprendre"
+    aria-label="Triangle pédagogique de Houssaye : trois sommets (Enseignant, Élève, Savoir) reliés par trois processus nommés Enseigner, Former et Apprendre"
     className="w-full h-auto max-w-[320px] mx-auto"
   >
     <line x1="60" y1="220" x2="160" y2="50" stroke="#0F766E" strokeWidth="2" strokeOpacity="0.75" />
     <line x1="60" y1="220" x2="260" y2="220" stroke="#D97706" strokeWidth="2" strokeOpacity="0.75" />
     <line x1="260" y1="220" x2="160" y2="50" stroke="#7C3AED" strokeWidth="2" strokeOpacity="0.75" />
 
-    <text x="90" y="130" style={{ fill: 'var(--svg-stroke-muted)' }} fontSize="11" fontFamily="Inter, sans-serif" fontStyle="italic" transform="rotate(-60 90 130)" textAnchor="middle">préparer</text>
-    <text x="160" y="240" style={{ fill: 'var(--svg-stroke-muted)' }} fontSize="11" fontFamily="Inter, sans-serif" fontStyle="italic" textAnchor="middle">enseigner</text>
+    <text x="90" y="130" style={{ fill: 'var(--svg-stroke-muted)' }} fontSize="11" fontFamily="Inter, sans-serif" fontStyle="italic" transform="rotate(-60 90 130)" textAnchor="middle">enseigner</text>
+    <text x="160" y="240" style={{ fill: 'var(--svg-stroke-muted)' }} fontSize="11" fontFamily="Inter, sans-serif" fontStyle="italic" textAnchor="middle">former</text>
     <text x="230" y="130" style={{ fill: 'var(--svg-stroke-muted)' }} fontSize="11" fontFamily="Inter, sans-serif" fontStyle="italic" transform="rotate(60 230 130)" textAnchor="middle">apprendre</text>
 
     <circle cx="160" cy="50" r="24" stroke="#7C3AED" strokeWidth="1.5" style={{ fill: 'var(--svg-circle-fill)', filter: 'drop-shadow(0 2px 4px rgba(15,23,42,0.08))' }} />

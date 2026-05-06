@@ -141,7 +141,7 @@ export const CONTENU_ACCUEIL = {
   baseline: "L'IA en périphérie, l'humain au cœur.",
   blocHoussaye: {
     titre: 'Le cadre de base — Jean Houssaye, 1988',
-    texte: "Une situation d'enseignement, c'est toujours un équilibre entre trois pôles : l'enseignant, l'élève et le savoir. Entre eux, trois axes de relation : préparer (Enseignant–Savoir), enseigner (Enseignant–Élève), apprendre (Élève–Savoir). Quand un axe devient trop fort, les deux autres s'affaiblissent.",
+    texte: "Une situation d'enseignement, c'est toujours un équilibre entre trois pôles : l'enseignant, l'élève et le savoir. Entre eux, trois processus : enseigner (Enseignant–Savoir), former (Enseignant–Élève), apprendre (Élève–Savoir). Quand un processus est privilégié, le troisième pôle « fait le mort ».",
   },
   blocAugmentation: {
     titre: "L'augmentation par l'IA",
