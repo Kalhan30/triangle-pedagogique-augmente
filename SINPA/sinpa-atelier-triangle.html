@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atelier · Manipuler le triangle pédagogique augmenté — SINPA 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0f172a;
+  --navy-soft: #1e293b;
+  --cyan: #22d3ee;
+  --cyan-dark: #0891b2;
+  --cyan-pale: #ecfeff;
+  --violet: #a78bfa;
+  --violet-dark: #7c3aed;
+  --violet-pale: #f5f3ff;
+  --green: #10b981;
+  --green-dark: #059669;
+  --green-pale: #ecfdf5;
+  --amber: #f59e0b;
+  --amber-dark: #b45309;
+  --amber-pale: #fffbeb;
+  --red: #ef4444;
+  --red-dark: #991b1b;
+  --red-pale: #fef2f2;
+  --gray-50: #f8fafc;
+  --gray-100: #f1f5f9;
+  --gray-200: #e2e8f0;
+  --gray-400: #94a3b8;
+  --gray-500: #64748b;
+  --gray-600: #475569;
+  --gray-700: #334155;
+  --font-display: "Playfair Display", Georgia, serif;
+  --font-body: "Manrope", system-ui, -apple-system, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; height: 100%; overflow: hidden; background: var(--navy); font-family: var(--font-body); }
+
+.deck { position: relative; width: 100vw; height: 100vh; overflow: hidden; }
+
+.slide {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  padding: 5vh 6vw;
+  opacity: 0; visibility: hidden;
+  transition: opacity 0.5s ease;
+  background: #ffffff; color: var(--navy);
+}
+.slide.active { opacity: 1; visibility: visible; z-index: 2; }
+.slide.dark { background: var(--navy); color: #ffffff; }
+.slide.gray { background: var(--gray-50); }
+.slide.cyan-bg { background: var(--cyan-pale); }
+.slide.violet-bg { background: var(--violet-pale); }
+
+.slide h1 { font-family: var(--font-display); font-weight: 600; line-height: 1.15; letter-spacing: -0.01em; }
+.slide h2 { font-family: var(--font-display); font-weight: 500; line-height: 1.25; }
+.slide p, .slide li { font-family: var(--font-body); line-height: 1.6; }
+
+/* Slide title */
+.slide-title h1 { font-size: clamp(2.8rem, 6vw, 5rem); text-align: center; max-width: 20ch; }
+.slide-title .subtitle { font-family: var(--font-body); font-weight: 300; font-size: clamp(1.1rem, 1.8vw, 1.5rem); color: var(--violet); margin-top: 1.5rem; letter-spacing: 0.05em; text-transform: uppercase; }
+.slide-title .meta { margin-top: 3rem; font-size: 1rem; color: rgba(255,255,255,0.65); text-align: center; font-weight: 300; letter-spacing: 0.08em; }
+.slide-title .meta strong { color: var(--violet); font-weight: 500; }
+.slide-title .accent-bar { width: 60px; height: 3px; background: linear-gradient(90deg, var(--violet), var(--cyan)); margin: 2rem auto; border-radius: 2px; }
+.slide-title .format-badge { display: inline-block; padding: 0.4rem 1rem; background: rgba(167,139,250,0.15); border: 1px solid var(--violet); color: var(--violet); border-radius: 20px; font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; margin-bottom: 2rem; }
+
+.slide-content { width: 100%; max-width: 1100px; }
+.slide-content h1 { font-size: clamp(2rem, 3.5vw, 2.8rem); margin-bottom: 0.5rem; color: var(--navy); }
+.slide-content .eyebrow { font-family: var(--font-body); font-weight: 600; font-size: 0.9rem; color: var(--violet-dark); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 1rem; }
+.slide-content .accent-bar { width: 48px; height: 3px; background: var(--violet); margin: 1.5rem 0 2rem; border-radius: 2px; }
+.slide-content > p { font-size: clamp(1.05rem, 1.4vw, 1.3rem); color: var(--gray-700); max-width: 70ch; }
+
+/* Section label */
+.section-label { display: inline-flex; align-items: center; font-size: 0.78rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--violet-dark); font-weight: 700; margin-bottom: 1.5rem; }
+.section-label::before { content: "— "; margin-right: 0.5rem; color: var(--violet); }
+.slide.dark .section-label { color: var(--violet); }
+.slide.cyan-bg .section-label { color: var(--cyan-dark); }
+.slide.cyan-bg .section-label::before { color: var(--cyan); }
+
+/* Timer badge (pour moments participatifs) */
+.timer-badge { position: absolute; top: 5vh; right: 6vw; background: var(--amber-pale); border: 1px solid var(--amber); color: var(--amber-dark); padding: 0.5rem 1.2rem; border-radius: 20px; font-size: 0.9rem; font-weight: 700; letter-spacing: 0.08em; display: inline-flex; align-items: center; gap: 0.5rem; }
+.timer-badge::before { content: "⏱"; font-size: 1rem; }
+
+/* Question big */
+.question-block { text-align: center; max-width: 20ch; }
+.question-block h1 { font-size: clamp(2.4rem, 5vw, 4rem); color: var(--navy); line-height: 1.2; }
+.question-block .underline { width: 120px; height: 4px; background: linear-gradient(90deg, var(--violet), var(--cyan)); margin: 2rem auto; border-radius: 2px; }
+.question-block p { font-size: clamp(1.1rem, 1.6vw, 1.4rem); color: var(--gray-600); font-style: italic; margin-top: 1rem; }
+
+/* Activity consigne */
+.consigne { background: linear-gradient(135deg, var(--violet-pale), var(--cyan-pale)); border-radius: 20px; padding: 2.5rem 3rem; border-left: 6px solid var(--violet); max-width: 900px; }
+.consigne .c-label { font-family: var(--font-body); font-weight: 700; font-size: 0.85rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--violet-dark); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+.consigne .c-label::before { content: ""; width: 24px; height: 24px; background: var(--violet); border-radius: 50%; display: inline-block; position: relative; }
+.consigne h2 { font-family: var(--font-display); font-weight: 600; font-size: clamp(1.5rem, 2.4vw, 2.1rem); color: var(--navy); margin-bottom: 1rem; }
+.consigne p { font-size: 1.15rem; color: var(--gray-700); line-height: 1.6; }
+.consigne ol { margin-top: 1rem; padding-left: 1.5rem; }
+.consigne li { font-size: 1.1rem; color: var(--gray-700); margin-bottom: 0.6rem; padding-left: 0.5rem; }
+.consigne li::marker { color: var(--violet-dark); font-weight: 700; }
+
+/* Sondage block */
+.poll-options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3rem; width: 100%; max-width: 1000px; }
+.poll-option { background: #fff; border: 2px solid var(--gray-200); border-radius: 16px; padding: 2rem 1.8rem; text-align: center; transition: all 0.3s ease; }
+.poll-option:hover { transform: translateY(-4px); }
+.poll-option .poll-num { font-family: var(--font-display); font-weight: 700; font-size: 3rem; color: var(--cyan); margin-bottom: 0.5rem; line-height: 1; }
+.poll-option:nth-child(2) .poll-num { color: var(--violet); }
+.poll-option:nth-child(3) .poll-num { color: var(--green); }
+.poll-option h3 { font-family: var(--font-display); font-weight: 600; font-size: 1.3rem; color: var(--navy); margin-bottom: 0.6rem; }
+.poll-option p { font-size: 1rem; color: var(--gray-600); line-height: 1.5; }
+.poll-option:nth-child(1) { border-color: var(--cyan); }
+.poll-option:nth-child(2) { border-color: var(--violet); }
+.poll-option:nth-child(3) { border-color: var(--green); }
+
+/* Situations à débattre */
+.situations { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; margin-top: 2rem; width: 100%; max-width: 1100px; }
+.situation-card { background: #fff; border: 1px solid var(--gray-200); border-radius: 14px; padding: 1.5rem 1.8rem; border-left: 4px solid var(--cyan); }
+.situation-card:nth-child(2) { border-left-color: var(--violet); }
+.situation-card:nth-child(3) { border-left-color: var(--green); }
+.situation-card:nth-child(4) { border-left-color: var(--amber); }
+.situation-card .sit-num { font-family: var(--font-display); font-weight: 700; font-size: 0.95rem; color: var(--cyan-dark); margin-bottom: 0.5rem; letter-spacing: 0.1em; }
+.situation-card:nth-child(2) .sit-num { color: var(--violet-dark); }
+.situation-card:nth-child(3) .sit-num { color: var(--green-dark); }
+.situation-card:nth-child(4) .sit-num { color: var(--amber-dark); }
+.situation-card p { font-size: 1.05rem; color: var(--gray-700); line-height: 1.6; }
+.situation-card .ask { margin-top: 0.8rem; font-size: 0.95rem; font-style: italic; color: var(--gray-500); }
+
+/* Mini curseur éthique (rappel visuel) */
+.ethics-mini { display: flex; align-items: center; gap: 1rem; margin: 2rem auto; max-width: 700px; padding: 1.2rem 1.5rem; background: #fff; border: 1px solid var(--gray-200); border-radius: 12px; }
+.ethics-mini .e-item { flex: 1; text-align: center; position: relative; padding-top: 1.5rem; }
+.ethics-mini .e-item::before { content: ""; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 14px; height: 14px; border-radius: 50%; }
+.ethics-mini .e-sub::before { background: var(--red); }
+.ethics-mini .e-ass::before { background: var(--violet); opacity: 0.5; }
+.ethics-mini .e-med::before { background: var(--violet); transform: translateX(-50%) scale(1.3); }
+.ethics-mini .e-cop::before { background: var(--violet); opacity: 0.7; }
+.ethics-mini .e-name { font-family: var(--font-display); font-weight: 600; font-size: 1rem; color: var(--navy); }
+.ethics-mini .e-sub .e-name { color: var(--red-dark); text-decoration: line-through; }
+.ethics-mini .e-med .e-name { color: var(--violet-dark); }
+
+/* Ressources grid */
+.resources { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 2rem; width: 100%; max-width: 1100px; }
+.resource { background: #fff; border: 1px solid var(--gray-200); border-radius: 12px; padding: 1.5rem 1.8rem; }
+.resource .res-label { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--cyan-dark); margin-bottom: 0.6rem; }
+.resource h3 { font-family: var(--font-display); font-weight: 600; font-size: 1.15rem; color: var(--navy); margin-bottom: 0.5rem; line-height: 1.3; }
+.resource p { font-size: 0.95rem; color: var(--gray-600); margin-bottom: 0.8rem; }
+.resource .res-url { font-size: 0.9rem; color: var(--violet-dark); font-weight: 600; word-break: break-all; }
+
+/* Grand CTA URL */
+.big-cta { text-align: center; }
+.big-cta .cta-label { font-size: 1rem; color: var(--gray-500); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1rem; }
+.big-cta .cta-url { font-family: var(--font-display); font-weight: 600; font-size: clamp(2rem, 3.5vw, 3rem); color: var(--violet-dark); padding: 1rem 0; display: block; }
+.big-cta .cta-desc { font-size: 1.1rem; color: var(--gray-600); max-width: 60ch; margin: 1rem auto; }
+
+/* Engagement prompt (final) */
+.engage-block { text-align: center; }
+.engage-block .label { font-size: 1rem; color: var(--violet-dark); letter-spacing: 0.15em; text-transform: uppercase; font-weight: 700; margin-bottom: 1.5rem; }
+.engage-block h1 { font-size: clamp(2.4rem, 4.5vw, 3.5rem); max-width: 20ch; margin: 0 auto 2rem; line-height: 1.2; }
+.engage-block .prompt { background: var(--amber-pale); border: 2px dashed var(--amber); color: var(--amber-dark); padding: 1.5rem 2rem; border-radius: 12px; font-family: var(--font-display); font-style: italic; font-size: 1.3rem; max-width: 600px; margin: 2rem auto; }
+
+/* Navigation UI */
+.nav-bar { position: fixed; bottom: 0; left: 0; right: 0; height: 4px; background: rgba(0,0,0,0.05); z-index: 10; }
+.deck.on-dark .nav-bar { background: rgba(255,255,255,0.1); }
+.nav-progress { height: 100%; background: linear-gradient(90deg, var(--violet), var(--cyan)); width: 0%; transition: width 0.5s ease; }
+.nav-info { position: fixed; bottom: 1.5rem; right: 2rem; z-index: 10; font-size: 0.82rem; color: var(--gray-500); font-weight: 500; letter-spacing: 0.1em; display: flex; align-items: center; gap: 0.75rem; }
+.deck.on-dark .nav-info { color: rgba(255,255,255,0.5); }
+.nav-info .sep { width: 20px; height: 1px; background: currentColor; opacity: 0.4; }
+.nav-hint { position: fixed; bottom: 1.5rem; left: 2rem; z-index: 10; font-size: 0.75rem; color: var(--gray-400); letter-spacing: 0.05em; opacity: 0.7; }
+.deck.on-dark .nav-hint { color: rgba(255,255,255,0.4); }
+.nav-hint kbd { display: inline-block; padding: 1px 6px; background: rgba(0,0,0,0.08); border: 1px solid rgba(0,0,0,0.15); border-radius: 3px; font-family: monospace; font-size: 0.7rem; margin: 0 2px; }
+.deck.on-dark .nav-hint kbd { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.15); color: rgba(255,255,255,0.8); }
+
+/* Brand */
+.brand { position: fixed; top: 1.5rem; left: 2rem; z-index: 10; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gray-400); }
+.deck.on-dark .brand { color: rgba(255,255,255,0.5); }
+.brand::before { content: ""; display: inline-block; width: 6px; height: 6px; background: var(--violet); border-radius: 50%; margin-right: 8px; vertical-align: middle; }
+
+/* Atelier badge (top right on content slides) */
+.atelier-badge { position: absolute; top: 5vh; right: 6vw; font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gray-400); font-weight: 700; }
+.slide.dark .atelier-badge { color: rgba(255,255,255,0.4); }
+
+/* Mini triangle (rappel) */
+.mini-triangle { max-width: 360px; width: 100%; height: auto; display: block; margin: 0 auto; }
+
+/* Two col for step + visual */
+.two-col { display: grid; grid-template-columns: 1.2fr 1fr; gap: 3rem; align-items: center; width: 100%; max-width: 1200px; }
+
+/* Browser frame pour captures d'app */
+.browser-frame {
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(15, 23, 42, 0.12), 0 8px 16px rgba(15, 23, 42, 0.06);
+  border: 1px solid var(--gray-200);
+}
+.browser-bar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.6rem 1rem;
+  background: var(--gray-100);
+  border-bottom: 1px solid var(--gray-200);
+}
+.browser-dots { display: flex; gap: 6px; }
+.browser-dots .dot { width: 11px; height: 11px; border-radius: 50%; display: inline-block; }
+.browser-dots .dot.red { background: #ff5f57; }
+.browser-dots .dot.yellow { background: #ffbd2e; }
+.browser-dots .dot.green { background: #28c840; }
+.browser-url {
+  flex: 1;
+  text-align: center;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  color: var(--gray-500);
+  background: #fff;
+  padding: 0.35rem 1rem;
+  border-radius: 6px;
+  border: 1px solid var(--gray-200);
+  max-width: 320px;
+  margin: 0 auto;
+  letter-spacing: 0.02em;
+}
+.browser-content { position: relative; background: #fff; line-height: 0; }
+.browser-content img { width: 100%; height: auto; display: block; }
+.slide.dark .browser-frame,
+.slide-title.dark .browser-frame {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 8px 16px rgba(0, 0, 0, 0.2);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+.capture-caption {
+  text-align: center;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--gray-500);
+  font-style: italic;
+  margin-top: 1rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.slide.dark .capture-caption { color: rgba(255, 255, 255, 0.6); }
+.slide-with-capture {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 3rem;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+}
+.slide-with-capture .text-side h1 { font-size: clamp(2rem, 3vw, 2.6rem); }
+.capture-annotation {
+  position: absolute;
+  background: var(--violet-dark);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+}
+
+/* Bouton « Lancer l'application » — bascule vers la démo en direct */
+.app-launch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-top: 1.5rem;
+  padding: 0.85rem 1.6rem;
+  background: linear-gradient(135deg, var(--violet), var(--cyan));
+  color: #fff !important;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(124, 58, 237, 0.35), 0 2px 6px rgba(15, 23, 42, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.app-launch:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(124, 58, 237, 0.45), 0 4px 10px rgba(15, 23, 42, 0.15);
+}
+.app-launch:active { transform: translateY(0); }
+.app-launch::before {
+  content: "";
+  width: 18px;
+  height: 18px;
+  background: #fff;
+  -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3zM5 5h6v2H5v12h12v-6h2v8H3V5h2z'/></svg>") no-repeat center / contain;
+          mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3zM5 5h6v2H5v12h12v-6h2v8H3V5h2z'/></svg>") no-repeat center / contain;
+}
+.slide.dark .app-launch,
+.slide-title.dark .app-launch {
+  box-shadow: 0 8px 24px rgba(124, 58, 237, 0.55), 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+.app-launch-mini {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.8rem;
+  padding: 0.55rem 1.1rem;
+  background: var(--violet);
+  color: #fff !important;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-decoration: none;
+  border-radius: 8px;
+  box-shadow: 0 3px 10px rgba(124, 58, 237, 0.25);
+  transition: background 0.2s, transform 0.15s;
+}
+.app-launch-mini:hover { background: var(--violet-dark); transform: translateY(-1px); }
+
+/* Responsive mobile — bascule des layouts deux colonnes */
+@media (max-width: 900px) {
+  .slide-with-capture,
+  .slide-with-capture > div,
+  .slide .two-col,
+  .slide .two-col > div {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+  }
+  .browser-frame { max-width: 100%; }
+}
+
+/* Print */
+@media print {
+  html, body { overflow: visible; height: auto; }
+  .slide { position: relative; opacity: 1 !important; visibility: visible !important; page-break-after: always; height: 100vh; }
+  .nav-bar, .nav-info, .nav-hint, .brand, .timer-badge, .atelier-badge { display: none !important; }
+}
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+<!-- SLIDE 1 : Titre atelier -->
+<section class="slide slide-title dark active" data-theme="dark">
+  <span class="format-badge">Atelier · 30 minutes</span>
+  <h1>Manipuler le triangle pédagogique augmenté</h1>
+  <div class="accent-bar"></div>
+  <p class="subtitle">Expérimenter · Positionner · Échanger</p>
+  <p class="meta"><strong>Vanessa Le Scolan Nguyen</strong> · ERUN · Académie de Montpellier<br>SINPA Occitanie · Atelier distanciel (BigBlueButton) · Mercredi 6 mai 2026</p>
+</section>
+
+<!-- SLIDE 2 : Ouverture -->
+<section class="slide">
+  <span class="atelier-badge">Ouverture</span>
+  <div class="question-block">
+    <h1>Où placez-vous l'IA dans votre classe ?</h1>
+    <div class="underline"></div>
+    <p>Pas en théorie. Concrètement. Cette semaine, dans votre pratique.</p>
+  </div>
+</section>
+
+<!-- SLIDE 3 : Sondage usages -->
+<section class="slide gray">
+  <span class="atelier-badge">Sondage éclair</span>
+  <div class="timer-badge">3 min</div>
+  <div class="slide-content" style="text-align: center;">
+    <span class="section-label">Tour de table</span>
+    <h1 style="text-align: center;">Et vous, où en êtes-vous ?</h1>
+    <div class="accent-bar" style="margin: 1.5rem auto 2rem;"></div>
+    <p style="margin: 0 auto; text-align: center;">Levez la main pour indiquer votre position actuelle. Une seule réponse, la plus honnête.</p>
+    <div class="poll-options">
+      <div class="poll-option">
+        <div class="poll-num">1</div>
+        <h3>J'observe</h3>
+        <p>Je lis, je regarde, je n'ai pas encore franchi le pas dans ma classe.</p>
+      </div>
+      <div class="poll-option">
+        <div class="poll-num">2</div>
+        <h3>J'expérimente</h3>
+        <p>J'ai testé quelques outils, j'ajuste, je tâtonne avec mes élèves.</p>
+      </div>
+      <div class="poll-option">
+        <div class="poll-num">3</div>
+        <h3>J'intègre</h3>
+        <p>L'IA fait partie de mon quotidien pédagogique, avec un cadre stabilisé.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 4 : Rappel éclair du cadre -->
+<section class="slide cyan-bg">
+  <span class="atelier-badge">Repère · 2 min</span>
+  <div class="two-col">
+    <div>
+      <span class="section-label">Point d'ancrage</span>
+      <h1>Le triangle et son catalyseur</h1>
+      <div class="accent-bar"></div>
+      <p>Un triangle éprouvé depuis 1988 (Houssaye). Trois pôles, trois relations. L'IA <strong>n'est pas un quatrième sommet</strong> — c'est un catalyseur au centre qui modifie l'intensité des flux entre les pôles, sans changer leur nature.</p>
+      <p style="margin-top: 1rem; font-size: 1.05rem; color: var(--gray-600); font-style: italic;">Nous allons maintenant le manipuler ensemble.</p>
+    </div>
+    <div>
+      <svg viewBox="0 0 360 340" class="mini-triangle" xmlns="http://www.w3.org/2000/svg">
+        <path d="M180,40 L60,280 L300,280 Z" fill="none" stroke="var(--gray-400)" stroke-width="2"/>
+        <rect x="140" y="20" width="80" height="36" rx="8" fill="var(--navy)"/>
+        <text x="180" y="44" text-anchor="middle" fill="#fff" font-size="13" font-weight="600" font-family="Manrope, sans-serif">SAVOIR</text>
+        <rect x="5" y="265" width="110" height="36" rx="8" fill="var(--navy)"/>
+        <text x="60" y="288" text-anchor="middle" fill="#fff" font-size="12" font-weight="600" font-family="Manrope, sans-serif">ENSEIGNANT</text>
+        <rect x="245" y="265" width="110" height="36" rx="8" fill="var(--navy)"/>
+        <text x="300" y="288" text-anchor="middle" fill="#fff" font-size="12" font-weight="600" font-family="Manrope, sans-serif">ÉLÈVE</text>
+        <circle cx="180" cy="200" r="28" fill="var(--cyan-pale)" stroke="var(--cyan)" stroke-width="2"/>
+        <text x="180" y="198" text-anchor="middle" fill="var(--cyan-dark)" font-size="11" font-weight="600" font-family="Manrope, sans-serif">IA</text>
+        <text x="180" y="212" text-anchor="middle" fill="var(--cyan-dark)" font-size="9" font-family="Manrope, sans-serif">catalyseur</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 5 : Démo appli -->
+<section class="slide violet-bg">
+  <span class="atelier-badge">Démo · 5 min</span>
+  <div class="slide-with-capture">
+    <div class="text-side">
+      <span class="section-label">Objet à manipuler</span>
+      <h1>L'application Triangle Pédagogique Augmenté</h1>
+      <div class="accent-bar"></div>
+      <p style="font-size: 1.1rem; color: var(--gray-700);">Un outil interactif pour situer vos usages, explorer le curseur éthique, diagnostiquer votre positionnement personnel.</p>
+      <div class="big-cta" style="text-align: left; margin-top: 2rem;">
+        <div class="cta-label" style="text-align: left;">ouvrez dans votre navigateur</div>
+        <div class="cta-url" style="text-align: left; font-size: clamp(1.6rem, 2.8vw, 2.3rem);">triangle.maprofbranchee.fr</div>
+        <a href="https://triangle.maprofbranchee.fr" target="_blank" rel="noopener" class="app-launch">Ouvrir l'application</a>
+        <p style="font-size: 0.95rem; color: var(--gray-600); margin-top: 1.2rem;">Cinq onglets : <strong>Explorer</strong> · <strong>Situations</strong> · <strong>Éthique</strong> · <strong>Mon Diagnostic</strong> · <strong>Cadre théorique</strong></p>
+      </div>
+    </div>
+    <div class="visual-side">
+      <div class="browser-frame">
+        <div class="browser-bar">
+          <div class="browser-dots">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+          </div>
+          <div class="browser-url">triangle.maprofbranchee.fr</div>
+        </div>
+        <div class="browser-content">
+          <img src="images/app-accueil.png" alt="Page d'accueil de l'application Triangle Pédagogique Augmenté" />
+        </div>
+      </div>
+      <p class="capture-caption">Page d'accueil · choix du niveau scolaire</p>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 6 : Activité 1 - situations à positionner -->
+<section class="slide">
+  <span class="atelier-badge">Activité 1</span>
+  <div class="timer-badge">7 min</div>
+  <div class="slide-content">
+    <span class="section-label">Manipulation collective</span>
+    <h1>Où placer chaque usage sur le curseur éthique ?</h1>
+    <div class="accent-bar"></div>
+    <p>Quatre situations réelles. À votre avis, chacune relève-t-elle d'<em>IA Minimale</em>, d'<em>IA Partenaire</em>, d'<em>IA Dominante</em> ou d'<em>IA Totale</em> ? Il n'y a pas toujours une seule bonne réponse.</p>
+    <div style="max-width: 680px; margin: 1.5rem auto;">
+      <div class="browser-frame">
+        <div class="browser-bar">
+          <div class="browser-dots">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+          </div>
+          <div class="browser-url">triangle.maprofbranchee.fr</div>
+        </div>
+        <div class="browser-content">
+          <img src="images/app-ethique-partenaire.png" alt="Curseur éthique de l'application positionné sur la zone IA Partenaire" />
+        </div>
+      </div>
+      <p class="capture-caption">Le curseur éthique de l'application · 4 zones, position actuelle : IA Partenaire (équilibre recommandé)</p>
+      <div style="text-align: center;">
+        <a href="https://triangle.maprofbranchee.fr" target="_blank" rel="noopener" class="app-launch-mini">Ouvrir le curseur éthique</a>
+      </div>
+    </div>
+    <div class="situations">
+      <div class="situation-card">
+        <div class="sit-num">Situation 1</div>
+        <p>Un collègue demande à ChatGPT de rédiger ses appréciations de bulletin, puis colle telles quelles.</p>
+        <p class="ask">Posture observée ?</p>
+      </div>
+      <div class="situation-card">
+        <div class="sit-num">Situation 2</div>
+        <p>Une enseignante génère une grille d'évaluation critériée, la retravaille pendant 20 minutes, puis l'utilise.</p>
+        <p class="ask">Posture observée ?</p>
+      </div>
+      <div class="situation-card">
+        <div class="sit-num">Situation 3</div>
+        <p>Un élève de 4e demande à l'IA de lui reformuler une consigne de maths qu'il ne comprend pas.</p>
+        <p class="ask">Posture observée ?</p>
+      </div>
+      <div class="situation-card">
+        <div class="sit-num">Situation 4</div>
+        <p>Une enseignante de CE2 utilise MATHIA-C3 comme exerciseur adaptatif en autonomie pour 6 élèves en difficulté.</p>
+        <p class="ask">Posture observée ?</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 7 : Activité 2 - sous-groupes -->
+<section class="slide gray">
+  <span class="atelier-badge">Activité 2</span>
+  <div class="timer-badge">5 min</div>
+  <div class="slide-content" style="text-align: center;">
+    <span class="section-label">Travail en binôme ou en trio</span>
+    <h1 style="text-align: center;">Un usage que vous aimeriez tester</h1>
+    <div class="accent-bar" style="margin: 1.5rem auto 2rem;"></div>
+    <div class="consigne" style="text-align: left; margin: 0 auto;">
+      <div class="c-label">Consigne</div>
+      <h2>Identifiez un usage concret de l'IA que vous aimeriez tester dans votre classe la semaine prochaine.</h2>
+      <ol>
+        <li><strong>Décrivez-le</strong> en une phrase (tâche précise, niveau concerné).</li>
+        <li><strong>Positionnez-le</strong> sur le curseur éthique : IA Partenaire ou IA Dominante ?</li>
+        <li><strong>Identifiez un risque</strong> et la parade que vous mettriez en place.</li>
+      </ol>
+      <p style="margin-top: 1.2rem; font-size: 1rem; color: var(--gray-500); font-style: italic;">Notez-le sur une feuille. Nous allons en partager quelques-uns ensemble.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 8 : Restitution -->
+<section class="slide">
+  <span class="atelier-badge">Restitution</span>
+  <div class="timer-badge">4 min</div>
+  <div class="slide-content" style="text-align: center;">
+    <span class="section-label">Partage collectif</span>
+    <h1 style="text-align: center;">Deux ou trois retours · une question ouverte</h1>
+    <div class="accent-bar" style="margin: 1.5rem auto 2rem;"></div>
+    <p style="margin: 0 auto 2rem; text-align: center; max-width: 60ch;">Qui veut partager l'usage qu'il ou elle a imaginé ? Nous l'examinons ensemble, en cherchant non pas la meilleure réponse mais la plus intéressante zone de questionnement.</p>
+    <div class="consigne" style="text-align: left; margin: 2rem auto; background: linear-gradient(135deg, var(--cyan-pale), var(--green-pale)); border-left-color: var(--green);">
+      <div class="c-label" style="color: var(--green-dark);"><span style="background: var(--green); width: 24px; height: 24px; border-radius: 50%; display: inline-block; margin-right: 0.5rem;"></span>Angle d'examen collectif</div>
+      <p style="font-size: 1.1rem;">Pour chaque proposition, trois questions guides :</p>
+      <ol style="margin-top: 0.8rem;">
+        <li>Est-ce que l'IA <strong>réduit la charge</strong> enseignante, ou la déplace ?</li>
+        <li>Est-ce que l'élève reste <strong>acteur de son apprentissage</strong>, ou devient-il consommateur ?</li>
+        <li>Qu'est-ce qui, dans cet usage, reste <strong>irréductiblement humain</strong> ?</li>
+      </ol>
+    </div>
+    <div class="consigne" style="text-align: left; margin: 2rem auto; background: var(--amber-pale); border-left-color: var(--amber);">
+      <div class="c-label" style="color: var(--amber-dark);"><span style="background: var(--amber); width: 24px; height: 24px; border-radius: 50%; display: inline-block; margin-right: 0.5rem;"></span>À déposer maintenant dans le chat BBB</div>
+      <p style="font-size: 1.1rem;"><strong>Une question. Une seule.</strong> Celle qui vous gratte le plus — sur la différenciation, l'éthique, la conformité, un cas concret. <strong>Vingt secondes pour l'écrire.</strong></p>
+      <p style="font-size: 0.95rem; margin-top: 0.6rem; color: var(--amber-dark); font-style: italic;">C'est elle qui ouvrira le webinaire de demain, jeudi 7 mai à 12h30.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 9 : Ressources à emporter -->
+<section class="slide cyan-bg">
+  <span class="atelier-badge">Pour aller plus loin</span>
+  <div class="slide-content">
+    <span class="section-label">Ressources à emporter</span>
+    <h1>Quatre ressources pour la semaine prochaine</h1>
+    <div class="accent-bar"></div>
+    <p>Pas de recette miracle. Quatre points d'entrée selon votre position actuelle.</p>
+    <div class="resources" style="grid-template-columns: repeat(2, 1fr); max-width: 1000px;">
+      <div class="resource" style="border-left: 4px solid var(--cyan);">
+        <div class="res-label">Si vous observez</div>
+        <h3>Article de fond</h3>
+        <p>Le triangle pédagogique augmenté par l'IA — une nouvelle grammaire de l'apprentissage. Cadre théorique, cas Plickers CE2, alertes recherche.</p>
+        <a href="https://maprofbranchee.fr/le-triangle-pedagogique-augmente-par-lia-une-nouvelle-grammaire-de-lapprentissage/" target="_blank" rel="noopener" class="res-url" style="text-decoration: none;">maprofbranchee.fr/le-triangle-pedagogique-augmente-par-lia</a>
+      </div>
+      <div class="resource" style="border-left: 4px solid var(--violet);">
+        <div class="res-label">Si vous expérimentez</div>
+        <h3>Application interactive</h3>
+        <p>Parcours pour diagnostiquer votre positionnement, situer vos usages sur le curseur éthique, affiner votre posture.</p>
+        <a href="https://triangle.maprofbranchee.fr" target="_blank" rel="noopener" class="res-url" style="text-decoration: none;">triangle.maprofbranchee.fr</a>
+      </div>
+      <div class="resource" style="border-left: 4px solid var(--green);">
+        <div class="res-label">Si vous intégrez</div>
+        <h3>Assistants P2IA</h3>
+        <p>Cycle 2 : Lalilo, Adaptiv'Math, Mathia, Smart Enseigno, Navi. Cycle 3 : Mathia-C3, Expliq, Edumalin, Origamia, Cards, yLANG.</p>
+        <a href="https://eduscol.education.fr/2785/intelligence-artificielle-et-education" target="_blank" rel="noopener" class="res-url" style="text-decoration: none;">eduscol.education.fr/p2ia</a>
+      </div>
+      <div class="resource" style="border-left: 4px solid var(--amber);">
+        <div class="res-label">Si vous diffusez</div>
+        <h3>Code source ouvert</h3>
+        <p>Application versée aux communs numériques éducatifs sur LaForgeEdu. Licences ouvertes : CC BY-SA 4.0 (contenus) et MIT (code).</p>
+        <a href="https://forge.apps.education.fr/le-scolanvanessa/triangle-pedagogique-augmente" target="_blank" rel="noopener" class="res-url" style="text-decoration: none; word-break: break-all;">forge.apps.education.fr/le-scolanvanessa/triangle-pedagogique-augmente</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 10 : Engagement personnel -->
+<section class="slide slide-title dark" data-theme="dark">
+  <div class="engage-block">
+    <p class="label">Avant de partir</p>
+    <h1 style="color: #fff;">Qu'est-ce que je teste demain, dans ma classe ?</h1>
+    <div class="prompt" style="background: rgba(245,158,11,0.1); border-color: var(--amber); color: var(--amber);">
+      Une phrase sur un post-it. Un seul usage. À garder avec vous.
+    </div>
+    <div style="background: rgba(124, 58, 237, 0.15); border: 1px solid rgba(124, 58, 237, 0.4); border-radius: 12px; padding: 1.5rem 2rem; max-width: 640px; margin: 2.5rem auto 0;">
+      <p style="color: var(--violet); font-size: 0.78rem; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 700; margin-bottom: 0.6rem;">Demain · jeudi 7 mai · 12h30 — 13h00</p>
+      <p style="color: #fff; font-size: 1.15rem; margin: 0; line-height: 1.5;">Webinaire <em>L'IA au service de la différenciation</em> — vos questions ouvriront la séance, avec un cas Plickers CE2 documenté et une lecture des alertes de la recherche récente.</p>
+    </div>
+    <p style="color: rgba(255,255,255,0.7); margin-top: 2rem; font-size: 1rem; max-width: 60ch; margin-left: auto; margin-right: auto;">Merci pour votre présence et pour la richesse des échanges. La différenciation, l'éthique et l'IA ne sont pas des problèmes techniques. Ce sont des questions professionnelles que nous portons ensemble.</p>
+    <p style="margin-top: 2.5rem; color: rgba(255,255,255,0.5); font-size: 0.9rem; letter-spacing: 0.1em;"><strong style="color: var(--violet);">MaProfBranchee</strong> · Vanessa Le Scolan Nguyen · SINPA Occitanie · Mai 2026</p>
+  </div>
+</section>
+
+</div>
+
+<div class="brand">MaProfBranchee</div>
+<div class="nav-info"><span id="slideNum">1</span><span class="sep"></span><span id="slideTotal">10</span></div>
+<div class="nav-hint"><kbd>←</kbd> <kbd>→</kbd> ou <kbd>espace</kbd> · <kbd>F</kbd> plein écran</div>
+<div class="nav-bar"><div class="nav-progress" id="progress"></div></div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const deck = document.getElementById('deck');
+const slideNum = document.getElementById('slideNum');
+const slideTotal = document.getElementById('slideTotal');
+const progress = document.getElementById('progress');
+let current = 0;
+slideTotal.textContent = slides.length;
+
+function show(i) {
+  if (i < 0 || i >= slides.length) return;
+  slides[current].classList.remove('active');
+  current = i;
+  slides[current].classList.add('active');
+  slideNum.textContent = current + 1;
+  progress.style.width = ((current + 1) / slides.length * 100) + '%';
+  const theme = slides[current].dataset.theme;
+  if (theme === 'dark') { deck.classList.add('on-dark'); }
+  else { deck.classList.remove('on-dark'); }
+}
+
+function next() { if (current < slides.length - 1) show(current + 1); }
+function prev() { if (current > 0) show(current - 1); }
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); next(); }
+  else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); prev(); }
+  else if (e.key === 'Home') { show(0); }
+  else if (e.key === 'End') { show(slides.length - 1); }
+  else if (e.key === 'f' || e.key === 'F') {
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+    else document.exitFullscreen();
+  }
+});
+
+document.addEventListener('click', (e) => {
+  if (e.target.closest('a, button, input')) return;
+  next();
+});
+
+show(0);
+</script>
+</body>
+</html>
